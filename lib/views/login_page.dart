@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
                 colors: [
                   // Colors.orange[900],
                   // Colors.orange[800],
-                  Colors.orange[700],
-                  Colors.orange[600],
+                  Colors.deepOrange[800],
+                  Colors.deepOrange[500],
                   // Colors.orange,
                 ],
                 stops: [
