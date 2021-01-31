@@ -3,7 +3,7 @@ class EventModel {
   String groupID;
   String eventName;
   String startDate;
-  String enddate;
+  String endDate;
   String localID;
   String localName;
 
@@ -12,16 +12,17 @@ class EventModel {
       this.groupID,
       this.eventName,
       this.startDate,
-      this.enddate,
+      this.endDate,
       this.localID,
       this.localName});
 
   EventModel.fromJson(Map<String, dynamic> json) {
     eventID = json['eventID'];
+    
     groupID = json['groupID'];
     eventName = json['eventName'];
     startDate = json['startDate'];
-    enddate = json['enddate'];
+    endDate = json['endDate'];
     localID = json['localID'];
     localName = json['localName'];
   }
@@ -32,7 +33,7 @@ class EventModel {
     data['groupID'] = this.groupID;
     data['eventName'] = this.eventName;
     data['startDate'] = this.startDate;
-    data['enddate'] = this.enddate;
+    data['endDate'] = this.endDate;
     data['localID'] = this.localID;
     data['localName'] = this.localName;
     return data;

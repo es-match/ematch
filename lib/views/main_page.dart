@@ -14,7 +14,7 @@ class _MainPageState extends State<MainPage> {
   int _screenIndex = 0;
 
   final List<Widget> _bottomNavPages = [
-    InnerHomePage(),
+    HomePage(),
     SearchGroupPage(),
     SchedulePage(),
     GroupPage(),
