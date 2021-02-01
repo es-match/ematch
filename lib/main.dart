@@ -8,17 +8,26 @@ void main() {
 
 class AppWidget extends StatelessWidget {
   @override
+  // Widget build(BuildContext context) {
+  //   var materialApp = MaterialApp(
+  //     theme: ThemeData(
+  //       primarySwatch: Colors.deepOrange,
+  //     ),
+  //     initialRoute: '/',
+  //     routes: {
+  //       '/': (context) => LoginPage(),
+  //       '/home': (context) => MainPage(),
+  //     },
+  //   );
+  //   return materialApp;
+  // }
   Widget build(BuildContext context) {
-    var materialApp = MaterialApp(
+    return MaterialApp(
+      title: 'E.S.MATCH',
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginPage(),
-        '/home': (context) => MainPage(),
-      },
+      home: LoginPage(),
     );
-    return materialApp;
   }
 }
