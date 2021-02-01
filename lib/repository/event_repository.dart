@@ -2,7 +2,7 @@ import 'package:ematch/models/event_model.dart';
 
 class EventRepository {
   List<EventModel> getEvents() {
-    List<EventModel> events = List<EventModel>();
+    List<EventModel> events = <EventModel>[];
     if (eventJson['events'] != null) {
       eventJson['events'].forEach((ev) {
         events.add(new EventModel.fromJson(ev));
