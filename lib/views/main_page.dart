@@ -23,16 +23,24 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
+    final _height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: DefaultTextStyle(
+
+      // appBar: AppBar(
+      //   title: Text('Home'),
+      // ),
+      body: Container(
+        height: _height,
+        width: _width,
+        child: DefaultTextStyle(
           style: TextStyle(
             color: Colors.white,
           ),
-          child: _bottomNavPages[_screenIndex]),
+          child: Container(child: _bottomNavPages[_screenIndex]),
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         unselectedIconTheme: IconThemeData(
           color: Colors.white,

@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return EventList();
+    return ListView.builder(
+      itemCount: 4,
+      itemBuilder: (context, index) {
+        return EventList();
+      },
+    );
   }
 }
