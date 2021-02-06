@@ -12,7 +12,7 @@ class EventList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      shrinkWrap: true,
+      // shrinkWrap: true,
       itemCount: _controller.eventCount,
       itemBuilder: (context, index) => ListTile(
         title: EventCard(event: _controller.events[index]),

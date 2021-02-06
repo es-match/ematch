@@ -33,6 +33,7 @@ dependencies:
   firebase_auth: ^0.18.0+1
   google_sign_in: ^4.5.3
   flutter_launcher_icons: "^0.8.0"
+  simple_search_bar: ^0.1.7
   
 dev_dependencies:
   flutter_test:

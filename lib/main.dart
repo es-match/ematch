@@ -1,4 +1,5 @@
 import 'package:ematch/views/login_page.dart';
+import 'package:ematch/views/main_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,6 +28,7 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
       ),
       home: LoginPage(),
+      // home: MainPage(),
     );
   }
 }

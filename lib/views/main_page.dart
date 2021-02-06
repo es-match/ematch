@@ -1,5 +1,5 @@
-import 'package:ematch/views/group_page.dart';
-import 'package:ematch/views/home_page.dart';
+import 'package:ematch/views/group/group_page.dart';
+import 'package:ematch/views/home/home_page.dart';
 import 'package:ematch/views/schedule_page.dart';
 import 'package:ematch/views/search_group_page.dart';
 import 'package:ematch/views/profile_page.dart';
