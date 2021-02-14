@@ -1,5 +1,5 @@
-import 'package:ematch/controllers/event_controller.dart';
-import 'package:ematch/custom_widgets/eventCard.dart';
+import 'package:ematch/UserApp/controllers/event_controller.dart';
+import 'package:ematch/UserApp/custom_widgets/eventCard.dart';
 import 'package:flutter/material.dart';
 
 class EventList extends StatelessWidget {

@@ -1,8 +1,8 @@
-import 'package:ematch/views/group/group_page.dart';
-import 'package:ematch/views/home/home_page.dart';
-import 'package:ematch/views/schedule_page.dart';
-import 'package:ematch/views/search_group_page.dart';
-import 'package:ematch/views/profile_page.dart';
+import 'package:ematch/UserApp/views/group/group_page.dart';
+import 'package:ematch/UserApp/views/home/home_page.dart';
+import 'package:ematch/UserApp/views/schedule_page.dart';
+import 'package:ematch/UserApp/views/search_group_page.dart';
+import 'package:ematch/UserApp/views/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -28,9 +28,9 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
 
-      // appBar: AppBar(
-      //   title: Text('Home'),
-      // ),
+      appBar: AppBar(
+        title: Text('Inicio'),
+      ),
       body: Container(
         height: _height,
         width: _width,

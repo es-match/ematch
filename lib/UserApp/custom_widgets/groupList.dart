@@ -1,12 +1,11 @@
-import 'package:ematch/custom_widgets/groupCard.dart';
+import 'package:ematch/UserApp/custom_widgets/groupCard.dart';
 import 'package:flutter/material.dart';
 
 class GroupList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      
-       shrinkWrap: true,
+      shrinkWrap: true,
       itemCount: 4,
       itemBuilder: (context, index) => ListTile(
         // title: GroupCard(),

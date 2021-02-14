@@ -1,5 +1,5 @@
-import 'package:ematch/custom_widgets/eventList.dart';
-import 'package:ematch/custom_widgets/groupList.dart';
+import 'package:ematch/UserApp/custom_widgets/eventList.dart';
+import 'package:ematch/UserApp/custom_widgets/groupList.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

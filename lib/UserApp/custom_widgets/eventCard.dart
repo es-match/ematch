@@ -1,4 +1,4 @@
-import 'package:ematch/models/event_model.dart';
+import 'package:ematch/UserApp/models/event_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

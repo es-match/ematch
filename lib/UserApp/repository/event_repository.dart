@@ -1,4 +1,4 @@
-import 'package:ematch/models/event_model.dart';
+import 'package:ematch/UserApp/models/event_model.dart';
 
 class EventRepository {
   List<EventModel> getEvents() {

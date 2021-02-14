@@ -1,4 +1,4 @@
-import 'package:ematch/views/group/newGroup_page.dart';
+import 'package:ematch/UserApp/views/group/newGroup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_search_bar/simple_search_bar.dart';
 

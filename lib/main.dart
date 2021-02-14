@@ -1,5 +1,6 @@
-import 'package:ematch/views/login_page.dart';
-import 'package:ematch/views/main_page.dart';
+import 'package:ematch/TESTCONTROLWIDGETS/testpageviewer.dart';
+import 'package:ematch/UserApp/views/login_page.dart';
+import 'package:ematch/UserApp/views/main_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,12 +24,12 @@ class AppWidget extends StatelessWidget {
   // }
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'E.S.MATCH',
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-      ),
-      home: LoginPage(),
-      // home: MainPage(),
-    );
+        title: 'E.S.MATCH',
+        theme: ThemeData(
+          primarySwatch: Colors.deepOrange,
+        ),
+        // home: LoginPage(),
+        home: TestPageViewer() //MainPage(),
+        );
   }
 }
