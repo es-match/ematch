@@ -1,3 +1,4 @@
+import 'package:ematch/OwnerApp/views/mainPage/_ownerMainPage.dart';
 import 'package:ematch/UserApp/views/main_page.dart';
 import 'package:flutter/material.dart';
 
@@ -6,14 +7,14 @@ var ownerPageWidgets = getOwnerPageWidgetList();
 
 Map<String, Widget> getOwnerPageWidgetList() {
   Map _opwidgets = Map<String, Widget>();
-  _opwidgets["MainPage"] = MainPage();
+  _opwidgets["OwnerMainPage"] = OwnerMainPage();
 
   return _opwidgets;
 }
 
 Map<String, Widget> getUserPageWidgetList() {
   Map _upwidgets = Map<String, Widget>();
-  _upwidgets["MainPage"] = MainPage();
+  _upwidgets["UserMainPage"] = MainPage();
 
   return _upwidgets;
 }
