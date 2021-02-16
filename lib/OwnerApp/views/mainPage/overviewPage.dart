@@ -29,6 +29,9 @@ class _OverViewPageState extends State<OverViewPage> {
                     return ListTile(
                       title: Card(
                         child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black),
+                          ),
                           height: 100,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
