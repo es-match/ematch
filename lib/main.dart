@@ -3,10 +3,13 @@ import 'package:ematch/UserApp/views/login_page.dart';
 import 'package:ematch/UserApp/views/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 void main() {
   runApp(AppWidget());
 }
+
+
 
 class AppWidget extends StatelessWidget {
   @override
