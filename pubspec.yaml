@@ -37,6 +37,7 @@ dependencies:
   google_sign_in: ^4.5.3
   flutter_launcher_icons: "^0.8.0"
   simple_search_bar: ^0.1.7
+  form_field_validator: ^1.0.1
   
   
 dev_dependencies:
