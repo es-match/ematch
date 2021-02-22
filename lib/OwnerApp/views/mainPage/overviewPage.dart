@@ -1,5 +1,6 @@
-import 'package:ematch/OwnerApp/views/mainPage/model/locationModel.dart';
-import 'package:ematch/OwnerApp/views/mainPage/repository/locationRepository.dart';
+import 'package:ematch/OwnerApp/model/locationModel.dart';
+import 'package:ematch/OwnerApp/repository/locationRepository.dart';
+import 'package:ematch/OwnerApp/views/insertLocationPage.dart';
 import 'package:flutter/material.dart';
 
 LocationRepository repository = LocationRepository();
@@ -93,7 +94,12 @@ class _OverViewPageState extends State<OverViewPage> {
         Align(
           alignment: Alignment.bottomCenter,
           child: RaisedButton(
-            onPressed: () => print("x"),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InsertLocationPage(),
+              ),
+            ),
             child: Text("Adicionar Novo Local"),
           ),
         ),

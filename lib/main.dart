@@ -9,8 +9,6 @@ void main() {
   runApp(AppWidget());
 }
 
-
-
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class AppWidget extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(),
+        '/': (context) => TestPageViewer(),
         '/home': (context) => MainPage(),
       },
     );
