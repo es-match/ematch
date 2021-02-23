@@ -24,7 +24,8 @@ dependencies:
   http: ^0.12.2
   flutter:
     sdk: flutter
-    pull_to_refresh: ^1.6.3
+  
+  pull_to_refresh: ^1.6.3
 
   
 
