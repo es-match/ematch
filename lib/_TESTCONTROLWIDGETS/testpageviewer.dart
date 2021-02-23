@@ -1,5 +1,6 @@
-import 'package:ematch/OwnerApp/views/mainPage/_ownerMainPage.dart';
-import 'package:ematch/UserApp/views/main_page.dart';
+import 'package:ematch/App/view/OwnerViews/_ownerMainPage.dart';
+import 'package:ematch/App/view/UserViews/main_page.dart';
+
 import 'package:flutter/material.dart';
 
 var userPageWidgets = getUserPageWidgetList();
