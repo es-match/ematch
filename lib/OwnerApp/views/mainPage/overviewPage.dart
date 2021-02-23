@@ -1,6 +1,7 @@
 import 'package:ematch/OwnerApp/model/locationModel.dart';
 import 'package:ematch/OwnerApp/repository/locationRepository.dart';
-import 'package:ematch/OwnerApp/views/insertLocationPage.dart';
+import 'package:ematch/OwnerApp/views/mainPage/locationPage/editLocationPage.dart';
+import 'package:ematch/OwnerApp/views/mainPage/locationPage/insertLocationPage.dart';
 import 'package:flutter/material.dart';
 
 LocationRepository repository = LocationRepository();
@@ -17,6 +18,15 @@ class _OverViewPageState extends State<OverViewPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("OverviewPage"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              model = repository.getLocations();
+              setState(() {});
+            },
+          )
+        ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -49,40 +59,51 @@ class _OverViewPageState extends State<OverViewPage> {
             itemBuilder: (context, index) {
               String title = locationsList[index].locationName;
               return ListTile(
-                title: Card(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
+                title: InkWell(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditLocationPage(
+                        locationModel: locationsList[index],
+                      ),
                     ),
-                    height: 100,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: ClipOval(
-                                child: Container(
-                                  decoration: BoxDecoration(color: Colors.red),
+                  ),
+                  child: Card(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
+                      ),
+                      height: 100,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: ClipOval(
+                                  child: Container(
+                                    decoration:
+                                        BoxDecoration(color: Colors.red),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text(title),
-                                  Chip(label: Text("CHIP TEST"))
-                                ],
+                            Expanded(
+                              flex: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Text(title),
+                                    Chip(label: Text("CHIP TEST"))
+                                  ],
+                                ),
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

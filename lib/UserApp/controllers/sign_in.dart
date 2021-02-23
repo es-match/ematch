@@ -1,5 +1,5 @@
-import 'package:ematch/OwnerApp/views/mainPage/model/userModel.dart';
-import 'package:ematch/OwnerApp/views/mainPage/repository/UserRepository.dart';
+import 'package:ematch/OwnerApp/model/userModel.dart';
+import 'package:ematch/OwnerApp/repository/userRepository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
