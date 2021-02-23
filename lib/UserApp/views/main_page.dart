@@ -4,6 +4,7 @@ import 'package:ematch/UserApp/views/schedule_page.dart';
 import 'package:ematch/UserApp/views/search_group_page.dart';
 import 'package:ematch/UserApp/views/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:ematch/UserApp/controllers/sign_in.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: Colors.grey[900],
 
       appBar: AppBar(
-        title: Text('Inicio'),
+        title: Text('Ola, ' + my_shortname),
       ),
       body: Container(
         height: _height,

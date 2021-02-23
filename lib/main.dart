@@ -19,7 +19,7 @@ class AppWidget extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => TestPageViewer(),
+        '/': (context) => LoginPage(),
         '/home': (context) => MainPage(),
       },
     );
