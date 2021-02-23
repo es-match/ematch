@@ -7,7 +7,7 @@ class LocationModel {
   String number;
   String imageUrl;
   String geolocation;
-  Null createDate;
+  String createDate;
 
   LocationModel(
       {this.id,
