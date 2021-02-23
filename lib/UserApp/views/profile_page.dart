@@ -33,7 +33,7 @@ class ProfilePage extends StatelessWidget {
           children: <Widget>[
             CircleAvatar(
               backgroundImage: NetworkImage(
-                imageUrl,
+                my_imageurl,
               ),
               radius: 60,
               backgroundColor: Colors.transparent,
@@ -47,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                   color: Colors.black54),
             ),
             Text(
-              name,
+              my_name,
               style: TextStyle(
                   fontSize: 25,
                   color: Colors.black,
@@ -62,7 +62,7 @@ class ProfilePage extends StatelessWidget {
                   color: Colors.black54),
             ),
             Text(
-              email,
+              my_email,
               style: TextStyle(
                   fontSize: 25,
                   color: Colors.black,

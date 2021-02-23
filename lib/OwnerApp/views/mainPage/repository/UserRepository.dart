@@ -14,36 +14,57 @@ class UserRepository {
     return users;
   }
 
-  Future<UserModel> getUserByGoogleToken(String googleToken) async {
+  Future<UserModel> getUserById(String id) async {
     try {
-      Map<String, String> queryParams = {
-        'googleToken': googleToken,
-      };
-      String queryString = Uri(queryParameters: queryParams).query;
+      // Map<String, String> queryParams = {
+      //   'id': googleToken,
+      // };
+      // String queryString = Uri(queryParameters: queryParams).query;
 
-      var requestUrl = url + '?' + queryString;
+      var requestUrl = url + id;
 
       final response = await get(requestUrl);
-      Iterable l = json.decode(response.body);
-      List<UserModel> users =
-          List<UserModel>.from(l.map((model) => UserModel.fromJson(model)));
-      return users[0];
+      UserModel user = UserModel.fromJson(json.decode(response.body));
+      return user;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<UserModel> getUserByGoogleToken(String googleToken) async {
+    try {
+      // Map<String, String> queryParams = {
+      //   'googleToken': googleToken,
+      // };
+      // String queryString = Uri(queryParameters: queryParams).query;
+
+      var requestUrl = url + "googleToken/" + googleToken;
+
+      final response = await get(requestUrl);
+      UserModel user = UserModel.fromJson(json.decode(response.body));
+      return user;
     } catch (e) {
       return null;
     }
   }
 
   Future<UserModel> getUserByEmailToken(String emailToken) async {
-    Map<String, String> queryParams = {
-      'emailToken': emailToken,
-    };
-    String queryString = Uri(queryParameters: queryParams).query;
+    try {
+      // Map<String, String> queryParams = {
+      //   'emailToken': emailToken,
+      // };
+      // String queryString = Uri(queryParameters: queryParams).query;
 
-    var requestUrl = url + '?' + queryString;
+      var requestUrl = url + 'emailToken/' + emailToken;
 
-    final response = await get(requestUrl);
-    UserModel user = UserModel.fromJson(json.decode(response.body));
-    return user;
+      final response = await get(requestUrl);
+      UserModel user = UserModel.fromJson(json.decode(response.body));
+      // List<UserModel> users =
+      //     List<UserModel>.from(l.map((model) => UserModel.fromJson(model)));
+      return user;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<UserModel> insertUser(UserModel userModel) async {
@@ -58,7 +79,8 @@ class UserRepository {
       body: jsonUser,
       headers: headers,
     );
-    UserModel user = UserModel.fromJson(json.decode(jsonUser));
-    return user;
+    String user = json.decode(response.body);
+    UserModel model = await getUserById(user);
+    return model;
   }
 }

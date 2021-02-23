@@ -3,6 +3,7 @@
 import 'package:ematch/UserApp/controllers/sign_in.dart';
 import 'package:ematch/UserApp/custom_widgets/background_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 import 'main_page.dart';
@@ -105,23 +106,48 @@ class _LoginPageState extends State<LoginPage>
                       SizedBox(
                         height: 10,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(), labelText: "Email"),
-                        validator: MultiValidator([
-                          RequiredValidator(
-                              errorText: "This Field Is Required"),
-                          EmailValidator(errorText: "Invalid Email Address"),
-                        ]),
-                        onChanged: (val) {
-                          email = val;
-                        },
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[900],
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: TextFormField(
+                          style: TextStyle(
+                            color: Colors.deepOrange,
+                          ),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                const Radius.circular(8.0),
+                              ),
+                              borderSide: new BorderSide(
+                                color: Colors.deepOrange,
+                                width: 1.0,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.deepOrange, width: 1.0),
+                            ),
+                            labelText: "E-mail",
+                            labelStyle: TextStyle(
+                              color: Colors.deepOrange,
+                            ),
+                          ),
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: "Campo obrigatório"),
+                            EmailValidator(errorText: "E-mail Inválido"),
+                          ]),
+                          onChanged: (val) {
+                            email = val;
+                          },
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: Colors.grey[900],
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: TextFormField(
@@ -130,29 +156,29 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             obscureText: true,
                             decoration: InputDecoration(
-                                focusColor: Colors.white,
-                                fillColor: Colors.white,
-                                hoverColor: Colors.white,
-                                border: new OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(8.0),
-                                  ),
-                                  borderSide: new BorderSide(
-                                    color: Colors.white,
-                                    width: 1.0,
-                                  ),
+                              border: new OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  const Radius.circular(8.0),
                                 ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.deepOrange, width: 1.0),
+                                borderSide: new BorderSide(
+                                  color: Colors.deepOrange,
+                                  width: 1.0,
                                 ),
-                                labelText: "Password",
-                                labelStyle: TextStyle(color: Colors.white)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.deepOrange, width: 1.0),
+                              ),
+                              labelText: "Senha",
+                              labelStyle: TextStyle(
+                                color: Colors.deepOrange,
+                              ),
+                            ),
                             validator: MultiValidator([
                               RequiredValidator(
-                                  errorText: "Password Is Required"),
+                                  errorText: "É necessário inserir a senha"),
                               MinLengthValidator(6,
-                                  errorText: "Minimum 6 Characters Required"),
+                                  errorText: "Mínimo de 6 caractéres"),
                             ]),
                             onChanged: (val) {
                               password = val;
@@ -164,22 +190,45 @@ class _LoginPageState extends State<LoginPage>
                         visible: signupVisible,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          child: TextFormField(
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: "Name/NickName"),
-                            validator: MultiValidator([
-                              RequiredValidator(
-                                  errorText: "This Field Is Required"),
-                            ]),
-                            onChanged: (val) {
-                              name = val;
-                            },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[900],
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: TextFormField(
+                              style: TextStyle(
+                                color: Colors.deepOrange,
+                              ),
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    const Radius.circular(8.0),
+                                  ),
+                                  borderSide: new BorderSide(
+                                    color: Colors.deepOrange,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.deepOrange, width: 1.0),
+                                ),
+                                labelText: "Nome/Apelido",
+                                labelStyle: TextStyle(
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
+                              validator: MultiValidator([
+                                RequiredValidator(
+                                  errorText: "Campo Obrigatório",
+                                )
+                              ]),
+                              onChanged: (val) {
+                                name = val;
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       _createAccButton(),
                       _signInButton(),
@@ -252,15 +301,15 @@ class _LoginPageState extends State<LoginPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
-                Icons.login,
+                Icons.keyboard_return,
                 color: Colors.grey,
-                size: 15.0,
-                semanticLabel: 'Text to announce in accessibility modes',
+                size: 20.0,
+                semanticLabel: 'Volte para tela de log-in',
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  'Back to Sign In',
+                  'Voltar para Login',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.grey,
@@ -293,15 +342,15 @@ class _LoginPageState extends State<LoginPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
-                Icons.login,
+                Icons.person_add,
                 color: Colors.grey,
-                size: 15.0,
-                semanticLabel: 'Text to announce in accessibility modes',
+                size: 20.0,
+                semanticLabel: 'Crie um novo cadastro',
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(
-                  'Sign Up',
+                  'Cadastrar',
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.grey,
@@ -336,13 +385,13 @@ class _LoginPageState extends State<LoginPage>
                 Icon(
                   Icons.login,
                   color: Colors.grey,
-                  size: 35.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
+                  size: 30.0,
+                  semanticLabel: 'Crie uma nova conta',
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'Create Account',
+                    'Criar nova conta',
                     style: TextStyle(
                       fontSize: 30,
                       color: Colors.grey,
@@ -379,13 +428,13 @@ class _LoginPageState extends State<LoginPage>
                 Icon(
                   Icons.login,
                   color: Colors.grey,
-                  size: 35.0,
-                  semanticLabel: 'Text to announce in accessibility modes',
+                  size: 30.0,
+                  semanticLabel: 'Conectar com seu usuário',
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                    'Sign In',
+                    'Entrar',
                     style: TextStyle(
                       fontSize: 30,
                       color: Colors.grey,
@@ -434,13 +483,13 @@ class _LoginPageState extends State<LoginPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image(
-                    image: AssetImage("assets/google_logo.png"), height: 35.0),
+                    image: AssetImage("assets/google_logo.png"), height: 30.0),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 2),
                   child: Text(
-                    'Sign in with Google',
+                    'Entrar/Cadastrar com conta Google',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.grey,
                     ),
                   ),

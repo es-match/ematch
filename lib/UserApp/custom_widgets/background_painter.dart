@@ -7,13 +7,13 @@ import 'package:flutter/rendering.dart';
 class BackgroundPainter extends CustomPainter {
   BackgroundPainter({Animation<double> animation})
       : dOrangePaint = Paint()
-          ..color = Colors.deepOrange
+          ..color = Colors.deepOrange[600]
           ..style = PaintingStyle.fill,
         greyPaint = Paint()
-          ..color = Colors.grey[900]
+          ..color = Colors.grey[850]
           ..style = PaintingStyle.fill,
         orangePaint = Paint()
-          ..color = Colors.deepOrange[700]
+          ..color = Colors.black
           ..style = PaintingStyle.fill,
         liquidAnim = CurvedAnimation(
           curve: Curves.elasticOut,
