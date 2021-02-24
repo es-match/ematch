@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 UserRepository userRepository = UserRepository();
+
 String myShortname;
 String myName;
 String myEmail;
@@ -191,8 +192,7 @@ Future<bool> createOrGetUserInDb(
         userModel.imageUrl =
             'https://firebasestorage.googleapis.com/v0/b/esmatch-ce3c9.appspot.com/o/Default%20Images%2Fblank_user.png?alt=media&token=5b908d38-c462-44a0-b119-70b06b8b310c';
         userModel.role = 'Standard';
-        String userid = userRepository.insertUser(userModel).toString();
-        userModel = await userRepository.getUserById(userid);
+        userModel = await userRepository.insertUser(userModel);
       }
     }
 
