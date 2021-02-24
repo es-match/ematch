@@ -1,7 +1,7 @@
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:flutter/material.dart';
 
-import 'login_page.dart';
+import '../loginPage.dart';
 
 class ProfilePage extends StatelessWidget {
   @override

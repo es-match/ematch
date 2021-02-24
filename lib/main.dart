@@ -1,4 +1,5 @@
 import 'package:ematch/App/view/UserViews/main_page.dart';
+import 'package:ematch/App/view/loginPage.dart';
 import 'package:ematch/_TESTCONTROLWIDGETS/testpageviewer.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class AppWidget extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => TestPageViewer(),
+        '/': (context) => LoginPage(), //TestPageViewer
         '/home': (context) => MainPage(),
       },
     );
