@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:ematch/OwnerApp/model/userModel.dart';
+import 'package:ematch/App/model/userModel.dart';
 import 'package:http/http.dart';
 
 class UserRepository {

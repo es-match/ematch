@@ -1,10 +1,10 @@
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/view/UserViews/home/home_page.dart';
 import 'package:ematch/App/view/UserViews/group/groupPage.dart';
 import 'package:ematch/App/view/UserViews/profile_page.dart';
 import 'package:ematch/App/view/UserViews/schedule_page.dart';
 import 'package:ematch/App/view/UserViews/search_group_page.dart';
 import 'package:flutter/material.dart';
-import 'package:ematch/UserApp/controllers/sign_in.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: Colors.grey[900],
 
       appBar: AppBar(
-        title: Text('Ola, ' + my_shortname),
+        title: Text('Ola, ' + myShortname),
       ),
       body: Container(
         height: _height,
