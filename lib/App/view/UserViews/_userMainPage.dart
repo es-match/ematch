@@ -1,51 +1,62 @@
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/navigationPage.dart';
-import 'package:ematch/App/view/OwnerViews/overviewPage.dart';
-import 'package:ematch/App/view/OwnerViews/profilePage.dart';
-import 'package:ematch/App/view/OwnerViews/revenuePage.dart';
+import 'package:ematch/App/view/UserViews/home/home_page.dart';
+import 'package:ematch/App/view/UserViews/group/_groupPage.dart';
+import 'package:ematch/App/view/UserViews/profile_page.dart';
+import 'package:ematch/App/view/UserViews/schedule_page.dart';
+import 'package:ematch/App/view/UserViews/search_group_page.dart';
 import 'package:flutter/material.dart';
 
-import 'lastnewsPage.dart';
-
-class OwnerMainPage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   @override
-  _OwnerMainPageState createState() => _OwnerMainPageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _OwnerMainPageState extends State<OwnerMainPage> {
+class _MainPageState extends State<MainPage> {
   int _screenIndex = 0;
 
   final List<NavigationPage> _widgetPages = [
     NavigationPage(
-        widget: OverViewPage(),
+        widget: HomePage(),
         bottomNavItem: BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
           ),
-          label: 'Resumo',
+          label: 'Inicio',
         )),
     NavigationPage(
-        widget: RevenuePage(),
+        widget: SearchGroupPage(),
         bottomNavItem: BottomNavigationBarItem(
           icon: Icon(
             Icons.search,
           ),
-          label: 'Receita',
+          label: 'Buscar evento',
         )),
     NavigationPage(
-        widget: LastNewsPage(),
+        widget: SchedulePage(),
         bottomNavItem: BottomNavigationBarItem(
           icon: Icon(
-            Icons.notifications,
+            Icons.calendar_today,
           ),
-          label: 'Ultimas Noticias',
+          label: 'Agenda',
+        )),
+    NavigationPage(
+        widget: GroupPage(),
+        bottomNavItem: BottomNavigationBarItem(
+          icon: Icon(
+            Icons.group,
+          ),
+          label: 'Grupos',
         )),
     NavigationPage(
         widget: ProfilePage(),
         bottomNavItem: BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Resumo',
+          label: 'Perfil',
         )),
   ];
+
+  // final List<Widget> _bottomNavPages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +65,7 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
-        title: Text('Inicio'),
+        title: Text('Ola, ' + myShortname),
       ),
       body: Container(
         height: _height,
@@ -88,10 +99,3 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
     return _widgetPages.map((e) => e.bottomNavItem).toList();
   }
 }
-
-// class OwnerNavigationPages {
-//   final Widget widget;
-//   final BottomNavigationBarItem bottomNavItem;
-
-//   OwnerNavigationPages({this.widget, this.bottomNavItem});
-// }

@@ -1,41 +1,40 @@
 class GroupModel {
-  String userID;
-  String groupID;
+  String id;
   String groupName;
-  String sportID;
-  String sportDesc;
-  String description;
-  String groupPicture;
+  List<String> groupAdmins;
+  List<String> groupPending;
+  List<String> groupUser;
+  String imageUrl;
+  String userCreator;
 
   GroupModel(
-      {this.userID,
-      this.groupID,
+      {this.id,
       this.groupName,
-      this.sportID,
-      this.sportDesc,
-      this.description,
-      this.groupPicture});
+      this.groupAdmins,
+      this.groupPending,
+      this.groupUser,
+      this.imageUrl,
+      this.userCreator});
 
   GroupModel.fromJson(Map<String, dynamic> json) {
-    userID = json['userID'];
-    groupID = json['groupID'];
+    id = json['id'];
     groupName = json['groupName'];
-    sportID = json['sportID'];
-    sportDesc = json['sportDesc'];
-    description = json['description'];
-    groupPicture = json['groupPicture'];
+    groupAdmins = json['groupAdmins'].cast<String>();
+    groupPending = json['groupPending'].cast<String>();
+    groupUser = json['groupUser'].cast<String>();
+    imageUrl = json['imageUrl'];
+    userCreator = json['userCreator'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userID'] = this.userID;
-    data['groupID'] = this.groupID;
+    data['id'] = this.id;
     data['groupName'] = this.groupName;
-    data['sportID'] = this.sportID;
-    data['sportDesc'] = this.sportDesc;
-    data['description'] = this.description;
-    data['groupPicture'] = this.groupPicture;
+    data['groupAdmins'] = this.groupAdmins;
+    data['groupPending'] = this.groupPending;
+    data['groupUser'] = this.groupUser;
+    data['imageUrl'] = this.imageUrl;
+    data['userCreator'] = this.userCreator;
     return data;
   }
 }
-

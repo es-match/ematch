@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-import 'UserViews/main_page.dart';
+import 'UserViews/_userMainPage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
