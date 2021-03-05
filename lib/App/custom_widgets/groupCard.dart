@@ -18,6 +18,14 @@ class _GroupCardState extends State<GroupCard> {
         children: [
           Container(
             height: 100,
+            width: MediaQuery.of(context).size.width,
+            child: Image.network(
+              widget.group.imageUrl,
+              fit: BoxFit.none,
+            ),
+          ),
+          Container(
+            height: 100,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Align(

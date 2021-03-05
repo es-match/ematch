@@ -2,6 +2,7 @@ import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/groupCard.dart';
 import 'package:ematch/App/model/groupModel.dart';
+import 'package:ematch/App/view/UserViews/group/groupDetailsPage.dart';
 import 'package:ematch/App/view/UserViews/group/newGroup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_search_bar/simple_search_bar.dart';
@@ -72,8 +73,16 @@ class _GroupPageState extends State<GroupPage> {
             itemCount: groupList.length,
             itemBuilder: (context, index) {
               // String groupName = groupList[index].groupName;
+              GroupModel currentGroup = groupList[index];
               return ListTile(
-                title: GroupCard(group: groupList[index]),
+                title: InkWell(
+                    onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  GroupDetailsPage(group: currentGroup)),
+                        ),
+                    child: GroupCard(group: currentGroup)),
               );
             },
           ),
