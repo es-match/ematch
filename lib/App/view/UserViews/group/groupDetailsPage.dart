@@ -1,4 +1,5 @@
 import 'package:ematch/App/model/groupModel.dart';
+import 'package:ematch/App/view/UserViews/eventPages/insertEventPage.dart';
 import 'package:flutter/material.dart';
 
 class GroupDetailsPage extends StatefulWidget {
@@ -163,15 +164,20 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width,
+          // ignore: deprecated_member_use
           child: RaisedButton(
-              child: Text('Agendar uma Nova Partida'), onPressed: () => {}
-              //  Navigator.push(
-              // context,
-              // MaterialPageRoute(builder: (context) => ()),
-              ),
+            child: Text('Agendar Novo Evento'),
+            onPressed: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => InsertEventPage()),
+              )
+            },
+          ),
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width,
+          // ignore: deprecated_member_use
           child: RaisedButton(
               child: Text('Ver Participantes do Grupo'), onPressed: () => {}),
         ),

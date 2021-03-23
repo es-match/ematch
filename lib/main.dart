@@ -1,10 +1,11 @@
 import 'package:ematch/App/view/UserViews/_userMainPage.dart';
 import 'package:ematch/App/view/loginPage.dart';
-import 'package:ematch/_TESTCONTROLWIDGETS/testpageviewer.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:ematch/_TESTCONTROLWIDGETS/testpageviewer.dart';
 
 void main() {
-  runApp(AppWidget());
+  initializeDateFormatting().then((_) => runApp(AppWidget()));
 }
 
 class AppWidget extends StatelessWidget {

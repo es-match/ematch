@@ -37,6 +37,7 @@ class TestPageViewer extends StatelessWidget {
                   itemBuilder: (context, index) {
                     String key = ownerPageWidgets.keys.elementAt(index);
                     return ListTile(
+                      // ignore: deprecated_member_use
                       title: RaisedButton(
                         child: Text('$key'),
                         onPressed: () => Navigator.push(
@@ -70,6 +71,7 @@ class UserPageListView extends StatelessWidget {
         itemBuilder: (context, index) {
           String key = userPageWidgets.keys.elementAt(index);
           return ListTile(
+            // ignore: deprecated_member_use
             title: RaisedButton(
               child: Text('$key'),
               onPressed: () => Navigator.push(

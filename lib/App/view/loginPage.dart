@@ -285,6 +285,7 @@ class _LoginPageState extends State<LoginPage>
   Widget _signInModeButton() {
     return Visibility(
       visible: signupVisible,
+      // ignore: deprecated_member_use
       child: RaisedButton(
         color: Colors.black26,
         splashColor: Colors.white,
@@ -326,6 +327,7 @@ class _LoginPageState extends State<LoginPage>
   Widget _signUpModeButton() {
     return Visibility(
       visible: !signupVisible,
+      // ignore: deprecated_member_use
       child: RaisedButton(
         color: Colors.black26,
         splashColor: Colors.white,
@@ -369,6 +371,7 @@ class _LoginPageState extends State<LoginPage>
       visible: signupVisible,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0),
+        // ignore: deprecated_member_use
         child: RaisedButton(
           color: Colors.black26,
           splashColor: Colors.white,
@@ -411,6 +414,7 @@ class _LoginPageState extends State<LoginPage>
       visible: !signupVisible,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0),
+        // ignore: deprecated_member_use
         child: OutlineButton(
           splashColor: Colors.grey,
           onPressed: login,
@@ -454,6 +458,7 @@ class _LoginPageState extends State<LoginPage>
       visible: !signupVisible,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15.0),
+        // ignore: deprecated_member_use
         child: OutlineButton(
           splashColor: Colors.grey,
           onPressed: () {

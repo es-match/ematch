@@ -79,6 +79,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
                       )),
                   Align(
                     alignment: Alignment.bottomCenter,
+                    // ignore: deprecated_member_use
                     child: RaisedButton(
                       onPressed: () => {
                         (_name.text.isEmpty ||
@@ -86,6 +87,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
                                 _cidade.text.isEmpty ||
                                 _endereco.text.isEmpty ||
                                 _numero.text.isEmpty)
+                            // ignore: deprecated_member_use
                             ? Scaffold.of(context).showSnackBar(SnackBar(
                                 content:
                                     Text('Por favor preencha todos os campos'),

@@ -150,11 +150,11 @@ showErrDialog(BuildContext context, String err) {
   FocusScope.of(context).requestFocus(new FocusNode());
   return showDialog(
     context: context,
-    child: AlertDialog(
+    builder: (context) => AlertDialog(
       title: Text("Error"),
       content: Text(err),
       actions: <Widget>[
-        OutlineButton(
+        OutlinedButton(
           onPressed: () {
             Navigator.pop(context);
           },

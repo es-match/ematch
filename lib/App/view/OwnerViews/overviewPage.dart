@@ -114,6 +114,7 @@ class _OverViewPageState extends State<OverViewPage> {
         ),
         Align(
           alignment: Alignment.bottomCenter,
+          // ignore: deprecated_member_use
           child: RaisedButton(
             onPressed: () => Navigator.push(
               context,

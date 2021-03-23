@@ -68,6 +68,7 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
                     )),
                 Align(
                   alignment: Alignment.bottomCenter,
+                  // ignore: deprecated_member_use
                   child: RaisedButton(
                     onPressed: () => locationController.insertLocation(),
                     child: Text("Criar espaço esportivo"),

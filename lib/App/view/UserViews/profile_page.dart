@@ -69,6 +69,7 @@ class ProfilePage extends StatelessWidget {
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 40),
+            // ignore: deprecated_member_use
             RaisedButton(
               onPressed: () {
                 signOutUser();
