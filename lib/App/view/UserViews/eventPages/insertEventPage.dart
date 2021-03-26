@@ -7,7 +7,6 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:haversine_distance/haversine_distance.dart';
 import 'dart:math' as math;
 // import 'package:table_calendar/table_calendar.dart';
-// import 'package:geocoder/geocoder.dart';
 
 class InsertEventPage extends StatefulWidget {
   @override
@@ -28,65 +27,58 @@ class _InsertEventPageState extends State<InsertEventPage> {
 
   //Usado para calculo de distancia no mapa
   final haversineDistance = HaversineDistance();
+  Future<void> _futureGetGeoLocation;
+  Future<void> _futureGetLocationDistances;
 
-  Future<void> _future;
   LatLng _initialPosition;
   double _circleRadius = 0;
   Set<Marker> markers = Set();
   @override
   void initState() {
     super.initState();
-
-    //PEGA LOCALIZACAO ATUAL DO USUARIO
-    // _future = _getGeolocation().then((value) => _getLocationDistances());
-    _getGeolocation();
-    _future = _getLocationDistances();
+    _currentSliderValue = 1;
+    _circleRadius = 1000;
+    _futureGetGeoLocation = _getGeolocation();
+    _futureGetLocationDistances = _getLocationDistances();
+    setMarkers(null);
 
     //HORARIOS
     dropdownValue = hours[0];
   }
 
   Future<List<LocationModel>> _getLocationDistances() async {
-    // _getGeolocation();
     return locationController.getLocations();
   }
 
-  void _getGeolocation() async {
+  _getGeolocation() async {
     // final query = "Rua viktor augusto stroka 499 sorocaba";
     // var addresses = await Geocoder.local.findAddressesFromQuery(query);
     // var first = addresses.first;
-    await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true)
-        .then((Position position) {
-      setState(() {
-        // _initialPosition = LatLng(position.latitude, position.longitude);
-        // print(first.coordinates);
-        // _initialPosition = LatLng(-23.505352, -47.453409);
-        _initialPosition =
-            // LatLng(first.coordinates.latitude, first.coordinates.longitude);
-            LatLng(position.latitude, position.longitude);
-      });
-    });
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+        forceAndroidLocationManager: true);
+
+    _initialPosition = LatLng(position.latitude, position.longitude);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Novo Evento"),
-      ),
-      body: FutureBuilder(
-        future: _future,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            setMarkers(snapshot.data);
-            return buildBody();
-          } else
-            return Center(child: CircularProgressIndicator());
-        },
-      ),
-    );
+        appBar: AppBar(
+          title: Text("Novo Evento"),
+        ),
+        // ignore: missing_required_param
+        body: FutureBuilder(
+          future:
+              Future.wait([_futureGetGeoLocation, _futureGetLocationDistances]),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              setMarkers(snapshot.data[1]);
+              return buildBody();
+            } else
+              return Center(child: CircularProgressIndicator());
+          },
+        ));
   }
 
   Padding buildBody() {
@@ -263,7 +255,8 @@ class _InsertEventPageState extends State<InsertEventPage> {
     Location lB = Location(posB.latitude, -posB.longitude);
 
     double value = haversineDistance.haversine(lA, lB, Unit.METER);
-    return value <= target ? 0.5 : 0;
+    double result = value <= target ? 0.5 : 0;
+    return result;
   }
 
   double getZoomLevel(double circleRadius) {
@@ -284,9 +277,6 @@ class _InsertEventPageState extends State<InsertEventPage> {
       onTap: () {},
     ));
 
-    // if (_initialPosition != null) {
-    //   await _getGeolocation();
-    // }
     data.forEach((model) {
       //TODO: VERIFICAR ERRO
       try {
