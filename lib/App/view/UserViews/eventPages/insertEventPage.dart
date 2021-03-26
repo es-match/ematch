@@ -1,10 +1,13 @@
+import 'package:ematch/App/controller/locationController.dart';
+import 'package:ematch/App/model/locationModel.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:haversine_distance/haversine_distance.dart';
-import 'package:geocoder/geocoder.dart';
 import 'dart:math' as math;
+// import 'package:table_calendar/table_calendar.dart';
+// import 'package:geocoder/geocoder.dart';
 
 class InsertEventPage extends StatefulWidget {
   @override
@@ -17,7 +20,8 @@ class _InsertEventPageState extends State<InsertEventPage> {
   List<String> hours = ["01:00 - 02:00", "02:00 - 03:00"];
 
   GoogleMapController googleMapController;
-  CalendarController _calendarController = CalendarController();
+  LocationController locationController = LocationController();
+
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
@@ -26,30 +30,43 @@ class _InsertEventPageState extends State<InsertEventPage> {
   final haversineDistance = HaversineDistance();
 
   Future<void> _future;
-
   LatLng _initialPosition;
   double _circleRadius = 0;
+  Set<Marker> markers = Set();
   @override
   void initState() {
     super.initState();
 
     //PEGA LOCALIZACAO ATUAL DO USUARIO
-    _future = _getGeolocation();
+    // _future = _getGeolocation().then((value) => _getLocationDistances());
+    _getGeolocation();
+    _future = _getLocationDistances();
 
     //HORARIOS
     dropdownValue = hours[0];
   }
 
-  Future<void> _getGeolocation() async {
-    final query = "Rua viktor augusto stroka 499 sorocaba";
-    var addresses = await Geocoder.local.findAddressesFromQuery(query);
-    var first = addresses.first;
-    setState(() {
-      // _initialPosition = LatLng(position.latitude, position.longitude);
-      print(first.coordinates);
-      // _initialPosition = LatLng(-23.505352, -47.453409);
-      _initialPosition =
-          LatLng(first.coordinates.latitude, first.coordinates.longitude);
+  Future<List<LocationModel>> _getLocationDistances() async {
+    // _getGeolocation();
+    return locationController.getLocations();
+  }
+
+  void _getGeolocation() async {
+    // final query = "Rua viktor augusto stroka 499 sorocaba";
+    // var addresses = await Geocoder.local.findAddressesFromQuery(query);
+    // var first = addresses.first;
+    await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(() {
+        // _initialPosition = LatLng(position.latitude, position.longitude);
+        // print(first.coordinates);
+        // _initialPosition = LatLng(-23.505352, -47.453409);
+        _initialPosition =
+            // LatLng(first.coordinates.latitude, first.coordinates.longitude);
+            LatLng(position.latitude, position.longitude);
+      });
     });
   }
 
@@ -62,9 +79,10 @@ class _InsertEventPageState extends State<InsertEventPage> {
       body: FutureBuilder(
         future: _future,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done)
+          if (snapshot.connectionState == ConnectionState.done) {
+            setMarkers(snapshot.data);
             return buildBody();
-          else
+          } else
             return Center(child: CircularProgressIndicator());
         },
       ),
@@ -97,17 +115,17 @@ class _InsertEventPageState extends State<InsertEventPage> {
     );
   }
 
-  TableCalendar buildCalendar() {
-    return TableCalendar(
-      availableCalendarFormats: {
-        CalendarFormat.month: 'Mensal',
-        CalendarFormat.twoWeeks: '2 Semanas',
-        CalendarFormat.week: 'Semanal',
-      },
-      calendarController: _calendarController,
-      locale: 'pt_BR',
-    );
-  }
+  // TableCalendar buildCalendar() {
+  //   return TableCalendar(
+  //     availableCalendarFormats: {
+  //       CalendarFormat.month: 'Mensal',
+  //       CalendarFormat.twoWeeks: '2 Semanas',
+  //       CalendarFormat.week: 'Semanal',
+  //     },
+  //     calendarController: _calendarController,
+  //     locale: 'pt_BR',
+  //   );
+  // }
 
   DropdownButton<String> buildHourDropDownButton() {
     return DropdownButton(
@@ -192,60 +210,7 @@ class _InsertEventPageState extends State<InsertEventPage> {
       zoomGesturesEnabled: false,
       mapType: MapType.normal,
       initialCameraPosition: CameraPosition(target: _initialPosition, zoom: 14),
-      markers: {
-        //MARKER PRINCIPAL
-        Marker(
-          markerId: MarkerId(index.toString()),
-          position: _initialPosition,
-          onTap: () {},
-        ),
-
-        Marker(
-          markerId: MarkerId('$index aux1'),
-          position: LatLng(-23.496501, -47.459765),
-          alpha: locationInRange(
-              _initialPosition, LatLng(-23.496501, -47.459765), _circleRadius),
-        ),
-
-        Marker(
-          markerId: MarkerId('$index aux2'),
-          position: LatLng(-23.492987, -47.463646),
-          alpha: locationInRange(
-              _initialPosition, LatLng(-23.492987, -47.463646), _circleRadius),
-        ),
-
-        Marker(
-          markerId: MarkerId('$index aux3'),
-          position: LatLng(-23.504725, -47.463079),
-          alpha: locationInRange(
-              _initialPosition, LatLng(-23.504725, -47.463079), _circleRadius),
-        ),
-        Marker(
-          markerId: MarkerId('$index aux4'),
-          position: LatLng(-23.505139, -47.455593),
-          alpha: locationInRange(
-              _initialPosition, LatLng(-23.505139, -47.455593), _circleRadius),
-        ),
-
-        Marker(
-          markerId: MarkerId('$index aux5'),
-          position: LatLng(-23.519244, -47.438434),
-          alpha: locationInRange(
-              _initialPosition, LatLng(-23.519244, -47.438434), _circleRadius),
-        ),
-        Marker(
-          markerId: MarkerId('$index aux6'),
-          position: LatLng(-23.544338, -47.505966),
-          alpha: locationInRange(
-              _initialPosition, LatLng(-23.544338, -47.505966), _circleRadius),
-        ),
-        Marker(
-          markerId: MarkerId('$index aux7'),
-          position: LatLng(-23.434137, -47.336185),
-          alpha: locationInRange(
-              _initialPosition, LatLng(-23.434137, -47.336185), _circleRadius),
-        ),
-      },
+      markers: markers,
       circles: {
         Circle(
             circleId: CircleId(index.toString()),
@@ -308,5 +273,86 @@ class _InsertEventPageState extends State<InsertEventPage> {
     zoomLevel = (16 - math.log(scale) / math.log(2));
 
     return zoomLevel;
+  }
+
+  setMarkers(List<LocationModel> data) async {
+    //ADICIONA POSICAO ATUAL
+    markers.add(//MARKER PRINCIPAL
+        Marker(
+      markerId: MarkerId("CURRENTPOSITION"),
+      position: _initialPosition,
+      onTap: () {},
+    ));
+
+    // if (_initialPosition != null) {
+    //   await _getGeolocation();
+    // }
+    data.forEach((model) {
+      //TODO: VERIFICAR ERRO
+      try {
+        LatLng modelLocation =
+            LatLng(model.geolocation.dLatitude, model.geolocation.dLongitude);
+        markers.add(
+          Marker(
+            markerId: MarkerId(model.id),
+            position: modelLocation,
+            alpha:
+                locationInRange(_initialPosition, modelLocation, _circleRadius),
+          ),
+        );
+      } catch (Exception) {
+        print("error");
+      }
+    });
+
+    // markers.addAll([
+    // Marker(
+    //   markerId: MarkerId('$index aux1'),
+    //   position: LatLng(-23.496501, -47.459765),
+    //   alpha: locationInRange(
+    //       _initialPosition, LatLng(-23.496501, -47.459765), _circleRadius),
+    // ),
+
+    // Marker(
+    //   markerId: MarkerId('$index aux2'),
+    //   position: LatLng(-23.492987, -47.463646),
+    //   alpha: locationInRange(
+    //       _initialPosition, LatLng(-23.492987, -47.463646), _circleRadius),
+    // ),
+
+    // Marker(
+    //   markerId: MarkerId('$index aux3'),
+    //   position: LatLng(-23.504725, -47.463079),
+    //   alpha: locationInRange(
+    //       _initialPosition, LatLng(-23.504725, -47.463079), _circleRadius),
+    // ),
+
+    //NAO SETADOS LOCALIZACAO NO FIREBASE
+    // Marker(
+    //   markerId: MarkerId('$index aux4'),
+    //   position: LatLng(-23.505139, -47.455593),
+    //   alpha: locationInRange(
+    //       _initialPosition, LatLng(-23.505139, -47.455593), _circleRadius),
+    // ),
+
+    // Marker(
+    //   markerId: MarkerId('$index aux5'),
+    //   position: LatLng(-23.519244, -47.438434),
+    //   alpha: locationInRange(
+    //       _initialPosition, LatLng(-23.519244, -47.438434), _circleRadius),
+    // ),
+    // Marker(
+    //   markerId: MarkerId('$index aux6'),
+    //   position: LatLng(-23.544338, -47.505966),
+    //   alpha: locationInRange(
+    //       _initialPosition, LatLng(-23.544338, -47.505966), _circleRadius),
+    // ),
+    // Marker(
+    //   markerId: MarkerId('$index aux7'),
+    //   position: LatLng(-23.434137, -47.336185),
+    //   alpha: locationInRange(
+    //       _initialPosition, LatLng(-23.434137, -47.336185), _circleRadius),
+    // )
+    // ]);
   }
 }

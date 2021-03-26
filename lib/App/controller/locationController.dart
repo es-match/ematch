@@ -1,3 +1,4 @@
+import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/repository/locationRepository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -32,5 +33,9 @@ class LocationController {
         city: this.city.text,
         address: this.address.text,
         number: this.number.text);
+  }
+
+  Future<List<LocationModel>> getLocations() {
+    return repository.getLocations();
   }
 }
