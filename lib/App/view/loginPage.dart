@@ -488,11 +488,11 @@ class _LoginPageState extends State<LoginPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image(
-                    image: AssetImage("assets/google_logo.png"), height: 30.0),
+                    image: AssetImage("assets/google_logo.png"), height: 25.0),
                 Padding(
                   padding: const EdgeInsets.only(left: 2),
                   child: Text(
-                    'Entrar/Cadastrar com conta Google',
+                    'Entrar com Google',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
