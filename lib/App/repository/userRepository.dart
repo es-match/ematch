@@ -16,11 +16,6 @@ class UserRepository {
 
   Future<UserModel> getUserById(String id) async {
     try {
-      // Map<String, String> queryParams = {
-      //   'id': googleToken,
-      // };
-      // String queryString = Uri(queryParameters: queryParams).query;
-
       var requestUrl = url + id;
 
       final response = await get(requestUrl);
@@ -33,11 +28,6 @@ class UserRepository {
 
   Future<UserModel> getUserByGoogleToken(String googleToken) async {
     try {
-      // Map<String, String> queryParams = {
-      //   'googleToken': googleToken,
-      // };
-      // String queryString = Uri(queryParameters: queryParams).query;
-
       var requestUrl = url + "googleToken/" + googleToken;
 
       final response = await get(requestUrl);
@@ -82,5 +72,16 @@ class UserRepository {
     String user = json.decode(response.body);
     UserModel model = await getUserById(user);
     return model;
+  }
+
+  Future<List<UserModel>> getUserByList(List<String> userIDList) async {
+    final response = await get(url);
+    Iterable l = json.decode(response.body);
+    List<UserModel> users = List<UserModel>.from(l.map((model) {
+      if (userIDList.contains(UserModel.fromJson(model).id)) {
+        return UserModel.fromJson(model);
+      }
+    }));
+    return users;
   }
 }

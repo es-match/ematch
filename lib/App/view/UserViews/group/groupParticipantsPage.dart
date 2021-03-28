@@ -19,21 +19,16 @@ class _GroupParticipantsPageState extends State<GroupParticipantsPage> {
   // List<String> _adminList;
   List<String> _userList;
   Future<List<UserModel>> getUsersByListIDs;
-  List<UserModel> groupUsers;
+  List<UserModel> groupUsers = [];
 
   @override
   void initState() {
-    
     super.initState();
 
     // _pendingList = widget.pendingList;
     // _adminList = widget.adminList;
     _userList = widget.userList;
-    getUsersByListIDs = _getusersByListIDs();
-  }
-
-  Future<List<UserModel>> _getusersByListIDs() async {
-    return await _controller.getUsersByListIDs(_userList);
+    getUsersByListIDs = _controller.getUsersByListIDs(_userList);
   }
 
   @override
@@ -45,9 +40,13 @@ class _GroupParticipantsPageState extends State<GroupParticipantsPage> {
       body: FutureBuilder(
         future: getUsersByListIDs,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
-            groupUsers = snapshot.data[0];
+          if (snapshot.connectionState == ConnectionState.done) {
+            for (UserModel u in snapshot.data) {
+              if (u != null) {
+                groupUsers.add(u);
+              }
+            }
+            // groupUsers = snapshot.data;
             return buildBody();
           } else {
             return Center(child: CircularProgressIndicator());
