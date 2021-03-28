@@ -7,9 +7,6 @@ class EventController {
 
   int eventCount;
 
-  // TextEditingController _titulo;
-  // TextEditingController _descricao;
-
   Future<List<EventModel>> getEventsByGroupID(String groupID) {
     return _repository.getEventsByGroupID(groupID);
   }

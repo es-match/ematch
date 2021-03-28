@@ -1,4 +1,4 @@
-import 'package:ematch/App/controller/event_controller.dart';
+import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/custom_widgets/eventCard.dart';
 import 'package:flutter/material.dart';
 

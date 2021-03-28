@@ -1,7 +1,8 @@
-import 'package:ematch/App/controller/event_controller.dart';
+import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/view/UserViews/eventPages/insertEventPage.dart';
+import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -222,7 +223,18 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           width: MediaQuery.of(context).size.width,
           // ignore: deprecated_member_use
           child: RaisedButton(
-              child: Text('Ver Participantes do Grupo'), onPressed: () => {}),
+            child: Text('Ver Participantes do Grupo'),
+            onPressed: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GroupParticipantsPage(
+                        adminList: widget.group.groupAdmins,
+                        pendingList: widget.group.groupPending,
+                        userList: widget.group.groupUser)),
+              ),
+            },
+          ),
         ),
       ],
     );
