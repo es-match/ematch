@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage>
                     children: [
                       Image(
                           image: AssetImage("assets/logo3esmatch.png"),
-                          height: 120.0),
+                          height: 100.0),
                       SizedBox(
                         height: 10,
                       ),
@@ -237,6 +237,20 @@ class _LoginPageState extends State<LoginPage>
                       _signUpModeButton(),
                     ],
                   ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                'Quer registrar seu espaço esportivo? Contate-nos pelo e-mail: esmatchar@gmail.com',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
                 ),
               ),
             ),
