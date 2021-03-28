@@ -7,4 +7,8 @@ class GroupController {
   Future<List<GroupModel>> getGroupsByUserID(String userID) {
     return repository.getGroupsByUserID(userID);
   }
+
+  Future<List<GroupModel>> getGroups() {
+    return repository.getGroups();
+  }
 }
