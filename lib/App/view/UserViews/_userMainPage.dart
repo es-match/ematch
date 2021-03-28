@@ -4,7 +4,7 @@ import 'package:ematch/App/view/UserViews/home/home_page.dart';
 import 'package:ematch/App/view/UserViews/group/_groupPage.dart';
 import 'package:ematch/App/view/UserViews/profile_page.dart';
 import 'package:ematch/App/view/UserViews/schedule_page.dart';
-import 'package:ematch/App/view/UserViews/search_group_page.dart';
+import 'package:ematch/App/view/UserViews/searchGroupPage.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {

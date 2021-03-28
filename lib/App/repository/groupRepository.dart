@@ -11,8 +11,17 @@ class GroupRepository {
     String path = "$url/byUser/$userID";
     final response = await get(path);
     Iterable l = json.decode(response.body);
-    List<GroupModel> locations =
+    List<GroupModel> groups =
         List<GroupModel>.from(l.map((model) => GroupModel.fromJson(model)));
-    return locations;
+    return groups;
+  }
+
+  Future<List<GroupModel>> getGroups() async {
+    String path = "$url";
+    final response = await get(path);
+    Iterable l = json.decode(response.body);
+    List<GroupModel> groups =
+        List<GroupModel>.from(l.map((model) => GroupModel.fromJson(model)));
+    return groups;
   }
 }
