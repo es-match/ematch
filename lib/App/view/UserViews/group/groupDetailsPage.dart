@@ -70,7 +70,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                     ),
                     child: ListView.builder(
                       // shrinkWrap: true,
-                      itemCount: events.length,
+                      itemCount: events == null ? 0 : events.length,
                       itemBuilder: (context, index) {
                         EventModel currEvent = events[index];
                         var eventName = currEvent.eventName;

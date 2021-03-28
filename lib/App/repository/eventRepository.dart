@@ -12,10 +12,11 @@ class EventRepository {
     final response = await get(path);
     if (response.body.toUpperCase().contains("NOT FOUND")) {
       return null;
+    } else {
+      Iterable l = json.decode(response.body);
+      List<EventModel> events =
+          List<EventModel>.from(l.map((model) => EventModel.fromJson(model)));
+      return events;
     }
-    Iterable l = json.decode(response.body);
-    List<EventModel> events =
-        List<EventModel>.from(l.map((model) => EventModel.fromJson(model)));
-    return events;
   }
 }

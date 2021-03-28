@@ -23,13 +23,17 @@ class _GroupParticipantsPageState extends State<GroupParticipantsPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    
     super.initState();
 
     // _pendingList = widget.pendingList;
     // _adminList = widget.adminList;
     _userList = widget.userList;
-    getUsersByListIDs = _controller.getUsersByListIDs(_userList);
+    getUsersByListIDs = _getusersByListIDs();
+  }
+
+  Future<List<UserModel>> _getusersByListIDs() async {
+    return await _controller.getUsersByListIDs(_userList);
   }
 
   @override
@@ -39,7 +43,7 @@ class _GroupParticipantsPageState extends State<GroupParticipantsPage> {
         title: Text("Participantes do Grupo"),
       ),
       body: FutureBuilder(
-        future: Future.wait([getUsersByListIDs]),
+        future: getUsersByListIDs,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
