@@ -1,45 +1,87 @@
+import 'package:ematch/App/controller/event_controller.dart';
+import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/view/UserViews/eventPages/insertEventPage.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class GroupDetailsPage extends StatefulWidget {
   final GroupModel group;
 
-  const GroupDetailsPage({this.group});
+  GroupDetailsPage({this.group});
 
   @override
   _GroupDetailsPageState createState() => _GroupDetailsPageState();
 }
 
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
+  EventController eventController = EventController();
+  Future<List<EventModel>> _getEventsByGroupID;
+  List<EventModel> events;
+
+  @override
+  void initState() {
+    super.initState();
+    _getEventsByGroupID = eventController.getEventsByGroupID(widget.group.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          buildTopImageWidget(context),
-          buildDescription(),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(bottom: 1, left: 8, right: 8, top: 3),
-              child: Column(
-                children: [
-                  Text("Próximas Partidas"),
-                  Flexible(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                        ),
+      appBar: AppBar(
+        title: Text("Informações do Grupo"),
+      ),
+      body: FutureBuilder(
+        future: Future.wait([_getEventsByGroupID]),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            events = snapshot.data[0];
+            return buildBody(context);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      bottomNavigationBar: buildBottomButtons(context),
+    );
+  }
+
+  Column buildBody(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        buildTopImageWidget(context),
+        buildDescription(),
+        Expanded(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(bottom: 1, left: 8, right: 8, top: 3),
+            child: Column(
+              children: [
+                Text("Próximos Eventos"),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
                       ),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 10,
-                        itemBuilder: (context, index) => ListTile(
+                    ),
+                    child: ListView.builder(
+                      // shrinkWrap: true,
+                      itemCount: events.length,
+                      itemBuilder: (context, index) {
+                        EventModel currEvent = events[index];
+                        var eventName = currEvent.eventName;
+                        var startDay = DateFormat("dd/MM")
+                            .format(DateTime.parse(currEvent.startDate));
+                        var endDay = DateFormat("dd/MM")
+                            .format(DateTime.parse(currEvent.endDate));
+                        var startTime = DateFormat("HH:mm")
+                            .format(DateTime.parse(currEvent.startDate));
+                        var endTime = DateFormat("HH:mm")
+                            .format(DateTime.parse(currEvent.endDate));
+                        return ListTile(
                           title: Container(
                             height: 80,
                             width: MediaQuery.of(context).size.width,
@@ -65,14 +107,15 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                                                 children: [
                                                   Icon(Icons
                                                       .calendar_today_outlined),
-                                                  Text("08/12, 19:00 - 21:00")
+                                                  Text(
+                                                      "$startDay, $startTime - $endTime")
                                                 ],
                                               ),
                                               Align(
                                                   alignment:
                                                       Alignment.centerLeft,
                                                   child: Text(
-                                                      "Paintball World - 5 km")),
+                                                      "$eventName - 5 km")),
                                             ],
                                           )),
                                       Expanded(
@@ -91,17 +134,16 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                                   ),
                                 )),
                           ),
-                        ),
-                      ),
+                        );
+                      },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          )
-        ],
-      ),
-      bottomNavigationBar: buildBottomButtons(context),
+          ),
+        )
+      ],
     );
   }
 
@@ -113,6 +155,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
         children: [
           Text("Descrição"),
           TextField(
+            enabled: false,
             textInputAction: TextInputAction.done,
             maxLines: 5,
             decoration: InputDecoration(

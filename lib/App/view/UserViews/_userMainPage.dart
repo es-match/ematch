@@ -8,7 +8,7 @@ import 'package:ematch/App/view/UserViews/search_group_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
-  @override
+  @override 
   _MainPageState createState() => _MainPageState();
 }
 
@@ -17,7 +17,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<NavigationPage> _widgetPages = [
     NavigationPage(
-        widget: HomePage(),
+        widget: HomePage(name: myShortname),
         bottomNavItem: BottomNavigationBarItem(
           icon: Icon(
             Icons.home,
@@ -30,7 +30,7 @@ class _MainPageState extends State<MainPage> {
           icon: Icon(
             Icons.search,
           ),
-          label: 'Buscar evento',
+          label: 'Buscar Eventos',
         )),
     NavigationPage(
         widget: SchedulePage(),
@@ -64,9 +64,9 @@ class _MainPageState extends State<MainPage> {
     final _height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        title: Text('Ola, ' + myShortname),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Ola, ' + myShortname),
+      // )
       body: Container(
         height: _height,
         width: _width,

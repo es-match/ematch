@@ -10,8 +10,7 @@ class EventController {
   // TextEditingController _titulo;
   // TextEditingController _descricao;
 
-  EventController() {
-    events = _repository.getEvents();
-    eventCount = events.length;
+  Future<List<EventModel>> getEventsByGroupID(String groupID) {
+    return _repository.getEventsByGroupID(groupID);
   }
 }

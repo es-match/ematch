@@ -1,41 +1,40 @@
 class EventModel {
-  String eventID;
+  String id;
   String groupID;
   String eventName;
+  String locationID;
   String startDate;
   String endDate;
-  String localID;
-  String localName;
+  String createDate;
 
   EventModel(
-      {this.eventID,
+      {this.id,
       this.groupID,
       this.eventName,
+      this.locationID,
       this.startDate,
       this.endDate,
-      this.localID,
-      this.localName});
+      this.createDate});
 
   EventModel.fromJson(Map<String, dynamic> json) {
-    eventID = json['eventID'];
-    
+    id = json['id'];
     groupID = json['groupID'];
     eventName = json['eventName'];
+    locationID = json['locationID'];
     startDate = json['startDate'];
     endDate = json['endDate'];
-    localID = json['localID'];
-    localName = json['localName'];
+    createDate = json['createDate'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['eventID'] = this.eventID;
+    data['id'] = this.id;
     data['groupID'] = this.groupID;
     data['eventName'] = this.eventName;
+    data['locationID'] = this.locationID;
     data['startDate'] = this.startDate;
     data['endDate'] = this.endDate;
-    data['localID'] = this.localID;
-    data['localName'] = this.localName;
+    data['createDate'] = this.createDate;
     return data;
   }
 }
