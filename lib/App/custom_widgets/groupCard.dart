@@ -25,14 +25,39 @@ class _GroupCardState extends State<GroupCard> {
             ),
           ),
           Container(
+            height: 30,
+            width: MediaQuery.of(context).size.width,
+            color: Color.fromRGBO(5, 5, 5, 0.65),
+          ),
+          Container(
             height: 100,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Text(widget.group.groupName)),
-            ),
-          )
+            child: Stack(children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      widget.group.groupName,
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    )),
+              ),
+              // Icon(
+              //   Icons.login,
+              //   color: Colors.white,
+              //   size: 20.0,
+              //   semanticLabel: 'Crie uma nova conta',
+              // ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  'SportName',
+                  style: TextStyle(
+                      color: Colors.white, fontStyle: FontStyle.italic),
+                ),
+              )
+            ]),
+          ),
         ],
       ),
     );
