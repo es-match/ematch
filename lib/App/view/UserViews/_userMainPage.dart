@@ -1,6 +1,6 @@
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/navigationPage.dart';
-import 'package:ematch/App/view/UserViews/home/home_page.dart';
+import 'package:ematch/App/view/UserViews/home/homePage.dart';
 import 'package:ematch/App/view/UserViews/group/_groupPage.dart';
 import 'package:ematch/App/view/UserViews/profile_page.dart';
 import 'package:ematch/App/view/UserViews/schedule_page.dart';
