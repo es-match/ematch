@@ -1,4 +1,5 @@
 import 'package:ematch/App/controller/sign_in.dart';
+import 'package:ematch/App/custom_widgets/background_painter.dart';
 import 'package:flutter/material.dart';
 
 import '../loginPage.dart';
@@ -9,20 +10,22 @@ class ProfilePage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
-              // Colors.orange[900],
-              // Colors.orange[800],
-              Colors.deepOrange[800],
               Colors.deepOrange[500],
+              Colors.deepOrange[600],
+              Colors.deepOrange[700],
+              Colors.deepOrange[800],
+              Colors.deepOrange[900],
               // Colors.orange,
             ],
             stops: [
-              // 0.1,
-              // 0.2,
-              0.1,
+              0.2,
+              0.4,
               0.6,
+              0.7,
+              0.9,
               // 0.9,
             ]),
       ),
@@ -82,7 +85,7 @@ class ProfilePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Sign Out',
+                  'Sair',
                   style: TextStyle(fontSize: 25, color: Colors.white),
                 ),
               ),
