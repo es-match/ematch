@@ -19,4 +19,13 @@ class EventRepository {
       return events;
     }
   }
+
+  Future<List<EventModel>> getEvents() async {
+    String path = url;
+    final response = await get(path);
+    Iterable l = json.decode(response.body);
+    List<EventModel> events =
+        List<EventModel>.from(l.map((model) => EventModel.fromJson(model)));
+    return events;
+  }
 }
