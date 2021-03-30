@@ -1,5 +1,4 @@
 import 'package:ematch/App/controller/sign_in.dart';
-import 'package:ematch/App/controller/userMainControllerSingleton.dart';
 import 'package:ematch/App/custom_widgets/navigationPage.dart';
 import 'package:ematch/App/view/UserViews/home/homePage.dart';
 import 'package:ematch/App/view/UserViews/group/_groupPage.dart';

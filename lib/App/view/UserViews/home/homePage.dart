@@ -1,6 +1,5 @@
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
-import 'package:ematch/App/controller/userMainControllerSingleton.dart';
 import 'package:ematch/App/custom_widgets/eventCard.dart';
 import 'package:ematch/App/custom_widgets/eventList.dart';
 import 'package:ematch/App/custom_widgets/groupList.dart';
@@ -23,13 +22,12 @@ List<EventModel> _eventList = [];
 class _HomePageState extends State<HomePage> {
   final List<Widget> listBuilderItems = [EventList(), EventList()];
   Future<List<EventModel>> future;
-  UserMainControllerSingleton controller = UserMainControllerSingleton();
   EventController _controller = EventController();
 
   @override
   void initState() {
     super.initState();
-    future = _controller.getEventsByUserID(myUserid);
+    future = _controller.getEventsByUserID("aaaaa$myUserid");
   }
 
   @override
@@ -51,22 +49,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Column buildBody() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: ListView.builder(
-            // shrinkWrap: true,
-            itemCount: _eventList.length,
-            itemBuilder: (context, index) => ListTile(
-              title: EventCard(event: _eventList[index]),
+  dynamic buildBody() {
+    if (_eventList.length == 0 || _eventList == null) {
+      return Align(
+        alignment: Alignment.topCenter,
+        child: Text(
+          "Nenhum evento futuro",
+          style: TextStyle(color: Colors.white, fontSize: 14),
+        ),
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              // shrinkWrap: true,
+              itemCount: _eventList.length,
+              itemBuilder: (context, index) => ListTile(
+                title: EventCard(event: _eventList[index]),
+              ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
   }
 
   Row buildBottomButtons(BuildContext context) {
