@@ -43,7 +43,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           }
         },
       ),
-      bottomNavigationBar: buildBottomButtons(context),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: buildBottomButtons(context),
+      ),
     );
   }
 
@@ -209,7 +212,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           // ignore: deprecated_member_use
-          child: RaisedButton(
+          child: ElevatedButton(
             child: Text('Agendar Novo Evento'),
             onPressed: () => {
               Navigator.push(
@@ -222,7 +225,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           // ignore: deprecated_member_use
-          child: RaisedButton(
+          child: ElevatedButton(
             child: Text('Ver Participantes do Grupo'),
             onPressed: () => {
               Navigator.push(

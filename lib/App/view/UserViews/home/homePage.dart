@@ -1,5 +1,6 @@
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
+import 'package:ematch/App/controller/userMainControllerSingleton.dart';
 import 'package:ematch/App/custom_widgets/eventCard.dart';
 import 'package:ematch/App/custom_widgets/eventList.dart';
 import 'package:ematch/App/custom_widgets/groupList.dart';
@@ -9,7 +10,9 @@ import 'package:flutter/material.dart';
 class HomePage extends StatefulWidget {
   final String name;
   final String userID;
-  HomePage({this.name, this.userID});
+  final changeIndexFunction;
+
+  HomePage({this.name, this.userID, this.changeIndexFunction});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,7 +23,7 @@ List<EventModel> _eventList = [];
 class _HomePageState extends State<HomePage> {
   final List<Widget> listBuilderItems = [EventList(), EventList()];
   Future<List<EventModel>> future;
-
+  UserMainControllerSingleton controller = UserMainControllerSingleton();
   EventController _controller = EventController();
 
   @override
@@ -67,25 +70,29 @@ class _HomePageState extends State<HomePage> {
 
   Row buildBottomButtons(BuildContext context) {
     return Row(
-      // mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Expanded(
-            // ignore: deprecated_member_use
-            child: RaisedButton(
-              child: Text('Buscar Grupos'),
-              onPressed: () => {},
-            ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ElevatedButton(
+                child: Text('Buscar Grupos'),
+                onPressed: () {
+                  widget.changeIndexFunction(1);
+                }),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Expanded(
-            // ignore: deprecated_member_use
-            child: RaisedButton(
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ElevatedButton(
               child: Text('Meus Grupos'),
-              onPressed: () => {},
+              onPressed: () {
+                // controller.setScreenIndex(3);
+                setState(() {
+                  widget.changeIndexFunction(2);
+                });
+              },
             ),
           ),
         ),
