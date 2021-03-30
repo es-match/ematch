@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.black26,
       // appBar: AppBar(
       //   title: Text('Ola, ' + myShortname),
       // )

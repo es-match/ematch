@@ -27,6 +27,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text("Buscar Grupos"),
       ),
