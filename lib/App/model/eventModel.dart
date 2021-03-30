@@ -6,6 +6,7 @@ class EventModel {
   String startDate;
   String endDate;
   String createDate;
+  List<String> confirmedUsers;
 
   EventModel(
       {this.id,
@@ -14,6 +15,7 @@ class EventModel {
       this.locationID,
       this.startDate,
       this.endDate,
+      this.confirmedUsers,
       this.createDate});
 
   EventModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class EventModel {
     locationID = json['locationID'];
     startDate = json['startDate'];
     endDate = json['endDate'];
+    confirmedUsers = json['confirmedUsers'].cast<String>();
     createDate = json['createDate'];
   }
 
@@ -34,6 +37,7 @@ class EventModel {
     data['locationID'] = this.locationID;
     data['startDate'] = this.startDate;
     data['endDate'] = this.endDate;
+    data['confirmedUsers'] = this.confirmedUsers;
     data['createDate'] = this.createDate;
     return data;
   }

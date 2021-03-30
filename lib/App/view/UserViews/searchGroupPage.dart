@@ -45,7 +45,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
 
   Column buildGroupColumn(List<GroupModel> groupList) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(

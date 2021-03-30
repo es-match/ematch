@@ -32,14 +32,15 @@ class _MainPageState extends State<MainPage> {
           ),
           label: 'Buscar Eventos',
         )),
-    NavigationPage(
-        widget: SchedulePage(),
-        bottomNavItem: BottomNavigationBarItem(
-          icon: Icon(
-            Icons.calendar_today,
-          ),
-          label: 'Agenda',
-        )),
+    //TODO:CALENDARIO ESCONDIDO
+    // NavigationPage(
+    //     widget: SchedulePage(),
+    //     bottomNavItem: BottomNavigationBarItem(
+    //       icon: Icon(
+    //         Icons.calendar_today,
+    //       ),
+    //       label: 'Agenda',
+    //     )),
     NavigationPage(
         widget: GroupPage(),
         bottomNavItem: BottomNavigationBarItem(
