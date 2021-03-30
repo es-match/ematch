@@ -5,6 +5,7 @@ import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/view/UserViews/group/groupDetailsPage.dart';
 import 'package:ematch/App/view/UserViews/group/insertGroupPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:simple_search_bar/simple_search_bar.dart';
 
 GroupController groupController = GroupController();
@@ -22,6 +23,7 @@ class _GroupPageState extends State<GroupPage> {
   void initState() {
     super.initState();
     groupController = GroupController();
+
     getUserGroups();
   }
 
@@ -32,6 +34,7 @@ class _GroupPageState extends State<GroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text("Meus Grupos"),
         actions: [

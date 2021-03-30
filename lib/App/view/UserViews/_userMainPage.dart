@@ -102,7 +102,8 @@ class _MainPageState extends State<MainPage> {
         ),
         showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.grey[700],
+        backgroundColor: Colors.deepOrange,
+        selectedItemColor: Colors.black,
         currentIndex: _screenIndex,
         items: getBottomNavigationBarItems(),
         onTap: (index) {
