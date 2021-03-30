@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    future = _controller.getEventsByUserID("aaaaa$myUserid");
+    future = _controller.getEventsByUserID(myUserid);
   }
 
   @override
