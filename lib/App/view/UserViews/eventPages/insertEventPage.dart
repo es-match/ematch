@@ -24,13 +24,12 @@ class _InsertEventPageState extends State<InsertEventPage> {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener =
       ItemPositionsListener.create();
-
+  LatLng _initialPosition;
   //Usado para calculo de distancia no mapa
   final haversineDistance = HaversineDistance();
   Future<void> _futureGetGeoLocation;
   Future<void> _futureGetLocationDistances;
 
-  LatLng _initialPosition;
   double _circleRadius = 0;
   Set<Marker> markers = Set();
   @override
@@ -50,15 +49,13 @@ class _InsertEventPageState extends State<InsertEventPage> {
     return locationController.getLocations();
   }
 
-  _getGeolocation() async {
+  Future<Position> _getGeolocation() async {
     // final query = "Rua viktor augusto stroka 499 sorocaba";
     // var addresses = await Geocoder.local.findAddressesFromQuery(query);
     // var first = addresses.first;
-    Position position = await Geolocator.getCurrentPosition(
+    return Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
         forceAndroidLocationManager: true);
-
-    _initialPosition = LatLng(position.latitude, position.longitude);
   }
 
   @override
@@ -73,6 +70,8 @@ class _InsertEventPageState extends State<InsertEventPage> {
               Future.wait([_futureGetGeoLocation, _futureGetLocationDistances]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              Position position = snapshot.data[0];
+              _initialPosition = LatLng(position.latitude, position.longitude);
               setMarkers(snapshot.data[1]);
               return buildBody();
             } else
@@ -97,8 +96,6 @@ class _InsertEventPageState extends State<InsertEventPage> {
           ),
           //LISTA DE EVENTOS
           buildEventListView(),
-          //TODO: FINALIZAR CALENDARIO
-          // buildCalendar(),
           SizedBox(height: 8),
           // buildHourDropDownButton(),
           // buildHourDropDownButton(),
@@ -106,18 +103,6 @@ class _InsertEventPageState extends State<InsertEventPage> {
       ),
     );
   }
-
-  // TableCalendar buildCalendar() {
-  //   return TableCalendar(
-  //     availableCalendarFormats: {
-  //       CalendarFormat.month: 'Mensal',
-  //       CalendarFormat.twoWeeks: '2 Semanas',
-  //       CalendarFormat.week: 'Semanal',
-  //     },
-  //     calendarController: _calendarController,
-  //     locale: 'pt_BR',
-  //   );
-  // }
 
   DropdownButton<String> buildHourDropDownButton() {
     return DropdownButton(

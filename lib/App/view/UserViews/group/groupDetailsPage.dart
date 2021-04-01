@@ -29,6 +29,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text("Informações do Grupo"),
       ),

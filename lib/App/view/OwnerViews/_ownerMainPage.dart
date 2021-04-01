@@ -37,7 +37,7 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
           icon: Icon(
             Icons.notifications,
           ),
-          label: 'Ultimas Noticias',
+          label: 'Notificações',
         )),
     NavigationPage(
         widget: ProfilePage(),
@@ -52,10 +52,10 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        title: Text('Inicio'),
-      ),
+      backgroundColor: Colors.transparent,
+      // appBar: AppBar(
+      //   title: Text('Inicio'),
+      // ),
       body: Container(
         height: _height,
         width: _width,
@@ -70,9 +70,11 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
         unselectedIconTheme: IconThemeData(
           color: Colors.white,
         ),
-        showUnselectedLabels: false,
+        unselectedItemColor: Colors.white,
+        showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.grey[700],
+        backgroundColor: Colors.deepOrange,
+        selectedItemColor: Colors.black,
         currentIndex: _screenIndex,
         items: getBottomNavigationBarItems(),
         onTap: (index) {

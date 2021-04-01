@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/repository/locationRepository.dart';
 import 'package:ematch/App/view/OwnerViews/locationPage/editLocationPage.dart';
@@ -16,8 +18,9 @@ class _OverViewPageState extends State<OverViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text("OverviewPage"),
+        title: Text("Meus Espaços"),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
@@ -44,6 +47,15 @@ class _OverViewPageState extends State<OverViewPage> {
           ),
         ),
       ),
+      bottomNavigationBar: ElevatedButton(
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => InsertLocationPage(),
+          ),
+        ),
+        child: Text("Adicionar Novo Local"),
+      ),
     );
   }
 
@@ -57,72 +69,124 @@ class _OverViewPageState extends State<OverViewPage> {
           child: ListView.builder(
             itemCount: locationsList.length,
             itemBuilder: (context, index) {
+              LocationModel currLocation = locationsList[index];
               String title = locationsList[index].locationName;
               return ListTile(
                 title: InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditLocationPage(
-                        locationModel: locationsList[index],
-                      ),
-                    ),
-                  ),
-                  child: Card(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                      ),
-                      height: 100,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: ClipOval(
-                                  child: Container(
-                                    decoration:
-                                        BoxDecoration(color: Colors.red),
-                                  ),
-                                ),
-                              ),
+                    onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditLocationPage(
+                              locationModel: locationsList[index],
                             ),
-                            Expanded(
-                              flex: 3,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    Text(title),
-                                    Chip(label: Text("CHIP TEST"))
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
+                    child: Card(
+                      child: Stack(
+                        children: [
+                          Container(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width,
+                            child: Image.network(
+                              currLocation.imageUrl,
+                              fit: BoxFit.none,
+                            ),
+                          ),
+                          Container(
+                            height: 100,
+                            width: MediaQuery.of(context).size.width,
+                            color: Color.fromRGBO(5, 5, 5, 0.65),
+                          ),
+                          Container(
+                            height: 100,
+                            child: Stack(children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      currLocation.locationName,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Text(
+                                      "Agendamentos finalizados: ${Random().nextInt(30)}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                              ),
+                              // Icon(
+                              //   Icons.login,
+                              //   color: Colors.white,
+                              //   size: 20.0,
+                              //   semanticLabel: 'Crie uma nova conta',
+                              // ),
+                              // Align(
+                              //   alignment: Alignment.topRight,
+                              //   child: Text(
+                              //     'SportName',
+                              //     style: TextStyle(
+                              //         color: Colors.white,
+                              //         fontStyle: FontStyle.italic),
+                              //   ),
+                              // )
+                            ]),
+                          ),
+                        ],
                       ),
+                    )
+                    // Card(
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //       border: Border.all(color: Colors.black),
+                    //     ),
+                    //     height: 100,
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: Row(
+                    //         children: [
+                    //           Expanded(
+                    //             flex: 1,
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.all(2.0),
+                    //               child: ClipOval(
+                    //                 child: currLocation.imageUrl != null
+                    //                     ? Image.network(currLocation.imageUrl)
+                    //                     : Container(
+                    //                         decoration:
+                    //                             BoxDecoration(color: Colors.red),
+                    //                       ),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           Expanded(
+                    //             flex: 3,
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.all(8.0),
+                    //               child: Column(
+                    //                 children: [
+                    //                   Text(title),
+                    //                   Chip(label: Text("CHIP TEST"))
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     ),
-                  ),
-                ),
               );
             },
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          // ignore: deprecated_member_use
-          child: RaisedButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InsertLocationPage(),
-              ),
-            ),
-            child: Text("Adicionar Novo Local"),
           ),
         ),
       ],
