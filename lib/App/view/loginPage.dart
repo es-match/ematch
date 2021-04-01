@@ -101,10 +101,10 @@ class _LoginPageState extends State<LoginPage>
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image(
-                          image: AssetImage("assets/logo3esmatch.png"),
-                          height: 100.0),
+                          image: AssetImage("assets/logo4esmatch.png"),
+                          height: 140.0),
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       Container(
                         decoration: BoxDecoration(
