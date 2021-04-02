@@ -36,6 +36,6 @@ class LocationController {
   }
 
   Future<List<LocationModel>> getLocations() {
-    return repository.getLocations();
+    return repository.getLocations() ;
   }
 }

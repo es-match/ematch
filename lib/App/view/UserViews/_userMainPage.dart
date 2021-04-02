@@ -2,7 +2,8 @@ import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/navigationPage.dart';
 import 'package:ematch/App/view/UserViews/home/homePage.dart';
 import 'package:ematch/App/view/UserViews/group/_groupPage.dart';
-import 'package:ematch/App/view/UserViews/profile_page.dart';
+import 'package:ematch/App/view/UserViews/profilePage.dart';
+// ignore: unused_import
 import 'package:ematch/App/view/UserViews/schedule_page.dart';
 import 'package:ematch/App/view/UserViews/searchGroupPage.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +16,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   // int _screenIndex = 0;
   int _screenIndex = 0;
-  @override
-  void initState() {
-    // TODO: implement initState
-  }
 
   void changeIndex(int value) {
     setState(() {
-      // _screenIndex = index;
       _screenIndex = value;
     });
   }

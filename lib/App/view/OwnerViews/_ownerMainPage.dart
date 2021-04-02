@@ -1,6 +1,6 @@
 import 'package:ematch/App/custom_widgets/navigationPage.dart';
 import 'package:ematch/App/view/OwnerViews/overviewPage.dart';
-import 'package:ematch/App/view/OwnerViews/profilePage.dart';
+import 'package:ematch/App/view/UserViews/profilePage.dart';
 import 'package:ematch/App/view/OwnerViews/revenuePage.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +43,7 @@ class _OwnerMainPageState extends State<OwnerMainPage> {
         widget: ProfilePage(),
         bottomNavItem: BottomNavigationBarItem(
           icon: Icon(Icons.person),
-          label: 'Resumo',
+          label: 'Perfil',
         )),
   ];
 

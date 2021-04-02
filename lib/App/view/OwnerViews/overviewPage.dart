@@ -70,6 +70,7 @@ class _OverViewPageState extends State<OverViewPage> {
             itemCount: locationsList.length,
             itemBuilder: (context, index) {
               LocationModel currLocation = locationsList[index];
+              // ignore: unused_local_variable
               String title = locationsList[index].locationName;
               return ListTile(
                 title: InkWell(

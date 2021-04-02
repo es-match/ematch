@@ -23,7 +23,7 @@ class _GroupPageState extends State<GroupPage> {
   void initState() {
     super.initState();
     groupController = GroupController();
-
+    
     getUserGroups();
   }
 
@@ -89,7 +89,8 @@ class _GroupPageState extends State<GroupPage> {
                               builder: (context) =>
                                   GroupDetailsPage(group: currentGroup)),
                         ),
-                    child: GroupCard(group: currentGroup)),
+                    child:
+                        GroupCard(group: currentGroup, sportName: "Futebol")),
               );
             },
           ),

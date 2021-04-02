@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class GroupCard extends StatefulWidget {
   final GroupModel group;
+  final String sportName;
 
-  const GroupCard({Key key, this.group}) : super(key: key);
+  GroupCard({Key key, this.group, this.sportName = ""}) : super(key: key);
 
   @override
   _GroupCardState createState() => _GroupCardState();
@@ -48,12 +49,15 @@ class _GroupCardState extends State<GroupCard> {
               //   size: 20.0,
               //   semanticLabel: 'Crie uma nova conta',
               // ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Text(
-                  'SportName',
-                  style: TextStyle(
-                      color: Colors.white, fontStyle: FontStyle.italic),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    widget.sportName,
+                    style: TextStyle(
+                        color: Colors.white, fontStyle: FontStyle.italic),
+                  ),
                 ),
               )
             ]),

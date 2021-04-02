@@ -1,7 +1,7 @@
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
-import 'package:ematch/App/view/UserViews/eventPages/insertEventPage.dart';
+import 'package:ematch/App/view/UserViews/eventPages/insertEventPagev2.dart';
 import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +29,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       // backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text("Informações do Grupo"),
@@ -64,10 +65,14 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                 const EdgeInsets.only(bottom: 1, left: 8, right: 8, top: 3),
             child: Column(
               children: [
-                Text("Próximos Eventos"),
+                Text(
+                  "Próximos Eventos",
+                  style: TextStyle(color: Colors.white),
+                ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
+                      color: Colors.grey[900],
                       border: Border.all(
                         width: 1,
                       ),
@@ -80,6 +85,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                         var eventName = currEvent.eventName;
                         var startDay = DateFormat("dd/MM")
                             .format(DateTime.parse(currEvent.startDate));
+                        // ignore: unused_local_variable
                         var endDay = DateFormat("dd/MM")
                             .format(DateTime.parse(currEvent.endDate));
                         var startTime = DateFormat("HH:mm")

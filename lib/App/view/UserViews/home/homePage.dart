@@ -2,6 +2,7 @@ import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/eventCard.dart';
 import 'package:ematch/App/custom_widgets/eventList.dart';
+// ignore: unused_import
 import 'package:ematch/App/custom_widgets/groupList.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:flutter/material.dart';

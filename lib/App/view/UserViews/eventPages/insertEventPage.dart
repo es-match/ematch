@@ -37,9 +37,8 @@ class _InsertEventPageState extends State<InsertEventPage> {
     super.initState();
     _currentSliderValue = 1;
     _circleRadius = 1000;
-    _futureGetGeoLocation = _getGeolocation();
+    // _futureGetGeoLocation = _getGeolocation();
     _futureGetLocationDistances = _getLocationDistances();
-    setMarkers(null);
 
     //HORARIOS
     dropdownValue = hours[0];
@@ -49,6 +48,7 @@ class _InsertEventPageState extends State<InsertEventPage> {
     return locationController.getLocations();
   }
 
+  // ignore: unused_element
   Future<Position> _getGeolocation() async {
     // final query = "Rua viktor augusto stroka 499 sorocaba";
     // var addresses = await Geocoder.local.findAddressesFromQuery(query);
@@ -70,9 +70,10 @@ class _InsertEventPageState extends State<InsertEventPage> {
               Future.wait([_futureGetGeoLocation, _futureGetLocationDistances]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              Position position = snapshot.data[0];
-              _initialPosition = LatLng(position.latitude, position.longitude);
-              setMarkers(snapshot.data[1]);
+              // Position position = snapshot.data[0];
+              // _initialPosition = LatLng(position.latitude, position.longitude);
+              _initialPosition = LatLng(-23.5257412, -47.4936445);
+              // setMarkers(snapshot.data[1]);
               return buildBody();
             } else
               return Center(child: CircularProgressIndicator());
@@ -187,16 +188,16 @@ class _InsertEventPageState extends State<InsertEventPage> {
       zoomGesturesEnabled: false,
       mapType: MapType.normal,
       initialCameraPosition: CameraPosition(target: _initialPosition, zoom: 14),
-      markers: markers,
-      circles: {
-        Circle(
-            circleId: CircleId(index.toString()),
-            center: _initialPosition,
-            radius: _circleRadius,
-            fillColor: Colors.orange.withOpacity(0.5),
-            strokeWidth: 3,
-            strokeColor: Colors.orange[100]),
-      },
+      // markers: markers,
+      // circles: {
+      //   Circle(
+      //       circleId: CircleId(index.toString()),
+      //       center: _initialPosition,
+      //       radius: _circleRadius,
+      //       fillColor: Colors.orange.withOpacity(0.5),
+      //       strokeWidth: 3,
+      //       strokeColor: Colors.orange[100]),
+      // },
       onMapCreated: (controller) {
         googleMapController = controller;
       },
@@ -253,7 +254,7 @@ class _InsertEventPageState extends State<InsertEventPage> {
     return zoomLevel;
   }
 
-  setMarkers(List<LocationModel> data) async {
+  setMarkers(List<LocationModel> data) {
     //ADICIONA POSICAO ATUAL
     markers.add(//MARKER PRINCIPAL
         Marker(
@@ -272,7 +273,9 @@ class _InsertEventPageState extends State<InsertEventPage> {
             markerId: MarkerId(model.id),
             position: modelLocation,
             alpha:
-                locationInRange(_initialPosition, modelLocation, _circleRadius),
+                // locationInRange(_initialPosition, modelLocation, _circleRadius),
+                locationInRange(LatLng(-23.5257412, -47.4936445), modelLocation,
+                    _circleRadius),
           ),
         );
       } catch (Exception) {
