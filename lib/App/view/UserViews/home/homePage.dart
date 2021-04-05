@@ -66,7 +66,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(
             child: ListView.builder(
-              // shrinkWrap: true,
               itemCount: _eventList.length,
               itemBuilder: (context, index) => ListTile(
                 title: EventCard(event: _eventList[index]),

@@ -1,5 +1,6 @@
 import 'package:ematch/App/controller/locationController.dart';
 import 'package:ematch/App/model/locationModel.dart';
+import 'package:ematch/App/view/UserViews/eventPages/selectEventDate.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,12 +9,13 @@ import 'package:haversine_distance/haversine_distance.dart';
 import 'dart:math' as math;
 // import 'package:table_calendar/table_calendar.dart';
 
-class InsertEventPage extends StatefulWidget {
+class SelectEventLocationPage extends StatefulWidget {
   @override
-  _InsertEventPageState createState() => _InsertEventPageState();
+  _SelectEventLocationPageState createState() =>
+      _SelectEventLocationPageState();
 }
 
-class _InsertEventPageState extends State<InsertEventPage> {
+class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
   double _currentSliderValue = 50;
   String dropdownValue = "";
 
@@ -133,7 +135,6 @@ class _InsertEventPageState extends State<InsertEventPage> {
                     _initialPosition, indexLocation, _circleRadius) >
                 0) {
               return ExpansionTile(
-                key: 
                 onExpansionChanged: (value) {
                   if (value)
                     itemScrollController.scrollTo(
@@ -147,17 +148,13 @@ class _InsertEventPageState extends State<InsertEventPage> {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Icon(
                         Icons.run_circle_outlined,
-                        color: Colors.white,
                       ),
                     ),
                     Column(
                       children: [
                         Text(
                           currLocation.locationName,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        )
+                        ),
                       ],
                     ),
                   ],
@@ -171,7 +168,8 @@ class _InsertEventPageState extends State<InsertEventPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => InsertEventPage()),
+                              builder: (context) =>
+                                  SelectEventDate(location: currLocation)),
                         );
                       },
                     ),
