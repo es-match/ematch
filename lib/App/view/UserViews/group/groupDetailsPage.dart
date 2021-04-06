@@ -1,7 +1,7 @@
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
-import 'package:ematch/App/view/UserViews/eventPages/insertEventPagev2.dart';
+import 'package:ematch/App/view/UserViews/eventPages/selectEventLocationPage.dart';
 import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -222,10 +222,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           child: ElevatedButton(
             child: Text('Agendar Novo Evento'),
             onPressed: () => {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => InsertEventPage()),
-              // )
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SelectEventLocationPage()),
+              )
             },
           ),
         ),

@@ -17,6 +17,21 @@ class AppWidget extends StatelessWidget {
     var materialApp = MaterialApp(
       title: "E.S.Match",
       theme: ThemeData(
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Colors.white,
+              displayColor: Colors.white,
+            ),
+        iconTheme: IconThemeData(color: Colors.white),
+        cardTheme: CardTheme(
+          color: Color.fromRGBO(69, 117, 104, 1),
+        ),
+        scaffoldBackgroundColor: Colors.black,
+        dividerTheme: DividerThemeData(
+          color: Colors.white,
+          thickness: 2,
+          space: 2
+        ),
+        // cardColor: Colors.orange[400],
         primarySwatch: Colors.deepOrange,
       ),
       initialRoute: '/',
