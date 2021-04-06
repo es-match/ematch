@@ -2,7 +2,6 @@
 //  Licensed under Apache License v2.0
 
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 // Example holidays
@@ -23,7 +22,8 @@ class TableCalendarexample extends StatefulWidget {
   _TableCalendarexampleState createState() => _TableCalendarexampleState();
 }
 
-class _TableCalendarexampleState extends State<TableCalendarexample> with TickerProviderStateMixin {
+class _TableCalendarexampleState extends State<TableCalendarexample>
+    with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   List _selectedEvents;
   AnimationController _animationController;
@@ -301,7 +301,7 @@ class _TableCalendarexampleState extends State<TableCalendarexample> with Ticker
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            RaisedButton(
+            ElevatedButton(
               child: Text('Month'),
               onPressed: () {
                 setState(() {
@@ -309,7 +309,7 @@ class _TableCalendarexampleState extends State<TableCalendarexample> with Ticker
                 });
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('2 weeks'),
               onPressed: () {
                 setState(() {
@@ -318,7 +318,7 @@ class _TableCalendarexampleState extends State<TableCalendarexample> with Ticker
                 });
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Week'),
               onPressed: () {
                 setState(() {
@@ -329,7 +329,7 @@ class _TableCalendarexampleState extends State<TableCalendarexample> with Ticker
           ],
         ),
         const SizedBox(height: 8.0),
-        RaisedButton(
+        ElevatedButton(
           child: Text(
               'Set day ${dateTime.day}-${dateTime.month}-${dateTime.year}'),
           onPressed: () {
