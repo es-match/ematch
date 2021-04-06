@@ -222,10 +222,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           child: ElevatedButton(
             child: Text('Agendar Novo Evento'),
             onPressed: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => InsertEventPage()),
-              )
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => InsertEventPage()),
+              // )
             },
           ),
         ),

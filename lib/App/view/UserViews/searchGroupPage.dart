@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/custom_widgets/groupCard.dart';
 import 'package:ematch/App/model/groupModel.dart';
@@ -20,6 +22,12 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
     getGroups();
   }
 
+  static const List<String> _kOptions = <String>[
+    'aardvark',
+    'bobcat',
+    'chameleon',
+  ];
+
   getGroups() {
     model = searchGroupController.getGroups();
   }
@@ -31,6 +39,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       appBar: AppBar(
         title: Text("Buscar Grupos"),
       ),
+
       body: FutureBuilder(
         future: model,
         builder: (context, snapshot) {
@@ -49,6 +58,26 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Container(
+          color: Colors.pink,
+          child: TextField(
+            maxLines: 1,
+            cursorColor: Colors.white,
+            decoration: InputDecoration(
+              labelText: 'Procurar Grupo',
+              icon: Icon(
+                Icons.find_in_page,
+                color: Colors.white,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white, width: 1.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white, width: 1.0),
+              ),
+            ),
+          ),
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: groupList.length,
@@ -72,3 +101,5 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
     );
   }
 }
+
+class AutocompleteBasicExample {}
