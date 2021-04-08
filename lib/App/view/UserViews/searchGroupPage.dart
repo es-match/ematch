@@ -1,7 +1,10 @@
+import 'dart:collection';
+
 import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/custom_widgets/groupCard.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SearchGroupPage extends StatefulWidget {
   @override
@@ -17,11 +20,25 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
   void initState() {
     super.initState();
     searchGroupController = GroupController();
-    getGroups();
+    getGroups('');
   }
 
-  getGroups() {
+  static const List<String> _kOptions = <String>[
+    'aardvark',
+    'bobcat',
+    'chameleon',
+  ];
+
+  getGroups(String value) {
     model = searchGroupController.getGroups();
+  }
+
+  onFilterTap(String value) {
+    setState(() {
+      model = value == ''
+          ? searchGroupController.getGroups()
+          : searchGroupController.getGroupsByName(value);
+    });
   }
 
   @override
@@ -31,14 +48,35 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
       appBar: AppBar(
         title: Text("Buscar Grupos"),
       ),
-      body: FutureBuilder(
-        future: model,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done)
-            return buildGroupColumn(snapshot.data);
-          else
-            return Center(child: CircularProgressIndicator());
-        },
+
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              color: Colors.white,
+              child: TextField(
+                cursorColor: Colors.black,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
+                onChanged: onFilterTap,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: FutureBuilder(
+                future: model,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done)
+                    return buildGroupColumn(snapshot.data);
+                  else
+                    return Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+          ),
+        ],
       ),
       // ignore: deprecated_member_use
     );

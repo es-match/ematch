@@ -11,4 +11,8 @@ class GroupController {
   Future<List<GroupModel>> getGroups() {
     return repository.getGroups();
   }
+
+  Future<List<GroupModel>> getGroupsByName(String groupName) {
+    return repository.getGroupsByNane(groupName);
+  }
 }
