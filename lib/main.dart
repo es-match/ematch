@@ -24,7 +24,8 @@ class AppWidget extends StatelessWidget {
         cardTheme: CardTheme(color: Color.fromRGBO(69, 117, 104, 1)),
         scaffoldBackgroundColor: Colors.black,
         dividerTheme:
-            DividerThemeData(color: Colors.white, thickness: 2, space: 2),        
+            DividerThemeData(color: Colors.white, thickness: 2, space: 2),
+        unselectedWidgetColor: Colors.white,
         primarySwatch: Colors.deepOrange,
       ),
       initialRoute: '/',

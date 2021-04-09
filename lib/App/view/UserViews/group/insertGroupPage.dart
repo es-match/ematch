@@ -1,6 +1,7 @@
 import 'package:ematch/App/controller/activitiesController.dart';
 import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/model/activityModel.dart';
+import 'package:ematch/App/model/groupModel.dart';
 import 'package:flutter/material.dart';
 
 class NewGroupPage extends StatefulWidget {
@@ -8,24 +9,17 @@ class NewGroupPage extends StatefulWidget {
   _NewGroupPageState createState() => _NewGroupPageState();
 }
 
-final List<String> esportes = [
-  'Futebol',
-  'Basquete',
-  'Paintball',
-];
-
 class _NewGroupPageState extends State<NewGroupPage> {
   ActivitiesController activitiesController = ActivitiesController();
   GroupController groupController = GroupController();
-  String _esportes = "";
+  ActivityModel _selectedActivity;
+  // String _selectedActivity;
   List<ActivityModel> activityList;
-
+  TextEditingController tituloController;
   @override
   void initState() {
     super.initState();
-    setState(() {
-      activityList = getActivities();
-    });
+    asyncMethods();
   }
 
   @override
@@ -34,9 +28,17 @@ class _NewGroupPageState extends State<NewGroupPage> {
       appBar: AppBar(
         title: Text('Novo Grupo'),
       ),
-      body: buildBody(),
+      body: activityList == null
+          ? Center(child: CircularProgressIndicator())
+          : buildBody(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => print("TESTE"),
+        onPressed: () {
+          GroupModel group = GroupModel();
+          group.groupName = tituloController.text;
+          group.imageUrl = _selectedActivity.imageUrl;
+          group.sportID = _selectedActivity.id;
+          groupController.insertGroup(group);
+        },
         child: Text("Criar"),
       ),
     );
@@ -53,6 +55,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
               //   child: Text('Título do Grupo'),
               // ),
               TextField(
+                controller: tituloController,
                 decoration: InputDecoration(
                     alignLabelWithHint: true,
                     labelText: 'Título do Grupo',
@@ -89,9 +92,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 child: Divider(),
               ),
               Text("Selecione o esporte"),
-              Column(
-                children: buildRadioList(),
-              ),
+              activityList == null
+                  ? Center(child: CircularProgressIndicator())
+                  : Column(
+                      children: buildRadioList(),
+                    ),
               Divider(),
             ],
           ),
@@ -103,23 +108,27 @@ class _NewGroupPageState extends State<NewGroupPage> {
   List<Widget> buildRadioList() {
     var radiobuttons = <RadioListTile>[];
 
-    esportes.forEach((element) {
-      return radiobuttons.add(RadioListTile<String>(
-        title: Text(element),
+    activityList.forEach((element) {
+      return radiobuttons.add(RadioListTile<ActivityModel>(
+        title: Text(element.sportName),
         value: element,
-        groupValue: _esportes,
-        onChanged: (String value) {
+        groupValue: _selectedActivity,
+        onChanged: (ActivityModel value) {
           setState(() {
-            _esportes = value;
+            _selectedActivity = value;
           });
         },
       ));
     });
-
     return radiobuttons;
   }
 
   Future<List<ActivityModel>> getActivities() async {
     return await activitiesController.getActivities();
+  }
+
+  void asyncMethods() async {
+    activityList = await getActivities();
+    setState(() {});
   }
 }

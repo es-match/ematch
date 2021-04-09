@@ -4,6 +4,7 @@ class GroupModel {
   List<String> groupAdmins;
   List<String> groupPending;
   List<String> groupUser;
+  String sportID;
   String imageUrl;
   String userCreator;
 
@@ -22,6 +23,7 @@ class GroupModel {
     groupAdmins = json['groupAdmins'].cast<String>();
     groupPending = json['groupPending'].cast<String>();
     groupUser = json['groupUser'].cast<String>();
+    sportID = json['sportID'];
     imageUrl = json['imageUrl'];
     userCreator = json['userCreator'];
   }
@@ -33,6 +35,7 @@ class GroupModel {
     data['groupAdmins'] = this.groupAdmins;
     data['groupPending'] = this.groupPending;
     data['groupUser'] = this.groupUser;
+    data['sportID'] = this.sportID;
     data['imageUrl'] = this.imageUrl;
     data['userCreator'] = this.userCreator;
     return data;

@@ -3,6 +3,7 @@ class ActivityModel {
   String sportDescription;
   String sportName;
   String createDate;
+  String imageUrl;
 
   ActivityModel(
       {this.id, this.sportDescription, this.sportName, this.createDate});
@@ -12,6 +13,7 @@ class ActivityModel {
     sportDescription = json['sportDescription'];
     sportName = json['sportName'];
     createDate = json['createDate'];
+    imageUrl = json['imageUrl'];
   }
 
   Map<String, dynamic> toJson() {
@@ -20,6 +22,7 @@ class ActivityModel {
     data['sportDescription'] = this.sportDescription;
     data['sportName'] = this.sportName;
     data['createDate'] = this.createDate;
+    data['imageUrl'] = this.imageUrl;
     return data;
   }
 }
