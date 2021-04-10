@@ -15,7 +15,9 @@ class SearchGroupPage extends StatefulWidget {
 class _SearchGroupPageState extends State<SearchGroupPage> {
   Future<List<GroupModel>> model;
   List<GroupModel> filteredList;
+  List<GroupModel> groupList;
 
+  TextEditingController searchTextFieldController = TextEditingController();
   GroupController searchGroupController;
 
   @override
@@ -25,11 +27,11 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
     getGroups('');
   }
 
-  static const List<String> _kOptions = <String>[
-    'aardvark',
-    'bobcat',
-    'chameleon',
-  ];
+  // static const List<String> _kOptions = <String>[
+  //   'aardvark',
+  //   'bobcat',
+  //   'chameleon',
+  // ];
 
   getGroups(String value) {
     model = searchGroupController.getGroups();
@@ -37,9 +39,9 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
 
   onFilterTap(String value) {
     setState(() {
-       model = value == ''
-           ? searchGroupController.getGroups()
-           : searchGroupController.getGroupsByName(value);
+      //  model = value == ''
+      //      ? searchGroupController.getGroups()
+      //      : searchGroupController.getGroupsByName(value);
     });
   }
 
@@ -58,6 +60,7 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
             child: Container(
               color: Colors.white,
               child: TextField(
+                controller: searchTextFieldController,
                 cursorColor: Colors.black,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
@@ -71,7 +74,21 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
                 future: model,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return buildGroupColumn(snapshot.data);
+                    if (groupList == null ||
+                        groupList.length <
+                            (snapshot.data as List<GroupModel>).length) {
+                      groupList = snapshot.data;
+                    }
+
+                    filteredList = groupList;
+
+                    if (searchTextFieldController.text != "")
+                      filteredList = groupList
+                          .where((element) => element.groupName
+                              .contains(searchTextFieldController.text))
+                          .toList();
+
+                    return buildGroupColumn(filteredList);
                   } else
                     return Center(child: CircularProgressIndicator());
                 },
