@@ -13,6 +13,7 @@ class SearchGroupPage extends StatefulWidget {
 
 class _SearchGroupPageState extends State<SearchGroupPage> {
   Future<List<GroupModel>> model;
+  List<GroupModel> filteredList;
 
   GroupController searchGroupController;
 
@@ -35,9 +36,9 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
 
   onFilterTap(String value) {
     setState(() {
-      model = value == ''
-          ? searchGroupController.getGroups()
-          : searchGroupController.getGroupsByName(value);
+       model = value == ''
+           ? searchGroupController.getGroups()
+           : searchGroupController.getGroupsByName(value);
     });
   }
 
@@ -68,9 +69,9 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
               child: FutureBuilder(
                 future: model,
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done)
+                  if (snapshot.connectionState == ConnectionState.done) {
                     return buildGroupColumn(snapshot.data);
-                  else
+                  } else
                     return Center(child: CircularProgressIndicator());
                 },
               ),

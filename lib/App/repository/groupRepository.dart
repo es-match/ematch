@@ -25,7 +25,7 @@ class GroupRepository {
     return groups;
   }
 
-  Future<List<GroupModel>> getGroupsByNane(String groupName) async {
+  Future<List<GroupModel>> getGroupsByName(String groupName) async {
     String path = "$url/byName/$groupName";
     final response = await get(path);
     List<GroupModel> groups = <GroupModel>[];
@@ -38,19 +38,19 @@ class GroupRepository {
   }
 
   void insertGroup(GroupModel group) async {
-       var _body = jsonEncode(group.toJson());
-      <String, dynamic>{
-         "groupName": group.groupName,
-    "groupAdmins": group.groupAdmins,
-    "groupPending": [],
-    "groupUser": [group.groupUser],
-    "imageUrl": group.imageUrl,
-    "sportID": group.sportID,
-    "sportRef": null,
-    "createDate": actualDate,
-    "userCreator": request.body.userCreator,
-      },
-    );
+    var _body = jsonEncode({
+      "groupName": group.groupName,
+      "groupDescription": group.groupDescription,
+      "groupAdmins": group.groupAdmins,
+      "groupPending": group.groupPending,
+      "groupUser": group.groupUser,
+      "imageUrl": group.imageUrl,
+      "sportID": group.sportID,
+      "sportRef": null,
+      "createDate": DateTime.now().millisecondsSinceEpoch,
+      "userCreator": group.userCreator,
+    });
+
     final response = await post(
       url,
       headers: <String, String>{
@@ -61,7 +61,4 @@ class GroupRepository {
 
     print(response.statusCode);
   }
-
-
-
 }

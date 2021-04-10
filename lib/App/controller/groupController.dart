@@ -13,7 +13,7 @@ class GroupController {
   }
 
   Future<List<GroupModel>> getGroupsByName(String groupName) {
-    return repository.getGroupsByNane(groupName);
+    return repository.getGroupsByName(groupName);
   }
 
   void insertGroup(GroupModel group) {

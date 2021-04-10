@@ -45,7 +45,7 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(
               Icons.search,
             ),
-            label: 'Buscar Eventos',
+            label: 'Buscar Grupos',
           )),
       //TODO:CALENDARIO ESCONDIDO
       // NavigationPage(
@@ -95,7 +95,7 @@ class _MainPageState extends State<MainPage> {
         unselectedIconTheme: IconThemeData(
           color: Colors.white,
         ),
-        showUnselectedLabels: false,
+        // showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.deepOrange,
         selectedItemColor: Colors.black,

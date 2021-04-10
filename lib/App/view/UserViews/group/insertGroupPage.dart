@@ -1,5 +1,6 @@
 import 'package:ematch/App/controller/activitiesController.dart';
 import 'package:ematch/App/controller/groupController.dart';
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/activityModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +11,15 @@ class NewGroupPage extends StatefulWidget {
 }
 
 class _NewGroupPageState extends State<NewGroupPage> {
+  ActivityModel _selectedActivity;
+  List<ActivityModel> activityList;
+
   ActivitiesController activitiesController = ActivitiesController();
   GroupController groupController = GroupController();
-  ActivityModel _selectedActivity;
-  // String _selectedActivity;
-  List<ActivityModel> activityList;
-  TextEditingController tituloController;
+
+  TextEditingController tituloController = TextEditingController();
+  TextEditingController descricaoController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -35,8 +39,13 @@ class _NewGroupPageState extends State<NewGroupPage> {
         onPressed: () {
           GroupModel group = GroupModel();
           group.groupName = tituloController.text;
+          group.groupDescription = descricaoController.text;
           group.imageUrl = _selectedActivity.imageUrl;
           group.sportID = _selectedActivity.id;
+          group.groupPending = [];
+          group.groupAdmins = [myUserid];
+          group.userCreator = myUserid;
+          group.groupUser = [myUserid];
           groupController.insertGroup(group);
         },
         child: Text("Criar"),
@@ -71,6 +80,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 child: Divider(),
               ),
               TextField(
+                controller: descricaoController,
                 maxLines: 5,
                 maxLength: 50,
                 decoration: InputDecoration(
