@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/custom_widgets/groupCard.dart';
 import 'package:ematch/App/model/groupModel.dart';
+import 'package:ematch/App/view/UserViews/group/groupDetailsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -96,12 +97,12 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
               GroupModel currentGroup = groupList[index];
               return ListTile(
                 title: InkWell(
-                    // onTap: (){} => Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) =>
-                    //               GroupDetailsPage(group: currentGroup)),
-                    //     ),
+                    onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  GroupDetailsPage(group: currentGroup)),
+                        ),
                     child: GroupCard(group: currentGroup)),
               );
             },

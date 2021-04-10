@@ -1,11 +1,11 @@
+import 'package:ematch/App/custom_widgets/background_painter.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:flutter/material.dart';
 
 class GroupCard extends StatefulWidget {
   final GroupModel group;
-  final String sportName;
 
-  GroupCard({Key key, this.group, this.sportName = ""}) : super(key: key);
+  GroupCard({Key key, this.group}) : super(key: key);
 
   @override
   _GroupCardState createState() => _GroupCardState();
@@ -14,55 +14,85 @@ class GroupCard extends StatefulWidget {
 class _GroupCardState extends State<GroupCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Stack(
-        children: [
-          Container(
-            height: 100,
-            width: MediaQuery.of(context).size.width,
-            child: Image.network(
-              widget.group.imageUrl,
-              fit: BoxFit.none,
-            ),
-          ),
-          Container(
-            height: 30,
-            width: MediaQuery.of(context).size.width,
-            color: Color.fromRGBO(5, 5, 5, 0.65),
-          ),
-          Container(
-            height: 100,
-            child: Stack(children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      widget.group.groupName,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    )),
+    return Container(
+      child: Card(
+        color: Color.fromRGBO(72, 72, 72, 0.45),
+        elevation: 5,
+        margin: EdgeInsets.all(3),
+        child: Stack(
+          children: [
+            Container(
+              height: 100,
+              width: MediaQuery.of(context).size.width,
+              child: Image.network(
+                widget.group.imageUrl,
+                fit: BoxFit.none,
               ),
-              // Icon(
-              //   Icons.login,
-              //   color: Colors.white,
-              //   size: 20.0,
-              //   semanticLabel: 'Crie uma nova conta',
-              // ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Text(
-                    widget.sportName,
-                    style: TextStyle(
-                        color: Colors.white, fontStyle: FontStyle.italic),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 65.0),
+              child: Container(
+                height: 35,
+                width: MediaQuery.of(context).size.width,
+                color: Color.fromRGBO(5, 5, 5, 0.55),
+                child: Stack(children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.group.groupName,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20),
+                        )),
                   ),
+                  // Icon(
+                  //   Icons.login,
+                  //   color: Colors.white,
+                  //   size: 20.0,
+                  //   semanticLabel: 'Crie uma nova conta',
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(6.0),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Text(
+                        "(SportName)",
+                        style: TextStyle(
+                            color: Colors.white, fontStyle: FontStyle.italic),
+                      ),
+                    ),
+                  )
+                ]),
+              ),
+            ),
+            Align(
+                alignment: Alignment.topRight,
+                child: Chip(
+                  backgroundColor: Colors.orange,
+                  padding: const EdgeInsets.all(1),
+                  avatar: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.black,
+                      size: 15.0,
+                      semanticLabel: 'Text to announce in accessibility modes',
+                    ),
+                  ),
+                  label: Text('Mais Info'),
+                )
+
+                // Container(
+                //   height: 30,
+                //   width: MediaQuery.of(context).size.width / 3,
+                //   color: Colors.blue,
+                // ),
                 ),
-              )
-            ]),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
