@@ -41,9 +41,9 @@ class GroupRepository {
     var _body = jsonEncode({
       "groupName": group.groupName,
       "groupDescription": group.groupDescription,
-      "groupAdmins": group.groupAdmins,
+      "groupAdmins": group.userCreator,
       "groupPending": group.groupPending,
-      "groupUser": group.groupUser,
+      "groupUser": group.userCreator,
       "imageUrl": group.imageUrl,
       "sportID": group.sportID,
       "sportRef": null,
@@ -51,8 +51,11 @@ class GroupRepository {
       "userCreator": group.userCreator,
     });
 
+    String path =
+        "http://localhost:5001/esmatch-ce3c9/us-central1/dbGroups/api/v1/groups/";
     final response = await post(
       url,
+      // path,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
