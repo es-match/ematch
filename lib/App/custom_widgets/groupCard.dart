@@ -1,3 +1,4 @@
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/background_painter.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:flutter/material.dart';
@@ -70,20 +71,7 @@ class _GroupCardState extends State<GroupCard> {
             ),
             Align(
                 alignment: Alignment.topRight,
-                child: Chip(
-                  backgroundColor: Colors.orange,
-                  padding: const EdgeInsets.all(1),
-                  avatar: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.black,
-                      size: 15.0,
-                      semanticLabel: 'Text to announce in accessibility modes',
-                    ),
-                  ),
-                  label: Text('Mais Info'),
-                )
+                child: buildChipStatusUser(myUserid)
 
                 // Container(
                 //   height: 30,
@@ -95,5 +83,81 @@ class _GroupCardState extends State<GroupCard> {
         ),
       ),
     );
+  }
+
+  Chip buildChipStatusUser(String myUserId) {
+    switch (widget.group.statusUserInGroup(myUserId)) {
+      case StatusUserForGroup.none:
+        return Chip(
+          backgroundColor: Colors.orange,
+          padding: const EdgeInsets.all(1),
+          avatar: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(
+              Icons.favorite,
+              color: Colors.black,
+              size: 15.0,
+              semanticLabel: 'Text to announce in accessibility modes',
+            ),
+          ),
+          label: Text(
+            "Saber Mais",
+          ),
+        );
+        break;
+      case StatusUserForGroup.admin:
+        return Chip(
+          backgroundColor: Colors.green,
+          padding: const EdgeInsets.all(1),
+          avatar: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(
+              Icons.favorite,
+              color: Colors.black,
+              size: 15.0,
+              semanticLabel: 'Text to announce in accessibility modes',
+            ),
+          ),
+          label: Text(
+            "Admin",
+          ),
+        );
+        break;
+      case StatusUserForGroup.follower:
+        return Chip(
+          backgroundColor: Colors.blue,
+          padding: const EdgeInsets.all(1),
+          avatar: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(
+              Icons.favorite,
+              color: Colors.black,
+              size: 15.0,
+              semanticLabel: 'Text to announce in accessibility modes',
+            ),
+          ),
+          label: Text(
+            "Seguindo",
+          ),
+        );
+        break;
+      default:
+        return Chip(
+          backgroundColor: Colors.orange,
+          padding: const EdgeInsets.all(1),
+          avatar: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(
+              Icons.favorite,
+              color: Colors.black,
+              size: 15.0,
+              semanticLabel: 'Text to announce in accessibility modes',
+            ),
+          ),
+          label: Text(
+            "Saber Mais",
+          ),
+        );
+    }
   }
 }

@@ -1,3 +1,9 @@
+enum StatusUserForGroup {
+  none,
+  admin,
+  follower,
+}
+
 class GroupModel {
   String id;
   String groupName;
@@ -42,5 +48,15 @@ class GroupModel {
     data['imageUrl'] = this.imageUrl;
     data['userCreator'] = this.userCreator;
     return data;
+  }
+
+  StatusUserForGroup statusUserInGroup(String userId) {
+    if (this.groupAdmins.contains(userId)) {
+      return StatusUserForGroup.admin;
+    }
+    if (this.groupUser.contains(userId)) {
+      return StatusUserForGroup.follower;
+    }
+    return StatusUserForGroup.none;
   }
 }
