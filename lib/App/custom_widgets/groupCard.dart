@@ -87,32 +87,14 @@ class _GroupCardState extends State<GroupCard> {
 
   Chip buildChipStatusUser(String myUserId) {
     switch (widget.group.statusUserInGroup(myUserId)) {
-      case StatusUserForGroup.none:
-        return Chip(
-          backgroundColor: Colors.orange,
-          padding: const EdgeInsets.all(1),
-          avatar: CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: Icon(
-              Icons.favorite,
-              color: Colors.black,
-              size: 15.0,
-              semanticLabel: 'Text to announce in accessibility modes',
-            ),
-          ),
-          label: Text(
-            "Saber Mais",
-          ),
-        );
-        break;
       case StatusUserForGroup.admin:
         return Chip(
           backgroundColor: Colors.green,
-          padding: const EdgeInsets.all(1),
+          padding: const EdgeInsets.all(0),
           avatar: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Icon(
-              Icons.favorite,
+              Icons.admin_panel_settings,
               color: Colors.black,
               size: 15.0,
               semanticLabel: 'Text to announce in accessibility modes',
@@ -126,11 +108,11 @@ class _GroupCardState extends State<GroupCard> {
       case StatusUserForGroup.follower:
         return Chip(
           backgroundColor: Colors.blue,
-          padding: const EdgeInsets.all(1),
+          padding: const EdgeInsets.all(0),
           avatar: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Icon(
-              Icons.favorite,
+              Icons.visibility,
               color: Colors.black,
               size: 15.0,
               semanticLabel: 'Text to announce in accessibility modes',
@@ -144,11 +126,11 @@ class _GroupCardState extends State<GroupCard> {
       default:
         return Chip(
           backgroundColor: Colors.orange,
-          padding: const EdgeInsets.all(1),
+          padding: const EdgeInsets.all(0),
           avatar: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Icon(
-              Icons.favorite,
+              Icons.search,
               color: Colors.black,
               size: 15.0,
               semanticLabel: 'Text to announce in accessibility modes',
