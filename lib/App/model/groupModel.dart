@@ -1,3 +1,6 @@
+import 'package:ematch/App/model/userModel.dart';
+import 'package:ematch/App/repository/userRepository.dart';
+
 enum StatusUserForGroup {
   none,
   admin,
@@ -58,5 +61,10 @@ class GroupModel {
       return StatusUserForGroup.follower;
     }
     return StatusUserForGroup.none;
+  }
+
+  Future<List<UserModel>> detailedGroupParticipants() async {
+    UserRepository rep = UserRepository();
+    return rep.getUserByList(this.groupUser);
   }
 }
