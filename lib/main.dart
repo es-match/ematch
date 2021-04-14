@@ -30,7 +30,7 @@ class AppWidget extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(), //TestPageViewer(),
+        '/': (context) => TestPageViewer(), //LoginPage(),
         '/home': (context) => MainPage(),
       },
     );

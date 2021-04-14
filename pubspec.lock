@@ -78,6 +78,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  dartz:
+    dependency: transitive
+    description:
+      name: dartz
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.2"
   fake_async:
     dependency: transitive
     description:
@@ -163,6 +170,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  geocoder:
+    dependency: "direct main"
+    description:
+      name: geocoder
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   geolocator:
     dependency: "direct main"
     description:
@@ -324,6 +338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.10"
+  search_cep:
+    dependency: "direct main"
+    description:
+      name: search_cep
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0+2"
   simple_gesture_detector:
     dependency: transitive
     description:
@@ -420,6 +441,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.5.1"
+  xml2json:
+    dependency: transitive
+    description:
+      name: xml2json
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.4.0"
   yaml:
     dependency: transitive
     description:

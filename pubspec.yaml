@@ -42,7 +42,9 @@ dependencies:
   scrollable_positioned_list: ^0.1.10  
   google_maps_flutter: ^2.0.1
   geolocator: ^6.2.1
-  haversine_distance: ^1.2.1  
+  haversine_distance: ^1.2.1 
+  search_cep: ^3.0.0+2
+  geocoder: ^0.2.1
   
   
 dev_dependencies:
