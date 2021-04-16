@@ -2,9 +2,11 @@
 
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/background_painter.dart';
+import 'package:ematch/App/view/OwnerViews/_ownerMainPage.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'UserViews/_userMainPage.dart';
 
@@ -17,27 +19,41 @@ class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   bool signupVisible = false;
+  bool loadingVisible = false;
   String email;
   String password;
   String name;
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   void login() {
+    showLoadBar();
     if (formkey.currentState.validate()) {
       formkey.currentState.save();
       signin(email, password, context).then((value) {
         if (value != null) {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MainPage(),
-              ));
+          if (myRole == "Standard") {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MainPage(),
+                ));
+          } else if (myRole == "PlaceOwner") {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OwnerMainPage(),
+                ));
+          }
+        } else {
+          hideLoadBar();
         }
-      });
+      }).catchError(() => hideLoadBar());
     }
+    hideLoadBar();
   }
 
   void createUser() {
+    showLoadBar();
     if (formkey.currentState.validate()) {
       formkey.currentState.save();
       signUp(email, password, name, context).then((value) {
@@ -47,9 +63,12 @@ class _LoginPageState extends State<LoginPage>
               MaterialPageRoute(
                 builder: (context) => MainPage(),
               ));
+        } else {
+          hideLoadBar();
         }
-      });
+      }).catchError(() => hideLoadBar());
     }
+    hideLoadBar();
   }
 
   @override
@@ -68,6 +87,18 @@ class _LoginPageState extends State<LoginPage>
   void hideSignUp() {
     setState(() {
       signupVisible = false;
+    });
+  }
+
+  void showLoadBar() {
+    setState(() {
+      loadingVisible = true;
+    });
+  }
+
+  void hideLoadBar() {
+    setState(() {
+      loadingVisible = false;
     });
   }
 
@@ -100,141 +131,174 @@ class _LoginPageState extends State<LoginPage>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Image(
-                          image: AssetImage("assets/logo4esmatch.png"),
-                          height: 140.0),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[900],
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: TextFormField(
-                          style: TextStyle(
-                            color: Colors.deepOrange,
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(8.0),
-                              ),
-                              borderSide: new BorderSide(
-                                color: Colors.deepOrange,
-                                width: 1.0,
-                              ),
+                      Visibility(
+                        visible: !loadingVisible,
+                        child: Column(
+                          children: [
+                            Image(
+                                image: AssetImage("assets/logo4esmatch.png"),
+                                height: 140.0),
+                            SizedBox(
+                              height: 20,
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.deepOrange, width: 1.0),
-                            ),
-                            labelText: "E-mail",
-                            labelStyle: TextStyle(
-                              color: Colors.deepOrange,
-                            ),
-                          ),
-                          validator: MultiValidator([
-                            RequiredValidator(errorText: "Campo obrigatório"),
-                            EmailValidator(errorText: "E-mail Inválido"),
-                          ]),
-                          onChanged: (val) {
-                            email = val;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey[900],
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: TextFormField(
-                            style: TextStyle(
-                              color: Colors.deepOrange,
-                            ),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              border: new OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  const Radius.circular(8.0),
+                            SingleChildScrollView(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[900],
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                borderSide: new BorderSide(
-                                  color: Colors.deepOrange,
-                                  width: 1.0,
+                                child: TextFormField(
+                                  style: TextStyle(
+                                    color: Colors.deepOrange,
+                                  ),
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(8.0),
+                                      ),
+                                      borderSide: new BorderSide(
+                                        color: Colors.deepOrange,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.deepOrange, width: 1.0),
+                                    ),
+                                    labelText: "E-mail",
+                                    labelStyle: TextStyle(
+                                      color: Colors.deepOrange,
+                                    ),
+                                  ),
+                                  validator: MultiValidator([
+                                    RequiredValidator(
+                                        errorText: "Campo obrigatório"),
+                                    EmailValidator(
+                                        errorText: "E-mail Inválido"),
+                                  ]),
+                                  onChanged: (val) {
+                                    email = val;
+                                  },
                                 ),
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.deepOrange, width: 1.0),
-                              ),
-                              labelText: "Senha",
-                              labelStyle: TextStyle(
-                                color: Colors.deepOrange,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 15.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[900],
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: TextFormField(
+                                  style: TextStyle(
+                                    color: Colors.deepOrange,
+                                  ),
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    border: new OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                        const Radius.circular(8.0),
+                                      ),
+                                      borderSide: new BorderSide(
+                                        color: Colors.deepOrange,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.deepOrange, width: 1.0),
+                                    ),
+                                    labelText: "Senha",
+                                    labelStyle: TextStyle(
+                                      color: Colors.deepOrange,
+                                    ),
+                                  ),
+                                  validator: MultiValidator([
+                                    RequiredValidator(
+                                        errorText:
+                                            "É necessário inserir a senha"),
+                                    MinLengthValidator(6,
+                                        errorText: "Mínimo de 6 caractéres"),
+                                  ]),
+                                  onChanged: (val) {
+                                    password = val;
+                                  },
+                                ),
                               ),
                             ),
-                            validator: MultiValidator([
-                              RequiredValidator(
-                                  errorText: "É necessário inserir a senha"),
-                              MinLengthValidator(6,
-                                  errorText: "Mínimo de 6 caractéres"),
-                            ]),
-                            onChanged: (val) {
-                              password = val;
-                            },
-                          ),
+                            Visibility(
+                              visible: signupVisible,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[900],
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.deepOrange,
+                                    ),
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: const BorderRadius.all(
+                                          const Radius.circular(8.0),
+                                        ),
+                                        borderSide: new BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.deepOrange,
+                                            width: 1.0),
+                                      ),
+                                      labelText: "Nome/Apelido",
+                                      labelStyle: TextStyle(
+                                        color: Colors.deepOrange,
+                                      ),
+                                    ),
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                        errorText: "Campo Obrigatório",
+                                      )
+                                    ]),
+                                    onChanged: (val) {
+                                      name = val;
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            _createAccButton(),
+                            _signInButton(),
+                            _signInButtonGoogle(),
+                            _signInModeButton(),
+                            _signUpModeButton(),
+                          ],
                         ),
                       ),
                       Visibility(
-                        visible: signupVisible,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[900],
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: TextFormField(
+                        visible: loadingVisible,
+                        child: Column(
+                          children: [
+                            Image(
+                                image: AssetImage("assets/loadingenter.gif"),
+                                height: 140.0),
+                            Text(
+                              "Por favor, aguarde...",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.deepOrange,
+                                fontSize: 15,
+                                color: Colors.white,
                               ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                    const Radius.circular(8.0),
-                                  ),
-                                  borderSide: new BorderSide(
-                                    color: Colors.deepOrange,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.deepOrange, width: 1.0),
-                                ),
-                                labelText: "Nome/Apelido",
-                                labelStyle: TextStyle(
-                                  color: Colors.deepOrange,
-                                ),
-                              ),
-                              validator: MultiValidator([
-                                RequiredValidator(
-                                  errorText: "Campo Obrigatório",
-                                )
-                              ]),
-                              onChanged: (val) {
-                                name = val;
-                              },
                             ),
-                          ),
+                          ],
                         ),
                       ),
-                      _createAccButton(),
-                      _signInButton(),
-                      _signInButtonGoogle(),
-                      _signInModeButton(),
-                      _signUpModeButton(),
                     ],
                   ),
                 ),
@@ -476,6 +540,7 @@ class _LoginPageState extends State<LoginPage>
         child: OutlineButton(
           splashColor: Colors.grey,
           onPressed: () {
+            showLoadBar();
             signInWithGoogle().then((result) {
               if (result != null) {
                 Navigator.of(context).pushReplacement(
@@ -485,8 +550,10 @@ class _LoginPageState extends State<LoginPage>
                     },
                   ),
                 );
-              } else {}
-            });
+              } else {
+                hideLoadBar();
+              }
+            }).catchError(() => hideLoadBar());
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
