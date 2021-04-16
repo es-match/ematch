@@ -1,6 +1,8 @@
 import 'package:ematch/App/controller/locationController.dart';
 import 'package:ematch/App/model/locationModel.dart';
+import 'package:ematch/App/view/OwnerViews/locationPage/editLocationAvaiability.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class EditLocationPage extends StatefulWidget {
   final LocationModel locationModel;
@@ -18,7 +20,13 @@ class _EditLocationPageState extends State<EditLocationPage> {
   final TextEditingController _endereco = TextEditingController();
   final TextEditingController _numero = TextEditingController();
 
+  GoogleMapController googleMapController;
   LocationController locationController;
+  LatLng _currPosition;
+  Set<Marker> marker = Set();
+
+  bool isEditMode;
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +42,25 @@ class _EditLocationPageState extends State<EditLocationPage> {
     locationController.city.text = widget.locationModel.city;
     locationController.address.text = widget.locationModel.address;
     locationController.number.text = widget.locationModel.number;
+
+    isEditMode = false;
+
+    _currPosition = LatLng(widget.locationModel.geolocation.dLatitude,
+        widget.locationModel.geolocation.dLongitude);
+    setMarker();
+  }
+
+  void setMarker() {
+    marker = {};
+    //ADICIONA POSICAO ATUAL
+    marker.add(//MARKER PRINCIPAL
+        Marker(
+      markerId: MarkerId("currentPosition"),
+      position: _currPosition,
+      onTap: () {
+        print('Tapped');
+      },
+    ));
   }
 
   @override
@@ -43,72 +70,142 @@ class _EditLocationPageState extends State<EditLocationPage> {
           title: Text("Editar Local"),
         ),
         body: Builder(builder: (context) {
-          return Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Expanded(
-                      flex: 6,
-                      child: Column(
-                        children: [
-                          Text("Nome da Quadra"),
-                          TextField(
-                            controller: locationController.name,
-                          ),
-                          Text("CEP"),
-                          TextField(
-                            controller: locationController.cep,
-                          ),
-                          Text("Cidade"),
-                          TextField(
-                            controller: locationController.city,
-                          ),
-                          Text("Endereço"),
-                          TextField(
-                            controller: locationController.address,
-                          ),
-                          Text("Número"),
-                          TextField(
-                            keyboardType: TextInputType.number,
-                            controller: locationController.number,
-                          ),
-                        ],
-                      )),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    // ignore: deprecated_member_use
-                    child: RaisedButton(
-                      onPressed: () => {
-                        (_name.text.isEmpty ||
-                                _cep.text.isEmpty ||
-                                _cidade.text.isEmpty ||
-                                _endereco.text.isEmpty ||
-                                _numero.text.isEmpty)
-                            // ignore: deprecated_member_use
-                            ? Scaffold.of(context).showSnackBar(SnackBar(
-                                content:
-                                    Text('Por favor preencha todos os campos'),
-                                action: SnackBarAction(
-                                  label: 'OK',
-                                  onPressed: () {
-                                    // Some code to undo the change.
-                                  },
-                                ),
-                              ))
-                            : locationController
-                                .editLocation(widget.locationModel.id)
-                      },
-                      child:
-                          Text("Editar ${widget.locationModel.locationName}"),
-                    ),
-                  ),
-                ],
+          return SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        flex: 6,
+                        child: Column(
+                          children: [
+                            Text("Nome da Quadra"),
+                            TextField(
+                              readOnly: !isEditMode,
+                              controller: locationController.name,
+                            ),
+                            Text("CEP"),
+                            TextField(
+                              readOnly: !isEditMode,
+                              controller: locationController.cep,
+                            ),
+                            Text("Cidade"),
+                            TextField(
+                              readOnly: !isEditMode,
+                              controller: locationController.city,
+                            ),
+                            Text("Endereço"),
+                            TextField(
+                              readOnly: !isEditMode,
+                              controller: locationController.address,
+                            ),
+                            Text("Número"),
+                            TextField(
+                              readOnly: !isEditMode,
+                              keyboardType: TextInputType.number,
+                              controller: locationController.number,
+                            ),
+                            Container(
+                              height: 250,
+                              child: GoogleMap(
+                                initialCameraPosition: CameraPosition(
+                                    target: _currPosition, zoom: 14),
+                                onMapCreated: (controller) {
+                                  googleMapController = controller;
+                                },
+                                markers: marker,
+                              ),
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                // ignore: deprecated_member_use
+                                child: isEditMode == true
+                                    ? buildEditModeButtons(context)
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditLocationAvaiability(
+                                                              widget
+                                                                  .locationModel)));
+                                            },
+                                            child: Text("Horários"),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                isEditMode = true;
+                                              });
+                                            },
+                                            child: Text("Editar Dados"),
+                                          ),
+                                        ],
+                                      ),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
               ),
             ),
           );
         }));
+  }
+
+  Row buildEditModeButtons(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton(
+          onPressed: () => {
+            (_name.text.isEmpty ||
+                    _cep.text.isEmpty ||
+                    _cidade.text.isEmpty ||
+                    _endereco.text.isEmpty ||
+                    _numero.text.isEmpty)
+                ? Scaffold.of(context)
+                    // ignore: deprecated_member_use
+                    .showSnackBar(SnackBar(
+                    content: Text('Preenchar todos os campos'),
+                    action: SnackBarAction(
+                      label: 'OK',
+                      onPressed: () {
+                        setState(() {
+                          isEditMode = true;
+                        });
+                        // Some code to undo the change.
+                      },
+                    ),
+                  ))
+                : locationController.editLocation(widget.locationModel.id)
+          },
+          child: Text("Finalizar"),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              isEditMode = false;
+            });
+          },
+          child: Text("Cancelar"),
+        ),
+      ],
+    );
   }
 }
