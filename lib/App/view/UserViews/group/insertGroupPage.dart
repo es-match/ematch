@@ -5,6 +5,8 @@ import 'package:ematch/App/model/activityModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:flutter/material.dart';
 
+import 'groupDetailsPage.dart';
+
 class NewGroupPage extends StatefulWidget {
   @override
   _NewGroupPageState createState() => _NewGroupPageState();
@@ -36,7 +38,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           ? Center(child: CircularProgressIndicator())
           : buildBody(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           GroupModel group = GroupModel();
           group.groupName = tituloController.text;
           group.groupDescription = descricaoController.text;
@@ -45,8 +47,14 @@ class _NewGroupPageState extends State<NewGroupPage> {
           group.groupPending = [];
           group.groupAdmins = [myUserid];
           group.userCreator = myUserid;
-          group.groupUser = [myUserid];
-          groupController.insertGroup(group);
+          group.groupUsers = [myUserid];
+          group = await groupController.insertGroup(group);
+
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => GroupDetailsPage(group: group),
+              ));
         },
         child: Text("Criar"),
       ),

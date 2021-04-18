@@ -16,7 +16,7 @@ class GroupController {
     return repository.getGroupsByName(groupName);
   }
 
-  void insertGroup(GroupModel group) {
+  Future<GroupModel> insertGroup(GroupModel group) {
     return repository.insertGroup(group);
   }
 }

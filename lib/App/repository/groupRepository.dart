@@ -37,13 +37,13 @@ class GroupRepository {
     return groups;
   }
 
-  void insertGroup(GroupModel group) async {
+  Future<GroupModel> insertGroup(GroupModel group) async {
     var _body = jsonEncode({
       "groupName": group.groupName,
       "groupDescription": group.groupDescription,
       "groupAdmins": group.userCreator,
       "groupPending": group.groupPending,
-      "groupUser": group.userCreator,
+      "groupUsers": group.userCreator,
       "imageUrl": group.imageUrl,
       "sportID": group.sportID,
       "sportRef": null,
@@ -63,5 +63,11 @@ class GroupRepository {
     );
 
     print(response.statusCode);
+    Map<String, dynamic> l;
+    if (response.statusCode == 200) {
+      l = json.decode(response.body);
+      group.id = l['id'];
+    }
+    return group;
   }
 }

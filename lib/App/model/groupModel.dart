@@ -13,7 +13,7 @@ class GroupModel {
   String groupDescription;
   List<String> groupAdmins;
   List<String> groupPending;
-  List<String> groupUser;
+  List<String> groupUsers;
   String sportID;
   String imageUrl;
   String userCreator;
@@ -23,7 +23,7 @@ class GroupModel {
       this.groupName,
       this.groupAdmins,
       this.groupPending,
-      this.groupUser,
+      this.groupUsers,
       this.imageUrl,
       this.userCreator});
 
@@ -33,7 +33,19 @@ class GroupModel {
     groupDescription = json['groupDescription'];
     groupAdmins = json['groupAdmins'].cast<String>();
     groupPending = json['groupPending'].cast<String>();
-    groupUser = json['groupUser'].cast<String>();
+    groupUsers = json['groupUsers'].cast<String>();
+    sportID = json['sportID'];
+    imageUrl = json['imageUrl'];
+    userCreator = json['userCreator'];
+  }
+
+  GroupModel.fromJson2(Map<String, dynamic> json) {
+    id = json['id'];
+    groupName = json['groupName'];
+    groupDescription = json['groupDescription'];
+    groupAdmins = json['groupAdmins'].cast<String>();
+    groupPending = json['groupPending'].cast<String>();
+    groupUsers = json['groupUsers'].cast<String>();
     sportID = json['sportID'];
     imageUrl = json['imageUrl'];
     userCreator = json['userCreator'];
@@ -46,7 +58,7 @@ class GroupModel {
     data['groupDescription'] = this.groupDescription;
     data['groupAdmins'] = this.groupAdmins;
     data['groupPending'] = this.groupPending;
-    data['groupUser'] = this.groupUser;
+    data['groupUsers'] = this.groupUsers;
     data['sportID'] = this.sportID;
     data['imageUrl'] = this.imageUrl;
     data['userCreator'] = this.userCreator;
@@ -57,7 +69,7 @@ class GroupModel {
     if (this.groupAdmins.contains(userId)) {
       return StatusUserForGroup.admin;
     }
-    if (this.groupUser.contains(userId)) {
+    if (this.groupUsers.contains(userId)) {
       return StatusUserForGroup.follower;
     }
     return StatusUserForGroup.none;
@@ -65,6 +77,6 @@ class GroupModel {
 
   Future<List<UserModel>> detailedGroupParticipants() async {
     UserRepository rep = UserRepository();
-    return rep.getUserByList(this.groupUser);
+    return rep.getUserByList(this.groupUsers);
   }
 }
