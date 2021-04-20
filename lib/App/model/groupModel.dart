@@ -15,6 +15,7 @@ class GroupModel {
   List<String> groupPending;
   List<String> groupUsers;
   String sportID;
+  String sportName;
   String imageUrl;
   String userCreator;
 
@@ -25,6 +26,8 @@ class GroupModel {
       this.groupPending,
       this.groupUsers,
       this.imageUrl,
+      this.sportID,
+      this.sportName,
       this.userCreator});
 
   GroupModel.fromJson(Map<String, dynamic> json) {
@@ -35,18 +38,7 @@ class GroupModel {
     groupPending = json['groupPending'].cast<String>();
     groupUsers = json['groupUsers'].cast<String>();
     sportID = json['sportID'];
-    imageUrl = json['imageUrl'];
-    userCreator = json['userCreator'];
-  }
-
-  GroupModel.fromJson2(Map<String, dynamic> json) {
-    id = json['id'];
-    groupName = json['groupName'];
-    groupDescription = json['groupDescription'];
-    groupAdmins = json['groupAdmins'].cast<String>();
-    groupPending = json['groupPending'].cast<String>();
-    groupUsers = json['groupUsers'].cast<String>();
-    sportID = json['sportID'];
+    sportName = json['sportName'];
     imageUrl = json['imageUrl'];
     userCreator = json['userCreator'];
   }
@@ -60,6 +52,7 @@ class GroupModel {
     data['groupPending'] = this.groupPending;
     data['groupUsers'] = this.groupUsers;
     data['sportID'] = this.sportID;
+    data['sportName'] = this.sportName;
     data['imageUrl'] = this.imageUrl;
     data['userCreator'] = this.userCreator;
     return data;

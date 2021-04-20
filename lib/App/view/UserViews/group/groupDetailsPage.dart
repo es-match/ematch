@@ -5,6 +5,7 @@ import 'package:ematch/App/model/userModel.dart';
 import 'package:ematch/App/view/UserViews/eventPages/selectEventLocationPage.dart';
 import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:intl/intl.dart';
 
 class GroupDetailsPage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
       backgroundColor: Colors.transparent,
       // backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text("${widget.group.groupName} (${widget.group.sportID})"),
+        title: Text("${widget.group.groupName} (${widget.group.sportName})"),
       ),
       body: FutureBuilder(
         future: Future.wait([_getEventsByGroupID, _detailedGroupParticipants]),
@@ -214,23 +215,53 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
     );
   }
 
+  bool descTextShowFlag = false;
+
   Padding buildDescription() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Descrição"),
-          TextField(
-            enabled: false,
-            textInputAction: TextInputAction.done,
-            maxLines: 5,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  width: 1,
+          Text(
+            "Descrição",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(3.0),
+          ),
+          new Container(
+            margin: EdgeInsets.all(8.0),
+            child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                    widget.group.groupDescription != ""
+                        ? widget.group.groupDescription
+                        : "sem descrição...",
+                    style: TextStyle(color: Colors.white),
+                    maxLines: descTextShowFlag ? 8 : 2,
+                    textAlign: TextAlign.start),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      descTextShowFlag = !descTextShowFlag;
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      descTextShowFlag
+                          ? Text("Mostrar menos...",
+                              style: TextStyle(color: Colors.blue))
+                          : Text("Mostrar mais...",
+                              style: TextStyle(color: Colors.blue))
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ],
@@ -252,7 +283,18 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
         width: MediaQuery.of(context).size.width,
         child: Align(
           alignment: Alignment.topRight,
-          child: ElevatedButton(child: Text('+ Seguir'), onPressed: () => {}),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.white,
+            ),
+            child: Text(
+              '+ Seguir',
+              style: TextStyle(
+                color: Colors.lightBlue,
+              ),
+            ),
+            onPressed: () => {},
+          ),
         ),
       )
       // Container(

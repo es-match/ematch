@@ -31,11 +31,16 @@ class _NewGroupPageState extends State<NewGroupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
+      drawerScrimColor: Colors.white,
       appBar: AppBar(
         title: Text('Novo Grupo'),
       ),
       body: activityList == null
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ))
           : buildBody(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -72,13 +77,25 @@ class _NewGroupPageState extends State<NewGroupPage> {
               //   child: Text('Título do Grupo'),
               // ),
               TextField(
+                cursorColor: Colors.white,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
                 controller: tituloController,
                 decoration: InputDecoration(
-                    alignLabelWithHint: true,
-                    labelText: 'Título do Grupo',
-                    labelStyle: TextStyle(
-                      color: Colors.white,
-                    )),
+                  fillColor: Colors.white,
+                  alignLabelWithHint: true,
+                  counterStyle: TextStyle(color: Colors.white),
+                  labelText: 'Título do Grupo',
+                  labelStyle: TextStyle(color: Colors.white),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.orangeAccent, width: 1.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                  ),
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -91,7 +108,11 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 controller: descricaoController,
                 maxLines: 5,
                 maxLength: 50,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
                 decoration: InputDecoration(
+                  fillColor: Colors.white,
                   labelText: 'Descrição do Grupo',
                   labelStyle: TextStyle(
                     color: Colors.white,
@@ -109,7 +130,12 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Divider(),
               ),
-              Text("Selecione o esporte"),
+              Text(
+                "Selecione o esporte:",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
               activityList == null
                   ? Center(child: CircularProgressIndicator())
                   : Column(
@@ -128,7 +154,13 @@ class _NewGroupPageState extends State<NewGroupPage> {
 
     activityList.forEach((element) {
       return radiobuttons.add(RadioListTile<ActivityModel>(
-        title: Text(element.sportName),
+        tileColor: Colors.grey[900],
+        title: Text(
+          element.sportName,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
         value: element,
         groupValue: _selectedActivity,
         onChanged: (ActivityModel value) {

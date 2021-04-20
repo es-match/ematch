@@ -60,7 +60,7 @@ class _GroupCardState extends State<GroupCard> {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        "(SportName)",
+                        "(" + widget.group.sportName + ")",
                         style: TextStyle(
                             color: Colors.white, fontStyle: FontStyle.italic),
                       ),
