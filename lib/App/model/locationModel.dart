@@ -8,6 +8,8 @@ class LocationModel {
   String imageUrl;
   Geolocation geolocation;
   Null createDate;
+  String avaiableDays;
+  String avaiableHours;
 
   LocationModel(
       {this.id,
@@ -18,7 +20,9 @@ class LocationModel {
       this.number,
       this.imageUrl,
       this.geolocation,
-      this.createDate});
+      this.createDate,
+      this.avaiableDays,
+      this.avaiableHours});
 
   LocationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -31,6 +35,9 @@ class LocationModel {
     geolocation = json['geolocation'] != null
         ? new Geolocation.fromJson(json['geolocation'])
         : null;
+    avaiableDays = json['avaiableDays'];
+    avaiableHours = json['avaiableHours'];
+
     createDate = json['createDate'];
   }
 
@@ -47,6 +54,8 @@ class LocationModel {
       data['geolocation'] = this.geolocation.toJson();
     }
     data['createDate'] = this.createDate;
+    data['avaiableDays'] = this.avaiableDays;
+    data['avaiableHours'] = this.avaiableHours;
     return data;
   }
 }

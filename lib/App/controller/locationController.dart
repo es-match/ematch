@@ -36,6 +36,27 @@ class LocationController {
   }
 
   Future<List<LocationModel>> getLocations() {
-    return repository.getLocations() ;
+    return repository.getLocations();
+  }
+
+  void editAvaiability(
+      String id, Map<int, bool> hoursList, Map<String, bool> daysList) {
+    String _daysList = "";
+    String _hoursList = "";
+
+    daysList.forEach((key, value) {
+      if (value)
+        _daysList = _daysList.isNotEmpty
+            ? "$_daysList, ${key.toString()}"
+            : key.toString();
+    });
+
+    hoursList.forEach((key, value) {
+      if (value)
+        _hoursList = _hoursList.isNotEmpty
+            ? "$_hoursList, ${key.toString()}"
+            : key.toString();
+    });
+    repository.editAvaiability(id, _hoursList, _daysList);
   }
 }

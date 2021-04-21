@@ -77,4 +77,21 @@ class LocationRepository {
     );
     print(response.statusCode);
   }
+
+  void editAvaiability(String id, String hoursList, String daysList) async {
+    var _body = jsonEncode(
+      <String, String>{
+        "avaiableDays": daysList,
+        "avaiableHours": hoursList,
+      },
+    );
+    final response = await patch(
+      url + "avaiability/$id",
+      headers: <String, String>{  
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: _body,
+    );
+    print(response.statusCode);
+  }
 }
