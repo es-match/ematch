@@ -404,7 +404,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   Stack buildTopImageWidget(BuildContext context) {
     return Stack(children: [
       Container(
-        height: 180,
+        height: 170,
         width: MediaQuery.of(context).size.width,
         child: Image.network(
           widget.group.imageUrl,
