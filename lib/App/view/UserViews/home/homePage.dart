@@ -5,6 +5,8 @@ import 'package:ematch/App/custom_widgets/eventList.dart';
 // ignore: unused_import
 import 'package:ematch/App/custom_widgets/groupList.dart';
 import 'package:ematch/App/model/eventModel.dart';
+import 'package:ematch/App/view/UserViews/searchGroupPage.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,11 +54,54 @@ class _HomePageState extends State<HomePage> {
 
   dynamic buildBody() {
     if (_eventList.length == 0 || _eventList == null) {
-      return Align(
-        alignment: Alignment.topCenter,
-        child: Text(
-          "Vocë náo tem novos eventos pendentes, crie agora mesmo um novo grupo e inicie um evento",
-          style: TextStyle(color: Colors.white, fontSize: 25),
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Align(
+          alignment: Alignment.center,
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: "Sem eventos atuais :(\nQue tal montar em ",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+                wordSpacing: 5,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'seus grupos',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap = () {
+                      widget.changeIndexFunction(2);
+                    },
+                ),
+                TextSpan(
+                  text: ' o próprio evento ou procurar em ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                ),
+                TextSpan(
+                  text: 'outros grupos?',
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
+                  recognizer: new TapGestureRecognizer()
+                    ..onTap = () {
+                      widget.changeIndexFunction(1);
+                    },
+                ),
+              ],
+            ),
+          ),
         ),
       );
     } else {
