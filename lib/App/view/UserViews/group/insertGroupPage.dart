@@ -48,7 +48,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
           group.groupName = tituloController.text;
           group.groupDescription = descricaoController.text;
           group.imageUrl = _selectedActivity.imageUrl;
-          group.sportID = _selectedActivity.id;
+          group.activityID = _selectedActivity.id;
           group.groupPending = [];
           group.groupAdmins = [myUserid];
           group.userCreator = myUserid;
@@ -77,7 +77,6 @@ class _NewGroupPageState extends State<NewGroupPage> {
               //   child: Text('Título do Grupo'),
               // ),
               TextField(
-                cursorColor: Colors.white,
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -85,15 +84,21 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   alignLabelWithHint: true,
-                  counterStyle: TextStyle(color: Colors.white),
                   labelText: 'Título do Grupo',
-                  labelStyle: TextStyle(color: Colors.white),
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                  ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.orangeAccent, width: 1.0),
+                    borderSide: BorderSide(
+                      color: Colors.deepOrange,
+                      width: 1.0,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide: BorderSide(
+                      color: Colors.grey[800],
+                      width: 1.0,
+                    ),
                   ),
                 ),
               ),
@@ -102,7 +107,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Divider(),
+                // child: Divider(),
               ),
               TextField(
                 controller: descricaoController,
@@ -118,22 +123,28 @@ class _NewGroupPageState extends State<NewGroupPage> {
                     color: Colors.white,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.orangeAccent, width: 1.0),
+                    borderSide: BorderSide(
+                      color: Colors.deepOrange,
+                      width: 1.0,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    borderSide: BorderSide(
+                      color: Colors.grey[800],
+                      width: 1.0,
+                    ),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Divider(),
+                // child: Divider(),
               ),
               Text(
-                "Selecione o esporte:",
+                "Selecione a atividade:",
                 style: TextStyle(
-                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               activityList == null
@@ -141,7 +152,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                   : Column(
                       children: buildRadioList(),
                     ),
-              Divider(),
+              // Divider(),
             ],
           ),
         ),
@@ -156,7 +167,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
       return radiobuttons.add(RadioListTile<ActivityModel>(
         tileColor: Colors.grey[900],
         title: Text(
-          element.sportName,
+          element.activityName,
           style: TextStyle(
             color: Colors.white,
           ),

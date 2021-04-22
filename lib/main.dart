@@ -11,9 +11,44 @@ void main() {
 
 class AppWidget extends StatelessWidget {
   @override
+  // Widget build(BuildContext context) {
+  //   // var materialApp = LitAuthInit(
+  //   //   child:
+  //   var materialApp = MaterialApp(
+  //     title: "E.S.Match",
+  //     theme: ThemeData(
+  //       textTheme: Theme.of(context)
+  //           .textTheme
+  //           .apply(bodyColor: Colors.white, displayColor: Colors.white),
+  //       iconTheme: IconThemeData(color: Colors.white),
+  //       cardTheme: CardTheme(color: Color.fromRGBO(69, 117, 104, 1)),
+  //       scaffoldBackgroundColor: Colors.black,
+  //       dividerTheme:
+  //           DividerThemeData(color: Colors.white, thickness: 2, space: 2),
+  //       unselectedWidgetColor: Colors.white,
+  //       primarySwatch: Colors.deepOrange,
+  //     ),
+  //     initialRoute: '/',
+  //     routes: {
+  //       '/': (context) => TestPageViewer(), //LoginPage(),
+  //       '/home': (context) => MainPage(),
+  //     },
+  //   );
+  //   return materialApp;
+  // }
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //       title: 'E.S.MATCH',
+  //       theme: ThemeData(
+  //         primarySwatch: Colors.deepOrange,
+  //       ),
+  //       // home: LoginPage(),
+  //       home: TestPageViewer() //MainPage(),
+  //       );
+  // }
+  //
+  //
   Widget build(BuildContext context) {
-    // var materialApp = LitAuthInit(
-    //   child:
     var materialApp = MaterialApp(
       title: "E.S.Match",
       theme: ThemeData(
@@ -29,21 +64,8 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
       ),
       initialRoute: '/',
-      routes: {
-        '/': (context) => TestPageViewer(), //LoginPage(),
-        '/home': (context) => MainPage(),
-      },
+      home: LoginPage(),
     );
     return materialApp;
   }
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //       title: 'E.S.MATCH',
-  //       theme: ThemeData(
-  //         primarySwatch: Colors.deepOrange,
-  //       ),
-  //       // home: LoginPage(),
-  //       home: TestPageViewer() //MainPage(),
-  //       );
-  // }
 }

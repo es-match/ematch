@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage>
                         child: Column(
                           children: [
                             Image(
-                                image: AssetImage("assets/logo4esmatch.png"),
+                                image: AssetImage("assets/icon/icon_logo.png"),
                                 height: 140.0),
                             SizedBox(
                               height: 20,

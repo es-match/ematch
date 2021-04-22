@@ -45,8 +45,8 @@ class GroupRepository {
       "groupPending": group.groupPending,
       "groupUsers": group.userCreator,
       "imageUrl": group.imageUrl,
-      "sportID": group.sportID,
-      "sportName": "",
+      "activityID": group.activityID,
+      "activityName": "",
       "createDate": DateTime.now().millisecondsSinceEpoch,
       "userCreator": group.userCreator,
     });
@@ -67,7 +67,7 @@ class GroupRepository {
     if (response.statusCode == 200) {
       l = json.decode(response.body);
       group.id = l['id'];
-      group.sportName = l['sportName'];
+      group.activityName = l['activityName'];
     }
     return group;
   }

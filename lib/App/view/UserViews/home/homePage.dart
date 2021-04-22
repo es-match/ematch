@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
       return Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Nenhum evento futuro",
-          style: TextStyle(color: Colors.white, fontSize: 14),
+          "Vocë náo tem novos eventos pendentes, crie agora mesmo um novo grupo e inicie um evento",
+          style: TextStyle(color: Colors.white, fontSize: 25),
         ),
       );
     } else {

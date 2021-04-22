@@ -1,17 +1,17 @@
 class ActivityModel {
   String id;
-  String sportDescription;
-  String sportName;
+  String activityDescription;
+  String activityName;
   String createDate;
   String imageUrl;
 
   ActivityModel(
-      {this.id, this.sportDescription, this.sportName, this.createDate});
+      {this.id, this.activityDescription, this.activityName, this.createDate});
 
   ActivityModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    sportDescription = json['sportDescription'];
-    sportName = json['sportName'];
+    activityDescription = json['activityDescription'];
+    activityName = json['activityName'];
     createDate = json['createDate'];
     imageUrl = json['imageUrl'];
   }
@@ -19,8 +19,8 @@ class ActivityModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['sportDescription'] = this.sportDescription;
-    data['sportName'] = this.sportName;
+    data['activityDescription'] = this.activityDescription;
+    data['activityName'] = this.activityName;
     data['createDate'] = this.createDate;
     data['imageUrl'] = this.imageUrl;
     return data;

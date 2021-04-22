@@ -60,7 +60,7 @@ class _GroupCardState extends State<GroupCard> {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        "(" + widget.group.sportName + ")",
+                        "(" + widget.group.activityName + ")",
                         style: TextStyle(
                             color: Colors.white, fontStyle: FontStyle.italic),
                       ),
@@ -96,13 +96,15 @@ class _GroupCardState extends State<GroupCard> {
             child: Icon(
               Icons.admin_panel_settings,
               color: Colors.black,
-              size: 15.0,
-              semanticLabel: 'Text to announce in accessibility modes',
+              size: 23.0,
             ),
           ),
-          label: Text(
-            "Admin",
-          ),
+          label: Text("Admin",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              )),
         );
         break;
       case StatusUserForGroup.follower:
@@ -114,31 +116,35 @@ class _GroupCardState extends State<GroupCard> {
             child: Icon(
               Icons.visibility,
               color: Colors.black,
-              size: 15.0,
-              semanticLabel: 'Text to announce in accessibility modes',
+              size: 23.0,
             ),
           ),
-          label: Text(
-            "Seguindo",
-          ),
+          label: Text("Seguindo",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              )),
         );
         break;
       default:
         return Chip(
-          backgroundColor: Colors.orange,
+          backgroundColor: Colors.yellow,
           padding: const EdgeInsets.all(0),
           avatar: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Icon(
               Icons.search,
               color: Colors.black,
-              size: 15.0,
-              semanticLabel: 'Text to announce in accessibility modes',
+              size: 23.0,
             ),
           ),
-          label: Text(
-            "Saber Mais",
-          ),
+          label: Text("Saber Mais",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              )),
         );
     }
   }

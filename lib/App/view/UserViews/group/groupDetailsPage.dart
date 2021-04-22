@@ -1,10 +1,12 @@
 import 'package:ematch/App/controller/eventController.dart';
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/model/userModel.dart';
 import 'package:ematch/App/view/UserViews/eventPages/selectEventLocationPage.dart';
 import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:intl/intl.dart';
 
@@ -37,7 +39,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
       backgroundColor: Colors.transparent,
       // backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text("${widget.group.groupName} (${widget.group.sportName})"),
+        title: Text("${widget.group.groupName} (${widget.group.activityName})"),
       ),
       body: FutureBuilder(
         future: Future.wait([_getEventsByGroupID, _detailedGroupParticipants]),
@@ -66,11 +68,21 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           buildTopImageWidget(context),
-          Divider(),
+          // Divider(),
+          SizedBox(
+            height: 20,
+          ),
           buildDescription(),
-          Divider(),
+          // Divider(),
+          //  SizedBox(
+          SizedBox(
+            height: 20,
+          ),
           buildNextEvents(),
-          Divider(),
+          // Divider(),
+          SizedBox(
+            height: 20,
+          ),
           buildGroupParticipantsList(context),
         ],
       ),
@@ -79,26 +91,62 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
 
   Container buildGroupParticipantsList(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(color: Colors.grey[900]),
       width: MediaQuery.of(context).size.width,
-      height: 300,
-      child: Column(
-        children: [
-          Text("Participantes"),
-          Expanded(
-            child: ListView.builder(
-              itemCount: groupParticipants.length,
-              itemBuilder: (context, index) {
-                UserModel user = groupParticipants[index];
-                return ListTile(
-                  title: Text(user.userName),
-                  // title: Card(
-                  //   child: Container(child: Text(user.userName)),
-                  // ),
-                );
-              },
+      height: 500,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  "Participantes (" +
+                      widget.group.groupUsers.length.toString() +
+                      ")",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
+            Expanded(
+              child: ListView.builder(
+                itemCount: groupParticipants.length,
+                itemBuilder: (context, index) {
+                  UserModel user = groupParticipants[index];
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(user.imageUrl),
+                    ),
+                    title: Row(
+                      children: [
+                        Text(user.userName),
+                        Text(
+                          widget.group.groupAdmins.contains(user.id)
+                              ? " Admin"
+                              : "",
+                          style: TextStyle(
+                            color: Colors.orangeAccent,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                    // title: Card(
+                    //   child: Container(child: Text(user.userName)),
+                    // ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -116,18 +164,32 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               children: [
                 Text(
                   "Próximos Eventos",
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
-                ElevatedButton(
-                  child: Text('Agendar Novo Evento'),
-                  onPressed: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SelectEventLocationPage()),
-                    )
-                  },
-                ),
+                widget.group.groupAdmins.contains(myUserid)
+                    ? ElevatedButton(
+                        child: Text(
+                          'Agendar Novo Evento',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SelectEventLocationPage()),
+                          )
+                        },
+                      )
+                    : SizedBox.shrink(),
               ],
             ),
             Expanded(
@@ -223,11 +285,26 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Descrição",
-            style: TextStyle(
-              color: Colors.white,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Text(
+                  "Descrição",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Container(
+                child: Align(
+                    alignment: Alignment.centerRight,
+                    child: buildButtonStatusUser(myUserid)),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(3.0),
@@ -241,7 +318,10 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                     widget.group.groupDescription != ""
                         ? widget.group.groupDescription
                         : "sem descrição...",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                     maxLines: descTextShowFlag ? 8 : 2,
                     textAlign: TextAlign.start),
                 InkWell(
@@ -269,34 +349,70 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
     );
   }
 
+  ElevatedButton buildButtonStatusUser(String myUserId) {
+    switch (widget.group.statusUserInGroup(myUserId)) {
+      case StatusUserForGroup.admin:
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+          ),
+          child: Text(
+            'Admin',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () => {},
+        );
+        break;
+      case StatusUserForGroup.follower:
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.lightBlue,
+          ),
+          child: Text(
+            'Seguindo',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () => {},
+        );
+        break;
+      default:
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.white,
+          ),
+          child: Text(
+            '+ Seguir',
+            style: TextStyle(
+              color: Colors.lightBlue,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () => {},
+        );
+    }
+  }
+
   Stack buildTopImageWidget(BuildContext context) {
     return Stack(children: [
       Container(
-        height: 150,
+        height: 180,
         width: MediaQuery.of(context).size.width,
         child: Image.network(
           widget.group.imageUrl,
-          fit: BoxFit.none,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.fill,
         ),
       ),
-      Container(
-        width: MediaQuery.of(context).size.width,
-        child: Align(
-          alignment: Alignment.topRight,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-            ),
-            child: Text(
-              '+ Seguir',
-              style: TextStyle(
-                color: Colors.lightBlue,
-              ),
-            ),
-            onPressed: () => {},
-          ),
-        ),
-      )
+
       // Container(
       //   height: 150,
       //   width: MediaQuery.of(context).size.width,
@@ -322,7 +438,13 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
           width: MediaQuery.of(context).size.width,
           // ignore: deprecated_member_use
           child: ElevatedButton(
-            child: Text('Agendar Novo Evento'),
+            child: Text(
+              'Agendar Novo Evento',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             onPressed: () => {
               Navigator.push(
                 context,

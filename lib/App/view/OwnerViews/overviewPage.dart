@@ -133,7 +133,7 @@ class _OverViewPageState extends State<OverViewPage> {
                               // Align(
                               //   alignment: Alignment.topRight,
                               //   child: Text(
-                              //     'SportName',
+                              //     'activityName',
                               //     style: TextStyle(
                               //         color: Colors.white,
                               //         fontStyle: FontStyle.italic),
