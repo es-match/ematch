@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 
 class GroupDetailsPage extends StatefulWidget {
   final GroupModel group;
@@ -115,6 +118,12 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                     fontSize: 20,
                   ),
                 ),
+                IconButton(
+                    icon: Icon(Icons.share),
+                    tooltip: 'Increase volume by 10',
+                    onPressed: () {
+                      share(context, widget.group);
+                    })
               ],
             ),
             Expanded(
@@ -480,4 +489,12 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
       ],
     );
   }
+}
+
+void share(BuildContext context, GroupModel group) {
+  final RenderBox box = context.findRenderObject();
+
+  Share.share("${group.groupName} - ${group.groupDescription}",
+      subject: group.groupDescription,
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
 }
