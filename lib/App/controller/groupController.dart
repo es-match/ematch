@@ -1,4 +1,5 @@
 import 'package:ematch/App/model/groupModel.dart';
+import 'package:ematch/App/model/userModel.dart';
 import 'package:ematch/App/repository/groupRepository.dart';
 
 class GroupController {
@@ -18,5 +19,15 @@ class GroupController {
 
   Future<GroupModel> insertGroup(GroupModel group) {
     return repository.insertGroup(group);
+  }
+
+  Future<GroupModel> followGroup(GroupModel group, String userID) {
+    group.groupUsers.add(userID);
+    return repository.updateGroup(group);
+  }
+
+  Future<GroupModel> unfollowGroup(GroupModel group, String userID) {
+    group.groupUsers.remove(userID);
+    return repository.updateGroup(group);
   }
 }

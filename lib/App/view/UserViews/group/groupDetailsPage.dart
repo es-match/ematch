@@ -1,14 +1,19 @@
+import 'dart:html';
+
 import 'package:ematch/App/controller/eventController.dart';
+import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/model/userModel.dart';
+import 'package:ematch/App/repository/groupRepository.dart';
 import 'package:ematch/App/view/UserViews/eventPages/selectEventLocationPage.dart';
 import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 
 class GroupDetailsPage extends StatefulWidget {
   final GroupModel group;
@@ -21,6 +26,7 @@ class GroupDetailsPage extends StatefulWidget {
 
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
   EventController eventController = EventController();
+  GroupController groupController = GroupController();
   Future<List<EventModel>> _getEventsByGroupID;
   List<EventModel> events;
   Future<List<UserModel>> _detailedGroupParticipants;
@@ -112,6 +118,12 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                     fontSize: 20,
                   ),
                 ),
+                IconButton(
+                    icon: Icon(Icons.share),
+                    tooltip: 'Increase volume by 10',
+                    onPressed: () {
+                      share(context, widget.group);
+                    })
               ],
             ),
             Expanded(
@@ -380,7 +392,17 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          onPressed: () => {},
+          onPressed: () async {
+            try {
+              GroupModel updateGroup =
+                  await groupController.unfollowGroup(widget.group, myUserId);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GroupDetailsPage(group: updateGroup)),
+              );
+            } catch (e) {}
+          },
         );
         break;
       default:
@@ -396,7 +418,17 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          onPressed: () => {},
+          onPressed: () async {
+            try {
+              GroupModel updateGroup =
+                  await groupController.followGroup(widget.group, myUserId);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GroupDetailsPage(group: updateGroup)),
+              );
+            } catch (e) {}
+          },
         );
     }
   }
@@ -457,4 +489,12 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
       ],
     );
   }
+}
+
+void share(BuildContext context, GroupModel group) {
+  final RenderBox box = context.findRenderObject();
+
+  Share.share("${group.groupName} - ${group.groupDescription}",
+      subject: group.groupDescription,
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
 }

@@ -45,6 +45,7 @@ dependencies:
   haversine_distance: ^1.2.1 
   search_cep: ^3.0.0+2
   geocoder: ^0.2.1
+  share: ^0.6.2+3
   
   
 dev_dependencies:

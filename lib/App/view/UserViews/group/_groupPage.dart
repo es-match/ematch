@@ -63,7 +63,9 @@ class _GroupPageState extends State<GroupPage> {
           child: Text('Criar um Grupo'),
           onPressed: () => Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => NewGroupPage()),
+            MaterialPageRoute(
+              builder: (context) => NewGroupPage(),
+            ),
           ),
         ),
       ),

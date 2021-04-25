@@ -62,13 +62,47 @@ class GroupRepository {
       body: _body,
     );
 
+    GroupModel newGroup = group;
+
     print(response.statusCode);
     Map<String, dynamic> l;
     if (response.statusCode == 200) {
       l = json.decode(response.body);
-      group.id = l['id'];
-      group.activityName = l['activityName'];
+      newGroup.id = l['id'];
+      newGroup.activityName = l["activityName"];
     }
-    return group;
+    return newGroup;
+  }
+
+  Future<GroupModel> updateGroup(GroupModel group) async {
+    var _body = jsonEncode({
+      "id": group.id,
+      "groupName": group.groupName,
+      "groupDescription": group.groupDescription,
+      "groupAdmins": group.groupAdmins,
+      "groupPending": group.groupPending,
+      "groupUsers": group.groupUsers,
+      "imageUrl": group.imageUrl,
+      "activityID": group.activityID,
+    });
+
+    // String path =
+    //     "http://localhost:5001/esmatch-ce3c9/us-central1/dbGroups/api/v1/groups/";
+    final response = await patch(
+      url,
+      // path,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: _body,
+    );
+
+    GroupModel newGroup = group;
+
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      newGroup = GroupModel.fromJson(json.decode(response.body));
+    }
+    return newGroup;
   }
 }
