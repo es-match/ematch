@@ -78,16 +78,18 @@ class LocationRepository {
     print(response.statusCode);
   }
 
-  void editAvaiability(String id, String hoursList, String daysList) async {
+  void editAvaiability(
+      String id, String hoursList, String daysList, String hourValue) async {
     var _body = jsonEncode(
       <String, String>{
         "avaiableDays": daysList,
         "avaiableHours": hoursList,
+        "hourValue": hourValue,
       },
     );
     final response = await patch(
       url + "avaiability/$id",
-      headers: <String, String>{  
+      headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
       },
       body: _body,

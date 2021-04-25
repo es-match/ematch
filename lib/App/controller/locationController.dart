@@ -1,4 +1,6 @@
+import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/locationModel.dart';
+import 'package:ematch/App/repository/eventRepository.dart';
 import 'package:ematch/App/repository/locationRepository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -12,10 +14,11 @@ class LocationController {
   LocationController(
       {this.name, this.cep, this.city, this.address, this.number});
 
-  LocationRepository repository = LocationRepository();
+  LocationRepository locationRepository = LocationRepository();
+  EventRepository eventRepository = EventRepository();
 
   insertLocation() {
-    repository.insertLocation(
+    locationRepository.insertLocation(
         userID: "1",
         name: name.text,
         cep: this.cep.text,
@@ -25,7 +28,7 @@ class LocationController {
   }
 
   editLocation(locationId) {
-    repository.editLocation(
+    locationRepository.editLocation(
         locationID: locationId,
         // userID: userID,
         name: name.text,
@@ -36,27 +39,58 @@ class LocationController {
   }
 
   Future<List<LocationModel>> getLocations() {
-    return repository.getLocations();
+    return locationRepository.getLocations();
   }
 
-  void editAvaiability(
-      String id, Map<int, bool> hoursList, Map<String, bool> daysList) {
+  void editAvaiability(String id, Map<int, bool> hoursList,
+      Map<String, bool> daysList, String hourValue) {
     String _daysList = "";
     String _hoursList = "";
 
     daysList.forEach((key, value) {
       if (value)
         _daysList = _daysList.isNotEmpty
-            ? "$_daysList, ${key.toString()}"
+            ? "$_daysList,${key.toString()}"
             : key.toString();
     });
 
     hoursList.forEach((key, value) {
       if (value)
         _hoursList = _hoursList.isNotEmpty
-            ? "$_hoursList, ${key.toString()}"
+            ? "$_hoursList,${key.toString()}"
             : key.toString();
     });
-    repository.editAvaiability(id, _hoursList, _daysList);
+    locationRepository.editAvaiability(id, _hoursList, _daysList, hourValue);
+  }
+
+  Future<Map<DateTime, List<EventModel>>> getLocationEvents(
+      String locationID) async {
+    List<EventModel> events =
+        await eventRepository.getEventsByLocation(locationID);
+
+    Map<DateTime, List<EventModel>> futureEvents = Map.fromIterable(events,
+        key: (k) {
+          var evDay = DateTime.parse(k.startDate);
+          evDay = DateTime(evDay.year, evDay.month, evDay.day);
+          return evDay;
+        },
+        value: (v) => []);
+
+    for (EventModel ev in events) {
+      var evDay = DateTime.parse(ev.startDate);
+      evDay = DateTime(evDay.year, evDay.month, evDay.day);
+      // var endDay = DateFormat("dd/MM").format(DateTime.parse(ev.endDate));
+      // var startTime = DateFormat("HH:mm").format(DateTime.parse(ev.startDate));
+      // var endTime = DateFormat("HH:mm").format(DateTime.parse(ev.endDate));
+
+      List list = futureEvents[evDay];
+      // if (list.isEmpty)
+      //   list = [ev];
+      // else
+      list.add(ev);
+      futureEvents[evDay] = list;
+    }
+
+    return futureEvents;
   }
 }

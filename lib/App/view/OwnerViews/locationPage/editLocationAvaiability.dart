@@ -24,6 +24,8 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
     "DOM": false
   };
 
+  TextEditingController hourValueController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +42,7 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
     });
 
     widget.location.avaiableDays.split(',').toList().forEach((el) {
-      daysList[el.toUpperCase()] = true;
+      daysList[el.trim().toUpperCase()] = true;
     });
   }
 
@@ -53,14 +55,45 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
           // mainAxisAlignment: MainAxisAlignment.start,
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text("R\$ Hora:"),
+                Expanded(
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: hourValueController,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.orangeAccent, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Divider(),
             buildHourListView(),
+            Divider(),
             buildDaysListView(),
           ],
         ),
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
-          controller.editAvaiability(widget.location.id, hoursList, daysList);
+          controller.editAvaiability(widget.location.id, hoursList, daysList,
+              hourValueController.text);
         },
         child: Text("Salvar"),
       ),
@@ -70,7 +103,7 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
 
   Container buildHourListView() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.75,
+      height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width,
       child: ListView(
         shrinkWrap: true,
