@@ -1,8 +1,10 @@
 import 'package:ematch/App/controller/eventController.dart';
+import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/model/userModel.dart';
+import 'package:ematch/App/repository/groupRepository.dart';
 import 'package:ematch/App/view/UserViews/eventPages/selectEventLocationPage.dart';
 import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class GroupDetailsPage extends StatefulWidget {
 
 class _GroupDetailsPageState extends State<GroupDetailsPage> {
   EventController eventController = EventController();
+  GroupController groupController = GroupController();
   Future<List<EventModel>> _getEventsByGroupID;
   List<EventModel> events;
   Future<List<UserModel>> _detailedGroupParticipants;
@@ -380,7 +383,17 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          onPressed: () => {},
+          onPressed: () async {
+            try {
+              GroupModel updateGroup =
+                  await groupController.unfollowGroup(widget.group, myUserId);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GroupDetailsPage(group: updateGroup)),
+              );
+            } catch (e) {}
+          },
         );
         break;
       default:
@@ -396,7 +409,17 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          onPressed: () => {},
+          onPressed: () async {
+            try {
+              GroupModel updateGroup =
+                  await groupController.followGroup(widget.group, myUserId);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GroupDetailsPage(group: updateGroup)),
+              );
+            } catch (e) {}
+          },
         );
     }
   }

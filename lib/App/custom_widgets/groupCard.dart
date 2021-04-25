@@ -19,6 +19,7 @@ class _GroupCardState extends State<GroupCard> {
       child: Card(
         color: Color.fromRGBO(72, 72, 72, 0.45),
         elevation: 5,
+        shadowColor: Colors.grey[800],
         margin: EdgeInsets.all(3),
         child: Stack(
           children: [
@@ -35,7 +36,7 @@ class _GroupCardState extends State<GroupCard> {
               child: Container(
                 height: 35,
                 width: MediaQuery.of(context).size.width,
-                color: Color.fromRGBO(5, 5, 5, 0.55),
+                color: Color.fromRGBO(5, 5, 5, 0.75),
                 child: Stack(children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(2.0),
@@ -60,9 +61,12 @@ class _GroupCardState extends State<GroupCard> {
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Text(
-                        "(" + widget.group.activityName + ")",
+                        "" + widget.group.activityName + "",
                         style: TextStyle(
-                            color: Colors.white, fontStyle: FontStyle.italic),
+                          color: Colors.deepOrangeAccent,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   )
