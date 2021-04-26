@@ -1,5 +1,4 @@
 import 'package:ematch/App/model/groupModel.dart';
-import 'package:ematch/App/model/userModel.dart';
 import 'package:ematch/App/repository/groupRepository.dart';
 
 class GroupController {
