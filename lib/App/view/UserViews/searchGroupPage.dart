@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:ematch/App/controller/groupController.dart';
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/custom_widgets/groupCard.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/view/UserViews/group/groupDetailsPage.dart';
@@ -50,8 +51,25 @@ class _SearchGroupPageState extends State<SearchGroupPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text("Buscar Grupos"),
-      ),
+          title: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.search),
+                Text(
+                  ' Buscar Groupos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      )),
 
       body: Column(
         children: [

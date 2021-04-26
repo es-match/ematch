@@ -36,7 +36,12 @@ class _GroupPageState extends State<GroupPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text("Meus Grupos"),
+        title: Row(
+          children: [
+            Icon(Icons.people),
+            Text(" Meus Grupos"),
+          ],
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),

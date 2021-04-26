@@ -5,7 +5,6 @@ import 'package:ematch/App/custom_widgets/eventList.dart';
 // ignore: unused_import
 import 'package:ematch/App/custom_widgets/groupList.dart';
 import 'package:ematch/App/model/eventModel.dart';
-import 'package:ematch/App/view/UserViews/searchGroupPage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +36,31 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: Text('Ola, ' + widget.name)),
+      appBar: AppBar(
+          title: Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Image.asset(
+                  'assets/esmatch_logo_white_draw.png',
+                  height: 50,
+                ),
+                Text(
+                  'Easy Sport Match',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            CircleAvatar(
+              backgroundImage: NetworkImage(myImageurl),
+            ),
+          ],
+        ),
+      )),
       body: FutureBuilder(
         future: future,
         builder: (context, snapshot) {
@@ -130,7 +153,13 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: ElevatedButton(
-                child: Text('Buscar Grupos'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(Icons.search),
+                    Text('Buscar Grupos'),
+                  ],
+                ),
                 onPressed: () {
                   widget.changeIndexFunction(1);
                 }),
@@ -140,7 +169,13 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: ElevatedButton(
-              child: Text('Meus Grupos'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(Icons.people),
+                  Text('Meus Grupos'),
+                ],
+              ),
               onPressed: () {
                 // controller.setScreenIndex(3);
                 setState(() {

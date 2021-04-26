@@ -1,17 +1,13 @@
-import 'dart:html';
-
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/model/userModel.dart';
-import 'package:ematch/App/repository/groupRepository.dart';
 import 'package:ematch/App/view/UserViews/eventPages/selectEventLocationPage.dart';
-import 'package:ematch/App/view/UserViews/group/groupParticipantsPage.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 
@@ -31,12 +27,43 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
   List<EventModel> events;
   Future<List<UserModel>> _detailedGroupParticipants;
   List<UserModel> groupParticipants;
+  bool _isCreatingLink;
+  ShortDynamicLink uri;
+  Future<Uri> _createLink() async {
+    setState(() {
+      _isCreatingLink = true;
+    });
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: "https://esmatchgroup.page.link",
+      link: Uri.parse("https://esmatchgroup.page.link"),
+      androidParameters: AndroidParameters(
+        packageName: "com.esmatch.ar.company",
+        minimumVersion: 0,
+      ),
+      dynamicLinkParametersOptions: DynamicLinkParametersOptions(
+        shortDynamicLinkPathLength: ShortDynamicLinkPathLength.short,
+      ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+        title:
+            '[ESMATCH] Ola, vamos praticar um(a) ${widget.group.activityName}?',
+        description:
+            'Criei um group no ESMATCH e gostaria que vocë seguisse, assim qualquer evento novo vocë ficará atualizado.',
+        imageUrl: Uri(
+            path:
+                "https://firebasestorage.googleapis.com/v0/b/esmatch-ce3c9.appspot.com/o/Default%20Images%2Flogoesm.png?alt=media&token=f1bcd122-9ab5-4699-aff9-780698f6e5ee"),
+      ),
+    );
+
+    uri = await parameters.buildShortLink();
+  }
 
   @override
   void initState() {
     super.initState();
+
     _detailedGroupParticipants = widget.group.detailedGroupParticipants();
     _getEventsByGroupID = eventController.getEventsByGroupID(widget.group.id);
+    _createLink();
   }
 
   @override
@@ -489,12 +516,14 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
       ],
     );
   }
-}
 
-void share(BuildContext context, GroupModel group) {
-  final RenderBox box = context.findRenderObject();
+  void share(BuildContext context, GroupModel group) {
+    final RenderBox box = context.findRenderObject();
 
-  Share.share("${group.groupName} - ${group.groupDescription}",
-      subject: group.groupDescription,
-      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+    Share.share(
+      "Ei vem participar do meu grupo no ESMatch",
+      subject: uri.shortUrl.toString(),
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+    );
+  }
 }
