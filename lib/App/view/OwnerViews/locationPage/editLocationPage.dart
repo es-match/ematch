@@ -1,4 +1,5 @@
 import 'package:ematch/App/controller/locationController.dart';
+import 'package:ematch/App/custom_widgets/locationEventtableCalendar.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/view/OwnerViews/locationPage/editLocationAvaiability.dart';
 import 'package:flutter/material.dart';
@@ -142,6 +143,25 @@ class _EditLocationPageState extends State<EditLocationPage> {
                                                                   .locationModel)));
                                             },
                                             child: Text("Horários"),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LocationEventtableCalendar(
+                                                    futureEvents:
+                                                        locationController
+                                                            .getLocationEvents(
+                                                                widget
+                                                                    .locationModel
+                                                                    .id),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Text("Calendário"),
                                           ),
                                           ElevatedButton(
                                             onPressed: () {

@@ -10,6 +10,7 @@ class LocationModel {
   Null createDate;
   String avaiableDays;
   String avaiableHours;
+  String hourValue;
 
   LocationModel(
       {this.id,
@@ -22,7 +23,8 @@ class LocationModel {
       this.geolocation,
       this.createDate,
       this.avaiableDays,
-      this.avaiableHours});
+      this.avaiableHours,
+      this.hourValue});
 
   LocationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,6 +39,7 @@ class LocationModel {
         : null;
     avaiableDays = json['avaiableDays'];
     avaiableHours = json['avaiableHours'];
+    hourValue = json['hourValue'];
 
     createDate = json['createDate'];
   }
@@ -56,6 +59,7 @@ class LocationModel {
     data['createDate'] = this.createDate;
     data['avaiableDays'] = this.avaiableDays;
     data['avaiableHours'] = this.avaiableHours;
+    data['hourValue'] = this.hourValue;
     return data;
   }
 }
