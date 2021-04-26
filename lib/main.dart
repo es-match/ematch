@@ -64,8 +64,8 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
       ),
       initialRoute: '/',
-      // home: LoginPage(),
-      home: TestPageViewer(),
+      home: LoginPage(),
+      // home: TestPageViewer(),
     );
     return materialApp;
   }

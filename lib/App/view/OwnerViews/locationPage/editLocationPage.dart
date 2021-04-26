@@ -2,6 +2,7 @@ import 'package:ematch/App/controller/locationController.dart';
 import 'package:ematch/App/custom_widgets/locationEventtableCalendar.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/view/OwnerViews/locationPage/editLocationAvaiability.dart';
+import 'package:ematch/App/view/OwnerViews/locationPage/locationCalendarPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -150,7 +151,8 @@ class _EditLocationPageState extends State<EditLocationPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      LocationEventtableCalendar(
+                                                      LocationCalendarPage(
+                                                    // LocationEventtableCalendar(
                                                     futureEvents:
                                                         locationController
                                                             .getLocationEvents(

@@ -1,3 +1,5 @@
+import 'package:ematch/App/controller/locationController.dart';
+import 'package:ematch/App/custom_widgets/locationEventtableCalendar.dart';
 import 'package:ematch/App/custom_widgets/table_calendar_example.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ class SelectEventDate extends StatefulWidget {
 
 class _SelectEventDateState extends State<SelectEventDate> {
   LatLng geoPosition;
+  LocationController locationController = LocationController();
   GoogleMapController googleMapController;
   CalendarController _calendarController = CalendarController();
   Set<Marker> markers = Set();
@@ -40,51 +43,61 @@ class _SelectEventDateState extends State<SelectEventDate> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                width: MediaQuery.of(context).size.width,
-                child: GoogleMap(
-                  onCameraMove: (position) => {},
-                  mapToolbarEnabled: false,
-                  // zoomControlsEnabled: false,
-                  zoomGesturesEnabled: false,
-                  mapType: MapType.normal,
-                  initialCameraPosition:
-                      CameraPosition(target: geoPosition, zoom: 14),
-                  markers: markers,
-                  onMapCreated: (controller) {
-                    googleMapController = controller;
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
+              buildMap(context),
+              Divider(),
               buildLocationValues(),
-              Container(
+              Divider(),
+              buildCalendarTable(context),
+            ]),
+      ),
+    );
+  }
+
+  Container buildCalendarTable(BuildContext context) {
+    return Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                child: TableCalendarexample(), //buildCalendar(),
-              ),
-            ]),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: LocationEventtableCalendar(
+                      futureEvents: locationController
+                          .getLocationEvents(widget.location.id)),
+                ) //TableCalendarexample(), //buildCalendar(),
+                );
+  }
+
+  Container buildMap(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.4,
+      width: MediaQuery.of(context).size.width,
+      child: GoogleMap(
+        onCameraMove: (position) => {},
+        mapToolbarEnabled: false,
+        // zoomControlsEnabled: false,
+        zoomGesturesEnabled: false,
+        mapType: MapType.normal,
+        initialCameraPosition: CameraPosition(target: geoPosition, zoom: 14),
+        markers: markers,
+        onMapCreated: (controller) {
+          googleMapController = controller;
+        },
       ),
     );
   }
 
   Container buildLocationValues() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
-      width: MediaQuery.of(context).size.width,
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text("Local"),
-            Text("Valor Por hora: xxx"),
-          ],
-        ),
-      ),
+      // height: MediaQuery.of(context).size.height * 0.6,
+      // width: MediaQuery.of(context).size.width,
+      child: Text("Valor Por hora: ${widget.location.hourValue}"),
+      // Card(
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.stretch,
+      //     children: [
+      //       Text("Valor Por hora: ${widget.location.hourValue}"),
+      //     ],
+      //   ),
+      // ),
     );
   }
 
