@@ -1,6 +1,5 @@
 import 'package:ematch/App/controller/locationController.dart';
-import 'package:ematch/App/custom_widgets/locationEventtableCalendar.dart';
-import 'package:ematch/App/custom_widgets/table_calendar_example.dart';
+import 'package:ematch/App/custom_widgets/userLocationEventtableCalendar.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -20,11 +19,13 @@ class _SelectEventDateState extends State<SelectEventDate> {
   GoogleMapController googleMapController;
   CalendarController _calendarController = CalendarController();
   Set<Marker> markers = Set();
+
+  String startDropdownvalue;
+  String endDropdownvalue;
+  String dropdownValue = 'One';
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     setState(() {
       geoPosition = LatLng(widget.location.geolocation.dLatitude,
           widget.location.geolocation.dLongitude);
@@ -40,30 +41,102 @@ class _SelectEventDateState extends State<SelectEventDate> {
       ),
       body: SingleChildScrollView(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              buildMap(context),
-              Divider(),
-              buildLocationValues(),
-              Divider(),
-              buildCalendarTable(context),
-            ]),
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            buildMap(context),
+            Divider(),
+            buildLocationValues(),
+            Divider(),
+            buildCalendarTable(context),
+            Container(
+                child: Row(
+              children: [
+                DropdownButton(
+                  value: startDropdownvalue,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      startDropdownvalue = newValue;
+                      // if (int.parse(endDropdownvalue) <
+                      //     int.parse(startDropdownvalue))
+                      endDropdownvalue = startDropdownvalue;
+                    });
+                  },
+                  items: dropDownMenuItems(),
+                  style: const TextStyle(
+                      color: Colors.white, backgroundColor: Colors.black),
+                ),
+                DropdownButton(
+                  value: endDropdownvalue,
+                  onChanged: (String newValue) {
+                    setState(() {
+                      endDropdownvalue = startDropdownvalue;
+                    });
+                  },
+                  items: dropDownMenuItems(true)
+                      .where((element) =>
+                          int.parse(startDropdownvalue) <=
+                          int.parse(element.value))
+                      .toList(),
+                  style: const TextStyle(
+                      color: Colors.white, backgroundColor: Colors.black),
+                ),
+              ],
+            )),
+          ],
+        ),
       ),
     );
   }
 
+  List<DropdownMenuItem<String>> dropDownMenuItems([bool end = false]) {
+    var hours = widget.location.avaiableHours.split(',').toList();
+
+    if (end) {
+      hours = hours
+          .where(
+              (element) => int.parse(startDropdownvalue) <= int.parse(element))
+          .toList();
+
+      // bool foundGap = false;
+      var lastIndex = -1;
+      for (String el in hours) {
+        try {
+          var index = hours.indexOf(el);
+          var nextEl = hours[index + 1];
+          if (int.parse(nextEl) - int.parse(el) > 1) {
+            lastIndex = index;
+            break;
+          }
+
+          if (lastIndex != -1) {
+            hours =
+                hours.where((element) => lastIndex >= hours.indexOf(element));
+          }
+        } catch (e) {}
+      }
+    }
+
+    return hours.map<DropdownMenuItem<String>>((String value) {
+      String sufix = end ? "59" : "00";
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text("$value:$sufix"),
+      );
+    }).toList();
+  }
+
   Container buildCalendarTable(BuildContext context) {
     return Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: LocationEventtableCalendar(
-                      futureEvents: locationController
-                          .getLocationEvents(widget.location.id)),
-                ) //TableCalendarexample(), //buildCalendar(),
-                );
+        // height: MediaQuery.of(context).size.height,
+        // width: MediaQuery.of(context).size.width,
+        child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: UserLocationEventtableCalendar(
+        futureEvents: locationController.getLocationEvents(widget.location.id),
+      ),
+    ) //TableCalendarexample(), //buildCalendar(),
+        );
   }
 
   Container buildMap(BuildContext context) {
@@ -87,17 +160,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
   Container buildLocationValues() {
     return Container(
-      // height: MediaQuery.of(context).size.height * 0.6,
-      // width: MediaQuery.of(context).size.width,
       child: Text("Valor Por hora: ${widget.location.hourValue}"),
-      // Card(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.stretch,
-      //     children: [
-      //       Text("Valor Por hora: ${widget.location.hourValue}"),
-      //     ],
-      //   ),
-      // ),
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:ematch/App/custom_widgets/locationEventtableCalendar.dart';
+import 'package:ematch/App/custom_widgets/ownerLocationEventtableCalendar.dart';
 import 'package:flutter/material.dart';
 
 class LocationCalendarPage extends StatefulWidget {
@@ -16,7 +16,7 @@ class _LocationCalendarPageState extends State<LocationCalendarPage> {
         appBar: AppBar(
           title: Text("Calendário"),
         ),
-        body: LocationEventtableCalendar(
+        body: OwnerLocationEventtableCalendar(
           futureEvents: widget.futureEvents,
         ));
   }

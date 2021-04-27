@@ -15,21 +15,21 @@ final Map<DateTime, List> _holidays = {
   DateTime(2020, 4, 22): ['Easter Monday'],
 };
 
-class LocationEventtableCalendar extends StatefulWidget {
+class OwnerLocationEventtableCalendar extends StatefulWidget {
   final Future<Map<DateTime, List>> futureEvents;
   final Widget customEventList;
   final String title;
 
-  const LocationEventtableCalendar(
+  const OwnerLocationEventtableCalendar(
       {Key key, this.futureEvents, this.title, this.customEventList})
       : super(key: key);
 
   @override
-  _LocationEventtableCalendarState createState() =>
-      _LocationEventtableCalendarState();
+  _OwnerLocationEventtableCalendarState createState() =>
+      _OwnerLocationEventtableCalendarState();
 }
 
-class _LocationEventtableCalendarState extends State<LocationEventtableCalendar>
+class _OwnerLocationEventtableCalendarState extends State<OwnerLocationEventtableCalendar>
     with TickerProviderStateMixin {
   Map<DateTime, List> _events;
   Future<Map<DateTime, List>> getEvents;
