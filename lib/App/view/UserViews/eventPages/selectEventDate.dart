@@ -22,7 +22,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
   String startDropdownvalue;
   String endDropdownvalue;
-  String dropdownValue = 'One';
+  // String dropdownValue = 'One';
   @override
   void initState() {
     super.initState();
@@ -49,6 +49,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
             buildLocationValues(),
             Divider(),
             buildCalendarTable(context),
+            Divider(),
             Container(
                 child: Row(
               children: [
@@ -74,10 +75,11 @@ class _SelectEventDateState extends State<SelectEventDate> {
                     });
                   },
                   items: dropDownMenuItems(true)
-                      .where((element) =>
-                          int.parse(startDropdownvalue) <=
-                          int.parse(element.value))
-                      .toList(),
+                       .where((element) =>
+                           int.parse(startDropdownvalue ?? "0")  <=
+                           int.parse(element.value))
+                       .toList(),
+                      
                   style: const TextStyle(
                       color: Colors.white, backgroundColor: Colors.black),
                 ),
@@ -92,36 +94,36 @@ class _SelectEventDateState extends State<SelectEventDate> {
   List<DropdownMenuItem<String>> dropDownMenuItems([bool end = false]) {
     var hours = widget.location.avaiableHours.split(',').toList();
 
-    if (end) {
-      hours = hours
-          .where(
-              (element) => int.parse(startDropdownvalue) <= int.parse(element))
-          .toList();
+    // if (end) {
+    //   hours = hours
+    //       .where(
+    //           (element) => int.parse(startDropdownvalue) <= int.parse(element))
+    //       .toList();
 
-      // bool foundGap = false;
-      var lastIndex = -1;
-      for (String el in hours) {
-        try {
-          var index = hours.indexOf(el);
-          var nextEl = hours[index + 1];
-          if (int.parse(nextEl) - int.parse(el) > 1) {
-            lastIndex = index;
-            break;
-          }
+    //   // bool foundGap = false;
+    //   var lastIndex = -1;
+    //   for (String el in hours) {
+    //     try {
+    //       var index = hours.indexOf(el);
+    //       var nextEl = hours[index + 1];
+    //       if (int.parse(nextEl) - int.parse(el) > 1) {
+    //         lastIndex = index;
+    //         break;
+    //       }
 
-          if (lastIndex != -1) {
-            hours =
-                hours.where((element) => lastIndex >= hours.indexOf(element));
-          }
-        } catch (e) {}
-      }
-    }
+    //       if (lastIndex != -1) {
+    //         hours =
+    //             hours.where((element) => lastIndex >= hours.indexOf(element));
+    //       }
+    //     } catch (e) {}
+    //   }
+    // }
 
     return hours.map<DropdownMenuItem<String>>((String value) {
-      String sufix = end ? "59" : "00";
+      // String sufix = end ? "59" : "00";
       return DropdownMenuItem<String>(
         value: value,
-        child: Text("$value:$sufix"),
+        child: Text("1"),
       );
     }).toList();
   }
