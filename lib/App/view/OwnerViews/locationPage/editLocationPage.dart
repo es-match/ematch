@@ -1,5 +1,5 @@
 import 'package:ematch/App/controller/locationController.dart';
-import 'package:ematch/App/custom_widgets/locationEventtableCalendar.dart';
+import 'package:ematch/App/custom_widgets/ownerLocationEventtableCalendar.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/view/OwnerViews/locationPage/editLocationAvaiability.dart';
 import 'package:ematch/App/view/OwnerViews/locationPage/locationCalendarPage.dart';
