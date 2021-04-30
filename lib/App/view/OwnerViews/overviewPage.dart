@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/repository/locationRepository.dart';
 import 'package:ematch/App/view/OwnerViews/locationPage/editLocationPage.dart';
@@ -20,7 +21,6 @@ class _OverViewPageState extends State<OverViewPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text("Meus Espaços"),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
@@ -30,6 +30,41 @@ class _OverViewPageState extends State<OverViewPage> {
             },
           )
         ],
+        title: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/esmatch_logo_white_draw.png',
+                    height: 50,
+                  ),
+                  Text(
+                    'Easy Sport Match',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              Align(
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(myImageurl),
+                ),
+              ),
+            ],
+          ),
+        ),
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.refresh),
+        //     onPressed: () {
+        //       model = repository.getLocations();
+        //       setState(() {});
+        //     },
+        //   )
+        // ],
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -54,7 +89,13 @@ class _OverViewPageState extends State<OverViewPage> {
             builder: (context) => InsertLocationPage(),
           ),
         ),
-        child: Text("Adicionar Novo Local"),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.add),
+            Text(" Adicionar Novo Local"),
+          ],
+        ),
       ),
     );
   }
@@ -67,7 +108,7 @@ class _OverViewPageState extends State<OverViewPage> {
         Expanded(
           flex: 6,
           child: ListView.builder(
-            itemCount: locationsList.length,
+            itemCount: locationsList == null ? 0 : locationsList.length,
             itemBuilder: (context, index) {
               LocationModel currLocation = locationsList[index];
               // ignore: unused_local_variable

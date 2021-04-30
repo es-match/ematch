@@ -69,12 +69,91 @@ class _EditLocationPageState extends State<EditLocationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Editar Local"),
+          title: Column(
+            children: [
+              Text(widget.locationModel.locationName),
+              // Text(
+              //   "(Detalhes do Local)",
+              //   style: TextStyle(
+              //     color: Colors.grey[200],
+              //   ),
+              // ),
+            ],
+          ),
         ),
+        bottomNavigationBar: isEditMode == true
+            ? null
+            : Row(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => EditLocationAvaiability(
+                      //                 widget.locationModel)));
+                      //   },
+                      //   child: Text("Horários"),
+                      // ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 12,
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LocationCalendarPage(
+                                  // LocationEventtableCalendar(
+                                  futureEvents:
+                                      locationController.getLocationEvents(
+                                          widget.locationModel.id),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.calendar_today),
+                              Text("Calendário"),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 12,
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              isEditMode = true;
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.edit),
+                              Text("Editar Dados"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
         body: Builder(builder: (context) {
           return SingleChildScrollView(
             child: Container(
-              height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                color: Colors.grey[800],
+                borderRadius: BorderRadius.circular(20),
+              ),
+              height: MediaQuery.of(context).size.height / 1.2,
               width: MediaQuery.of(context).size.width,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -85,28 +164,59 @@ class _EditLocationPageState extends State<EditLocationPage> {
                     Expanded(
                         flex: 6,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text("Nome da Quadra"),
+                            Text(
+                              "Nome da Quadra",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
                             TextField(
                               readOnly: !isEditMode,
                               controller: locationController.name,
                             ),
-                            Text("CEP"),
+                            Text(
+                              "CEP",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
                             TextField(
                               readOnly: !isEditMode,
                               controller: locationController.cep,
                             ),
-                            Text("Cidade"),
+                            Text(
+                              "Cidade",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
                             TextField(
                               readOnly: !isEditMode,
                               controller: locationController.city,
                             ),
-                            Text("Endereço"),
+                            Text(
+                              "Endereço",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
                             TextField(
                               readOnly: !isEditMode,
                               controller: locationController.address,
                             ),
-                            Text("Número"),
+                            Text(
+                              "Número",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 18,
+                              ),
+                            ),
                             TextField(
                               readOnly: !isEditMode,
                               keyboardType: TextInputType.number,
@@ -123,60 +233,13 @@ class _EditLocationPageState extends State<EditLocationPage> {
                                 markers: marker,
                               ),
                             ),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.bottomRight,
+                            Align(
+                                alignment: Alignment.bottomCenter,
+
                                 // ignore: deprecated_member_use
                                 child: isEditMode == true
                                     ? buildEditModeButtons(context)
-                                    : Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          EditLocationAvaiability(
-                                                              widget
-                                                                  .locationModel)));
-                                            },
-                                            child: Text("Horários"),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LocationCalendarPage(
-                                                    // LocationEventtableCalendar(
-                                                    futureEvents:
-                                                        locationController
-                                                            .getLocationEvents(
-                                                                widget
-                                                                    .locationModel
-                                                                    .id),
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Text("Calendário"),
-                                          ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                isEditMode = true;
-                                              });
-                                            },
-                                            child: Text("Editar Dados"),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                            ),
+                                    : null),
                           ],
                         )),
                   ],
@@ -214,7 +277,13 @@ class _EditLocationPageState extends State<EditLocationPage> {
                   ))
                 : locationController.editLocation(widget.locationModel.id)
           },
-          child: Text("Finalizar"),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(Icons.save),
+              Text("Salvar"),
+            ],
+          ),
         ),
         SizedBox(
           width: 10,
@@ -225,7 +294,13 @@ class _EditLocationPageState extends State<EditLocationPage> {
               isEditMode = false;
             });
           },
-          child: Text("Cancelar"),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(Icons.cancel),
+              Text("Cancelar"),
+            ],
+          ),
         ),
       ],
     );

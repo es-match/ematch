@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "933152040383-9ib46nfqe1chipuiiautib0r615f5or7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.esmatch.ar.company",
+            "certificate_hash": "eb6aa2d1556f959fad4a17a6380be519ca00c4ed"
+          }
+        },
+        {
+          "client_id": "933152040383-e2scp2iavsnp72u52i58k1oa0g8169fo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.esmatch.ar.company",
+            "certificate_hash": "6862da881cb5872c5a8bd258a6f997bd74e1637e"
+          }
+        },
+        {
+          "client_id": "933152040383-e7c5qktar39p6im1flhsik60ch4cbl0s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.esmatch.ar.company",
+            "certificate_hash": "dcaf1e5b09c4c27802842a1f1d8c4394cb938bfa"
+          }
+        },
+        {
           "client_id": "933152040383-6j889us92rkmscqens48l1509numnvbm.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -42,7 +66,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:933152040383:android:e3b32e57a5af009630ed0a",
         "android_client_info": {
-          "package_name": "com.esmatch.ar.company"
+          "package_name": "com.example.ematch"
         }
       },
       "oauth_client": [
@@ -50,8 +74,16 @@
           "client_id": "933152040383-0g6ko611u5gfrd9nnaftiis9ri2octcc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.esmatch.ar.company",
+            "package_name": "com.example.ematch",
             "certificate_hash": "eb6aa2d1556f959fad4a17a6380be519ca00c4ed"
+          }
+        },
+        {
+          "client_id": "933152040383-8m8slkgqlcv4ktl6ld0nb177a5lgo6l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ematch",
+            "certificate_hash": "dcaf1e5b09c4c27802842a1f1d8c4394cb938bfa"
           }
         },
         {

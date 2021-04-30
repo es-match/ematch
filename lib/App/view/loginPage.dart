@@ -47,7 +47,9 @@ class _LoginPageState extends State<LoginPage>
         } else {
           hideLoadBar();
         }
-      }).catchError(() => hideLoadBar());
+      }).catchError((e) {
+        hideLoadBar();
+      });
     }
     hideLoadBar();
   }
@@ -553,7 +555,7 @@ class _LoginPageState extends State<LoginPage>
               } else {
                 hideLoadBar();
               }
-            }).catchError(() => hideLoadBar());
+            }).catchError((e) => hideLoadBar());
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
