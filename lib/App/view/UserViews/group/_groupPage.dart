@@ -63,13 +63,30 @@ class _GroupPageState extends State<GroupPage> {
       ),
       // ignore: deprecated_member_use
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: ElevatedButton(
-          child: Text('Criar um Grupo'),
-          onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NewGroupPage(),
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height / 13,
+          width: MediaQuery.of(context).size.width,
+          child: ElevatedButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.add,
+                  size: 50,
+                ),
+                Text(
+                  '  Criar um Grupo',
+                  style: TextStyle(fontSize: 27),
+                ),
+              ],
+            ),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewGroupPage(),
+              ),
             ),
           ),
         ),

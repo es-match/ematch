@@ -145,47 +145,58 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Row buildBottomButtons(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ElevatedButton(
+  Padding buildBottomButtons(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height / 13,
+              width: MediaQuery.of(context).size.width / 2.5,
+              child: ElevatedButton(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(Icons.search),
+                      Text(
+                        'Buscar Grupos',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    widget.changeIndexFunction(1);
+                  }),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height / 13,
+              width: MediaQuery.of(context).size.width / 2.5,
+              child: ElevatedButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Icon(Icons.search),
-                    Text('Buscar Grupos'),
+                    Icon(Icons.people),
+                    Text(
+                      'Meus Grupos',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ],
                 ),
                 onPressed: () {
-                  widget.changeIndexFunction(1);
-                }),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ElevatedButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(Icons.people),
-                  Text('Meus Grupos'),
-                ],
+                  // controller.setScreenIndex(3);
+                  setState(() {
+                    widget.changeIndexFunction(2);
+                  });
+                },
               ),
-              onPressed: () {
-                // controller.setScreenIndex(3);
-                setState(() {
-                  widget.changeIndexFunction(2);
-                });
-              },
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
