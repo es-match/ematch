@@ -120,7 +120,7 @@ class _UserLocationEventtableCalendarState
       },
       calendarController: _calendarController,
       locale: 'pt_BR',
-      events: _events,
+      events: _events,      
       holidays: _holidays,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
@@ -128,6 +128,7 @@ class _UserLocationEventtableCalendarState
         todayColor: Colors.deepOrange[200],
         markersColor: Colors.brown[700],
         outsideDaysVisible: false,
+        
       ),
       headerStyle: HeaderStyle(
         formatButtonTextStyle:
@@ -149,7 +150,7 @@ class _UserLocationEventtableCalendarState
       locale: 'pl_PL',
       calendarController: _calendarController,
       events: _events,
-      holidays: _holidays,
+      holidays: _holidays,      
       initialCalendarFormat: CalendarFormat.month,
       formatAnimation: FormatAnimation.slide,
       startingDayOfWeek: StartingDayOfWeek.sunday,

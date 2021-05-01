@@ -8,7 +8,6 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
 class SelectEventDate extends StatefulWidget {
-  
   SelectEventDate({this.location});
 
   @override
@@ -20,9 +19,9 @@ class _SelectEventDateState extends State<SelectEventDate> {
   LatLng geoPosition;
   LocationController locationController = LocationController();
   GoogleMapController googleMapController;
-  CalendarController _calendarController = CalendarController();  
+  CalendarController _calendarController = CalendarController();
   Set<Marker> markers = Set();
-  
+
   List<dynamic> dayEvents;
 
   String startDropdownvalue;
@@ -38,13 +37,15 @@ class _SelectEventDateState extends State<SelectEventDate> {
     });
   }
 
-  dynamic getDayEvents(List<dynamic> events)  {
+  dynamic getDayEvents(List<dynamic> events) {
     setState(() {
+      //LIMPA DROPDOWNS
+      startDropdownvalue = null;
+      endDropdownvalue = null;
       dayEvents = events;
       print(dayEvents);
-    });    
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +64,12 @@ class _SelectEventDateState extends State<SelectEventDate> {
             Divider(),
             buildCalendarTable(context),
             Divider(),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 buildDropdownButtons(),
-                ElevatedButton(onPressed: (){}, child: Text("Ir para pagamento")),
+                ElevatedButton(
+                    onPressed: () {}, child: Text("Ir para pagamento")),
               ],
             ),
           ],
@@ -79,138 +80,142 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
   Container buildDropdownButtons() {
     return Container(
-              child: Row(
-            children: [
-              DropdownButton(
-                value: startDropdownvalue,                  
-                
-                onChanged: (String newValue) {
-                  setState(() {
-                    startDropdownvalue = newValue;                      
-                    endDropdownvalue = startDropdownvalue;
-                  });
-                },
-                items: dropDownMenuItems(),
-                style: const TextStyle(
-                    color: Colors.white, backgroundColor: Colors.black),
-              ),
-              DropdownButton(
-                value: endDropdownvalue,
-                onChanged: (String newValue) {
-                  setState(() {
-                    endDropdownvalue = startDropdownvalue;
-                  });
-                },
-                items: dropDownMenuItems(true)
-                     .where((element) =>
-                         int.parse(startDropdownvalue ?? "0")  <=
-                         int.parse(element.value))
-                     .toList(),                      
-                style: const TextStyle(
-                    color: Colors.white, backgroundColor: Colors.black),
-              ),
-            ],
-          ));
+        child: Row(
+      children: [
+        DropdownButton(
+          value: startDropdownvalue,
+          onChanged: (String newValue) {
+            setState(() {
+              startDropdownvalue = newValue;
+              endDropdownvalue = startDropdownvalue;
+            });
+          },
+          items: dropDownMenuItems(),
+          style: const TextStyle(
+              color: Colors.white, backgroundColor: Colors.black),
+        ),
+        DropdownButton(
+          value: endDropdownvalue,
+          onChanged: (String newValue) {
+            setState(() {
+              endDropdownvalue = startDropdownvalue;
+            });
+          },
+          items: dropDownMenuItems(true),
+              // .where((element) =>
+              //     int.parse(startDropdownvalue ?? "0") <=
+              //     int.parse(element.value))
+              // .toList(),
+          style: const TextStyle(
+              color: Colors.white, backgroundColor: Colors.black),
+        ),
+      ],
+    ));
   }
 
   List<DropdownMenuItem<String>> dropDownMenuItems([bool end = false]) {
+    
+    if(end && startDropdownvalue == null)
+      return null;
+    
     var hours = widget.location.avaiableHours.split(',').toList();
 
     //REMOVE horários cadastrados no dia selecionado
-    if(dayEvents != null){
-    dayEvents.forEach((event) { 
+    if (dayEvents != null) {
+      dayEvents.forEach((event) {
         EventModel ev = event;
-        String startTime =
-        //REMOVER .substract ao resolver situacao de regionalizaçao (UTC-3)
-           (DateFormat("HH").format(DateTime.parse(ev.startDate).subtract(Duration(hours: 3))));
 
-        if(hours.contains(startTime)){
-          hours.remove(startTime);
-        }        
+        // String startTime =
+        // //REMOVER .substract ao resolver situacao de regionalizaçao (UTC-3)
+        //    (DateFormat("HH").format(DateTime.parse(ev.startDate).subtract(Duration(hours: 3))));
 
-
-          
+        ev.getAlocatedHoursList().forEach((e) {
+          if (hours.contains(e)) {
+            hours.remove(e);
+          }
+        });
       });
     }
 
-
-
-    //REMOVER HORARIOS C/ GAP    
+    //REMOVER HORARIOS C/ GAP
     if (end) {
-        hours = hours.where((element) => (int.parse(element) - int.parse(startDropdownvalue ?? "0")) == (hours.indexOf(element) - hours.indexOf(startDropdownvalue ?? "0"))).toList();
-    }   
+      hours = hours
+          .where((element) =>
+              (int.parse(element) - int.parse(startDropdownvalue ?? "0")) ==
+              (hours.indexOf(element) -
+                  hours.indexOf(startDropdownvalue ?? "0")))
+          .toList();
+    }
 
     return hours.map<DropdownMenuItem<String>>((String value) {
       String sufix = end ? "59" : "00";
       return DropdownMenuItem<String>(
         value: value,
         child: Text("$value:$sufix"),
-        onTap: (){},
+        onTap: () {},
       );
     }).toList();
   }
 
   Container buildCalendarTable(BuildContext context) {
     return Container(
-        // height: MediaQuery.of(context).size.height,
-        // width: MediaQuery.of(context).size.width,
-        child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: UserLocationEventtableCalendar(
-        futureEvents: locationController.getLocationEvents(widget.location.id),customOnDaySelected: getDayEvents),
-            ), 
-                );
-          }    
-        
-        
-          Container buildMap(BuildContext context) {
-            return Container(
-              height: MediaQuery.of(context).size.height * 0.4,
-              width: MediaQuery.of(context).size.width,
-              child: GoogleMap(
-                onCameraMove: (position) => {},
-                mapToolbarEnabled: false,
-                // zoomControlsEnabled: false,
-                zoomGesturesEnabled: false,
-                mapType: MapType.normal,
-                initialCameraPosition: CameraPosition(target: geoPosition, zoom: 14),
-                markers: markers,
-                onMapCreated: (controller) {
-                  googleMapController = controller;
-                },
-              ),
-            );
-          }
-        
-          Container buildLocationValues() {
-            return Container(
-              child: Text("Valor Por hora: ${widget.location.hourValue}"),
-            );
-          }
-        
-          void setMarkers() {
-            markers = {};
-            //POSICAO DO ESPACO ESPORTIVO
-            markers.add(//MARKER PRINCIPAL
-                Marker(
-              markerId: MarkerId("CURRENTPOSITION"),
-              position: geoPosition,
-              onTap: () {},
-            ));
-          }
-        
-          TableCalendar buildCalendar() {
-            return TableCalendar(
-              availableCalendarFormats: {
-                CalendarFormat.month: 'Mensal',
-                CalendarFormat.twoWeeks: '2 Semanas',
-                CalendarFormat.week: 'Semanal',
-              },
-              calendarController: _calendarController,
-              locale: 'pt_BR',
-            );
-          }
-        
-          
-           
+      // height: MediaQuery.of(context).size.height,
+      // width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: UserLocationEventtableCalendar(
+            futureEvents:
+                locationController.getLocationEvents(widget.location.id),
+            customOnDaySelected: getDayEvents),
+      ),
+    );
+  }
+
+  Container buildMap(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.4,
+      width: MediaQuery.of(context).size.width,
+      child: GoogleMap(
+        onCameraMove: (position) => {},
+        mapToolbarEnabled: false,
+        // zoomControlsEnabled: false,
+        zoomGesturesEnabled: false,
+        mapType: MapType.normal,
+        initialCameraPosition: CameraPosition(target: geoPosition, zoom: 14),
+        markers: markers,
+        onMapCreated: (controller) {
+          googleMapController = controller;
+        },
+      ),
+    );
+  }
+
+  Container buildLocationValues() {
+    return Container(
+      child: Text("Valor Por hora: ${widget.location.hourValue}"),
+    );
+  }
+
+  void setMarkers() {
+    markers = {};
+    //POSICAO DO ESPACO ESPORTIVO
+    markers.add(//MARKER PRINCIPAL
+        Marker(
+      markerId: MarkerId("CURRENTPOSITION"),
+      position: geoPosition,
+      onTap: () {},
+    ));
+  }
+
+  TableCalendar buildCalendar() {
+    return TableCalendar(
+      availableCalendarFormats: {
+        CalendarFormat.month: 'Mensal',
+        CalendarFormat.twoWeeks: '2 Semanas',
+        CalendarFormat.week: 'Semanal',
+      },
+      calendarController: _calendarController,
+      locale: 'pt_BR',
+    );
+  }
 }
