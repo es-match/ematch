@@ -1,6 +1,7 @@
 import 'package:ematch/App/controller/locationController.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class EditLocationAvaiability extends StatefulWidget {
   final LocationModel location;
@@ -49,45 +50,103 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
+      appBar: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(widget.location.locationName),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("R\$ Hora:"),
-                Expanded(
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: hourValueController,
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.orangeAccent, width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                      ),
-                    ),
-                  ),
-                ),
+                Icon(Icons.calendar_today_outlined),
+                Text("  Ajustar Disponibilidade:"),
               ],
             ),
-            Divider(),
-            buildHourListView(),
-            Divider(),
-            buildDaysListView(),
           ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.grey[900],
+              borderRadius: BorderRadius.circular(
+                20,
+              )),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "R\$/Hora:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        color: Colors.grey[800],
+                        child: TextField(
+                          keyboardType: TextInputType.number,
+                          controller: hourValueController,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.orangeAccent, width: 1.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.grey, width: 1.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: Colors.grey[800],
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Horários disponíveis para reserva:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      buildHourListView(),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                buildDaysListView(),
+              ],
+            ),
+          ),
         ),
       ),
       floatingActionButton: ElevatedButton(
@@ -95,7 +154,27 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
           controller.editAvaiability(widget.location.id, hoursList, daysList,
               hourValueController.text);
         },
-        child: Text("Salvar"),
+        child: Container(
+          height: MediaQuery.of(context).size.height / 15,
+          width: MediaQuery.of(context).size.width / 4,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.save,
+                size: 30,
+              ),
+              Text(
+                "  Salvar",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       // ),
     );
@@ -112,7 +191,15 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
           // return ListTile(title: Text("$curNum:00 - $curNum:59"));
           return CheckboxListTile(
             contentPadding: EdgeInsets.all(0),
-            title: Text("$curNum:00 - $curNum:59"),
+            title: Row(
+              children: [
+                Icon(Icons.arrow_forward),
+                Text(
+                  "$curNum:00 - $curNum:59",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
             value: hoursList[e],
             onChanged: (value) {
               setState(() {
@@ -127,16 +214,26 @@ class _EditLocationAvaiabilityState extends State<EditLocationAvaiability> {
 
   Container buildDaysListView() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: MediaQuery.of(context).size.height * 0.10,
       width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey[800],
+      ),
+      alignment: Alignment.center,
       child: ListView(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         children: daysList.keys.map((e) {
           // return ListTile(title: Text("$curNum:00 - $curNum:59"));
           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(e),
+              Text(
+                e,
+                textAlign: TextAlign.center,
+              ),
               Checkbox(
                   value: daysList[e],
                   onChanged: (value) {

@@ -1,48 +1,53 @@
 //  Copyright (c) 2019 Aleksander Woźniak
 //  Licensed under Apache License v2.0
 
+import 'dart:ui';
+
+import 'package:ematch/App/controller/locationController.dart';
 import 'package:ematch/App/model/eventModel.dart';
+import 'package:ematch/App/model/locationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
 // Example holidays
 final Map<DateTime, List> _holidays = {
-  DateTime(2020, 1, 1): ['New Year\'s Day'],
-  DateTime(2020, 1, 6): ['Epiphany'],
-  DateTime(2020, 2, 14): ['Valentine\'s Day'],
-  DateTime(2020, 4, 21): ['Easter Sunday'],
-  DateTime(2020, 4, 22): ['Easter Monday'],
+  // DateTime(2021, 5, 5): ['New Year\'s Day'],
+  // DateTime(2021, 1, 6): ['Epiphany'],
+  // DateTime(2021, 2, 14): ['Valentine\'s Day'],
+  // DateTime(2021, 4, 21): ['Easter Sunday'],
+  // DateTime(2021, 4, 22): ['Easter Monday'],
 };
 
 class OwnerLocationEventtableCalendar extends StatefulWidget {
-  final Future<Map<DateTime, List>> futureEvents;
-  final Widget customEventList;
-  final String title;
+  final LocationModel location;
 
-  const OwnerLocationEventtableCalendar(
-      {Key key, this.futureEvents, this.title, this.customEventList})
-      : super(key: key);
+  OwnerLocationEventtableCalendar({Key key, this.location}) : super(key: key);
 
   @override
   _OwnerLocationEventtableCalendarState createState() =>
       _OwnerLocationEventtableCalendarState();
 }
 
-class _OwnerLocationEventtableCalendarState extends State<OwnerLocationEventtableCalendar>
+class _OwnerLocationEventtableCalendarState
+    extends State<OwnerLocationEventtableCalendar>
     with TickerProviderStateMixin {
   Map<DateTime, List> _events;
-  Future<Map<DateTime, List>> getEvents;
   List _selectedEvents;
   AnimationController _animationController;
   CalendarController _calendarController;
+  DateTime today = DateTime.now();
+  Map<String, DateTime> weekdaysEnabled;
+  Future<Map<DateTime, List>> futureEvents;
+  String title;
+  LocationController locationController = LocationController();
 
   @override
   void initState() {
     super.initState();
-    getEvents = widget.futureEvents;
+    futureEvents = locationController.getLocationEvents(widget.location.id);
+    today = DateTime.now();
     if (_selectedEvents == null) _selectedEvents = [];
-
     // _selectedEvents = _events[_selectedDay] ?? [];
     _calendarController = CalendarController();
 
@@ -81,12 +86,13 @@ class _OwnerLocationEventtableCalendarState extends State<OwnerLocationEventtabl
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getEvents,
+      future: futureEvents,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           _events = snapshot.data;
           if (_selectedEvents.isEmpty ?? true)
             _selectedEvents = _events[DateTime.now()] ?? [];
+
           return buildBody();
         } else
           return Center(child: CircularProgressIndicator());
@@ -94,19 +100,28 @@ class _OwnerLocationEventtableCalendarState extends State<OwnerLocationEventtabl
     );
   }
 
-  Column buildBody() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        // Switch out 2 lines below to play with TableCalendar's settings
-        //-----------------------
-        _buildTableCalendar(),
-        // _buildTableCalendarWithBuilders(),
-        const SizedBox(height: 8.0),
-        _buildButtons(),
-        const SizedBox(height: 8.0),
-        Expanded(child: widget.customEventList ?? _buildEventList()),
-      ],
+  Container buildBody() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          // Switch out 2 lines below to play with TableCalendar's settings
+          //-----------------------
+          _buildTableCalendar(),
+          // _buildTableCalendarWithBuilders(),
+          const SizedBox(height: 8.0),
+          _buildButtons(),
+          const SizedBox(height: 8.0),
+          Expanded(
+              child:
+                  // widget.customEventList ??
+                  _buildEventList()),
+        ],
+      ),
     );
   }
 
@@ -122,16 +137,45 @@ class _OwnerLocationEventtableCalendarState extends State<OwnerLocationEventtabl
       locale: 'pt_BR',
       events: _events,
       holidays: _holidays,
+      weekendDays: widget.location.getLocationDaysDisable().values.toList(),
+      // enabledDayPredicate: (date) {
+      //   return date.weekday != DateTime.sunday;
+      // },
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
-        selectedColor: Colors.deepOrange[400],
-        todayColor: Colors.deepOrange[200],
+        selectedColor: Colors.deepOrange[700],
+        todayColor: Colors.grey[700],
         markersColor: Colors.brown[700],
+        weekendStyle: TextStyle(
+          color: Colors.grey[600],
+          fontWeight: FontWeight.w300,
+        ),
+        weekdayStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+        ),
         outsideDaysVisible: false,
       ),
+      daysOfWeekStyle: DaysOfWeekStyle(
+        weekendStyle: TextStyle(
+          color: Colors.grey[600],
+          fontWeight: FontWeight.w300,
+        ),
+        weekdayStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       headerStyle: HeaderStyle(
-        formatButtonTextStyle:
-            TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+        centerHeaderTitle: true,
+        titleTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+        formatButtonTextStyle: TextStyle().copyWith(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
         formatButtonDecoration: BoxDecoration(
           color: Colors.deepOrange[400],
           borderRadius: BorderRadius.circular(16.0),
@@ -273,47 +317,69 @@ class _OwnerLocationEventtableCalendarState extends State<OwnerLocationEventtabl
 
     return Column(
       children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            ElevatedButton(
-              child: Text('Month'),
-              onPressed: () {
-                setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.month);
-                });
-              },
-            ),
-            ElevatedButton(
-              child: Text('2 weeks'),
-              onPressed: () {
-                setState(() {
-                  _calendarController
-                      .setCalendarFormat(CalendarFormat.twoWeeks);
-                });
-              },
-            ),
-            ElevatedButton(
-              child: Text('Week'),
-              onPressed: () {
-                setState(() {
-                  _calendarController.setCalendarFormat(CalendarFormat.week);
-                });
-              },
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisSize: MainAxisSize.max,
+        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //   children: <Widget>[
+        //     Container(
+        //       height: MediaQuery.of(context).size.height / 14,
+        //       width: MediaQuery.of(context).size.width / 3.2,
+        //       child: ElevatedButton(
+        //         child: Text('Mensal'),
+        //         onPressed: () {
+        //           setState(() {
+        //             _calendarController.setCalendarFormat(CalendarFormat.month);
+        //           });
+        //         },
+        //       ),
+        //     ),
+        //     Container(
+        //       height: MediaQuery.of(context).size.height / 14,
+        //       width: MediaQuery.of(context).size.width / 3.2,
+        //       child: ElevatedButton(
+        //         child: Text('2 Semanas'),
+        //         onPressed: () {
+        //           setState(() {
+        //             _calendarController
+        //                 .setCalendarFormat(CalendarFormat.twoWeeks);
+        //           });
+        //         },
+        //       ),
+        //     ),
+        //     Container(
+        //       height: MediaQuery.of(context).size.height / 14,
+        //       width: MediaQuery.of(context).size.width / 3.2,
+        //       child: ElevatedButton(
+        //         child: Text('Semanal'),
+        //         onPressed: () {
+        //           setState(() {
+        //             _calendarController.setCalendarFormat(CalendarFormat.week);
+        //           });
+        //         },
+        //       ),
+        //     ),
+        //   ],
+        // ),
         const SizedBox(height: 8.0),
-        ElevatedButton(
-          child: Text(
-              'Set day ${dateTime.day}-${dateTime.month}-${dateTime.year}'),
-          onPressed: () {
-            _calendarController.setSelectedDay(
-              DateTime(dateTime.year, dateTime.month, dateTime.day),
-              runCallback: true,
-            );
-          },
+        Container(
+          height: MediaQuery.of(context).size.height / 15,
+          width: MediaQuery.of(context).size.width / 2,
+          child: ElevatedButton(
+            child: Text(
+              'Mostrar Hoje\n(${today.day}/${today.month}/${today.year})',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              _calendarController.setSelectedDay(
+                DateTime(today.year, today.month, today.day),
+                runCallback: true,
+              );
+            },
+          ),
         ),
       ],
     );
@@ -329,12 +395,24 @@ class _OwnerLocationEventtableCalendarState extends State<OwnerLocationEventtabl
             .format(DateTime.parse(ev.startDate).add(Duration(hours: 1)));
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(width: 0.8),
+            color: Colors.grey[800],
+            border: Border.all(width: 0.1),
             borderRadius: BorderRadius.circular(12.0),
           ),
           margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
           child: ListTile(
-            title: Text("${ev.eventName} - $startTime - $endTime"),
+            title: Row(
+              children: [
+                Icon(Icons.timer),
+                Text(
+                  "($startTime - $endTime)\t",
+                  style: TextStyle(
+                    color: Colors.amber,
+                  ),
+                ),
+                Text("${ev.eventName}"),
+              ],
+            ),
             onTap: () => print('$event tapped!'),
           ),
         );

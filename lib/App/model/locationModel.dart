@@ -62,6 +62,33 @@ class LocationModel {
     data['hourValue'] = this.hourValue;
     return data;
   }
+
+  Map<String, int> getLocationDaysEnable() {
+    Map<String, int> response = Map<String, int>();
+    if (this.avaiableDays.contains("SEG")) response["SEG"] = DateTime.monday;
+    if (this.avaiableDays.contains("TER")) response["TER"] = DateTime.tuesday;
+    if (this.avaiableDays.contains("QUA")) response["QUA"] = DateTime.wednesday;
+    if (this.avaiableDays.contains("QUI")) response["QUI"] = DateTime.thursday;
+    if (this.avaiableDays.contains("SEX")) response["SEX"] = DateTime.friday;
+    if (this.avaiableDays.contains("SAB")) response["SAB"] = DateTime.saturday;
+    if (this.avaiableDays.contains("DOM")) response["DOM"] = DateTime.sunday;
+
+    return response;
+  }
+
+  Map<String, int> getLocationDaysDisable() {
+    Map<String, int> response = Map<String, int>();
+    if (!this.avaiableDays.contains("SEG")) response["SEG"] = DateTime.monday;
+    if (!this.avaiableDays.contains("TER")) response["TER"] = DateTime.tuesday;
+    if (!this.avaiableDays.contains("QUA"))
+      response["QUA"] = DateTime.wednesday;
+    if (!this.avaiableDays.contains("QUI")) response["QUI"] = DateTime.thursday;
+    if (!this.avaiableDays.contains("SEX")) response["SEX"] = DateTime.friday;
+    if (!this.avaiableDays.contains("SAB")) response["SAB"] = DateTime.saturday;
+    if (!this.avaiableDays.contains("DOM")) response["DOM"] = DateTime.sunday;
+
+    return response;
+  }
 }
 
 class Geolocation {

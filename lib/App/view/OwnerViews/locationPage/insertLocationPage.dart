@@ -64,7 +64,11 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
       ),
       body: _currPosition == null
           ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(child: buildBody(context)),
+          : SingleChildScrollView(
+              child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: buildBody(context),
+            )),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if (formkey.currentState.validate()) {
@@ -126,6 +130,11 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
 
   Container buildBody(BuildContext context) {
     return Container(
+      //color: Colors.grey[900],
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(20),
+      ),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Padding(
@@ -138,45 +147,47 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
                   flex: 6,
                   child: Column(
                     children: [
-                      TextFormField(
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                        controller: locationController.name,
-                        validator: MultiValidator([
-                          RequiredValidator(
-                            errorText: "Campo Obrigatório",
-                          )
-                        ]),
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          alignLabelWithHint: true,
-                          labelText: 'Nome da Quadra',
-                          labelStyle: TextStyle(
+                      Container(
+                        child: TextFormField(
+                          style: TextStyle(
                             color: Colors.white,
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.deepOrange,
-                              width: 1.0,
+                          controller: locationController.name,
+                          validator: MultiValidator([
+                            RequiredValidator(
+                              errorText: "Campo Obrigatório",
+                            )
+                          ]),
+                          decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            alignLabelWithHint: true,
+                            labelText: 'Nome da Quadra',
+                            labelStyle: TextStyle(
+                              color: Colors.white,
                             ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey[800],
-                              width: 1.0,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepOrange,
+                                width: 1.0,
+                              ),
                             ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.redAccent[700],
-                              width: 1.0,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.grey[800],
+                                width: 1.0,
+                              ),
                             ),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.deepOrange,
-                              width: 1.0,
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.redAccent[700],
+                                width: 1.0,
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepOrange,
+                                width: 1.0,
+                              ),
                             ),
                           ),
                         ),

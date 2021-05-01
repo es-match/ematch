@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'editLocationAvaiability.dart';
 
 class LocationCalendarPage extends StatefulWidget {
-  final LocationModel model;
+  final LocationModel location;
 
-  LocationCalendarPage({Key key, this.model}) : super(key: key);
+  LocationCalendarPage({Key key, this.location}) : super(key: key);
   @override
   _LocationCalendarPageState createState() => _LocationCalendarPageState();
 }
@@ -20,7 +20,7 @@ class _LocationCalendarPageState extends State<LocationCalendarPage> {
   void initState() {
     super.initState();
     LocationController locationController = LocationController();
-    futureEvents = locationController.getLocationEvents(widget.model.id);
+    futureEvents = locationController.getLocationEvents(widget.location.id);
   }
 
   @override
@@ -30,7 +30,7 @@ class _LocationCalendarPageState extends State<LocationCalendarPage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.model.locationName),
+            Text(widget.location.locationName),
             Row(
               children: [
                 Icon(Icons.calendar_today),
@@ -40,8 +40,11 @@ class _LocationCalendarPageState extends State<LocationCalendarPage> {
           ],
         ),
       ),
-      body: OwnerLocationEventtableCalendar(
-        futureEvents: this.futureEvents,
+      body: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: OwnerLocationEventtableCalendar(
+          location: this.widget.location,
+        ),
       ),
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,13 +54,23 @@ class _LocationCalendarPageState extends State<LocationCalendarPage> {
             width: MediaQuery.of(context).size.width / 2,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            EditLocationPage(locationModel: widget.model)));
+                Navigator.pop(context);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) =>
+                //             EditLocationPage(locationModel: widget.model)));
               },
-              child: Text("Detalhes"),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(Icons.map_outlined),
+                  Text(
+                    "Detalhes",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
             ),
           ),
           Container(
@@ -65,9 +78,22 @@ class _LocationCalendarPageState extends State<LocationCalendarPage> {
             width: MediaQuery.of(context).size.width / 2,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            EditLocationAvaiability(widget.location)));
               },
-              child: Text("Horários"),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(Icons.lock_clock),
+                  Text(
+                    "Horários",
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
