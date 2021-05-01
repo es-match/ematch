@@ -21,15 +21,15 @@ class _OverViewPageState extends State<OverViewPage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              model = repository.getLocations();
-              setState(() {});
-            },
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.refresh),
+        //     onPressed: () {
+        //       model = repository.getLocations();
+        //       setState(() {});
+        //     },
+        //   )
+        // ],
         title: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,19 +82,32 @@ class _OverViewPageState extends State<OverViewPage> {
           ),
         ),
       ),
-      bottomNavigationBar: ElevatedButton(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => InsertLocationPage(),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 4.0),
+        child: Container(
+          height: MediaQuery.of(context).size.height / 12,
+          width: MediaQuery.of(context).size.width,
+          child: ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InsertLocationPage(),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.add,
+                  size: 50,
+                ),
+                Text(
+                  " Adicionar Novo Local",
+                  style: TextStyle(fontSize: 27),
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.add),
-            Text(" Adicionar Novo Local"),
-          ],
         ),
       ),
     );

@@ -107,10 +107,11 @@ class _EditLocationPageState extends State<EditLocationPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => LocationCalendarPage(
+                                  model: widget.locationModel,
                                   // LocationEventtableCalendar(
-                                  futureEvents:
-                                      locationController.getLocationEvents(
-                                          widget.locationModel.id),
+                                  // futureEvents:
+                                  //     locationController.getLocationEvents(
+                                  //         widget.locationModel.id),
                                 ),
                               ),
                             );
@@ -119,7 +120,10 @@ class _EditLocationPageState extends State<EditLocationPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Icon(Icons.calendar_today),
-                              Text("Calendário"),
+                              Text(
+                                "Calendário",
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ],
                           ),
                         ),
@@ -137,7 +141,10 @@ class _EditLocationPageState extends State<EditLocationPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Icon(Icons.edit),
-                              Text("Editar Dados"),
+                              Text(
+                                "Editar Dados",
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ],
                           ),
                         ),
@@ -250,59 +257,65 @@ class _EditLocationPageState extends State<EditLocationPage> {
         }));
   }
 
-  Row buildEditModeButtons(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        ElevatedButton(
-          onPressed: () => {
-            (_name.text.isEmpty ||
-                    _cep.text.isEmpty ||
-                    _cidade.text.isEmpty ||
-                    _endereco.text.isEmpty ||
-                    _numero.text.isEmpty)
-                ? Scaffold.of(context)
-                    // ignore: deprecated_member_use
-                    .showSnackBar(SnackBar(
-                    content: Text('Preenchar todos os campos'),
-                    action: SnackBarAction(
-                      label: 'OK',
-                      onPressed: () {
-                        setState(() {
-                          isEditMode = true;
-                        });
-                        // Some code to undo the change.
-                      },
-                    ),
-                  ))
-                : locationController.editLocation(widget.locationModel.id)
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Icon(Icons.save),
-              Text("Salvar"),
-            ],
+  Container buildEditModeButtons(BuildContext context) {
+    return Container(
+      height: MediaQuery.of(context).size.height / 12,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ElevatedButton(
+            onPressed: () => {
+              (_name.text.isEmpty ||
+                      _cep.text.isEmpty ||
+                      _cidade.text.isEmpty ||
+                      _endereco.text.isEmpty ||
+                      _numero.text.isEmpty)
+                  ? Scaffold.of(context)
+                      // ignore: deprecated_member_use
+                      .showSnackBar(SnackBar(
+                      content: Text('Preenchar todos os campos'),
+                      action: SnackBarAction(
+                        label: 'OK',
+                        onPressed: () {
+                          setState(() {
+                            isEditMode = true;
+                          });
+                          // Some code to undo the change.
+                        },
+                      ),
+                    ))
+                  : locationController.editLocation(widget.locationModel.id)
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(Icons.save),
+                Text(
+                  "Salvar",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              isEditMode = false;
-            });
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Icon(Icons.cancel),
-              Text("Cancelar"),
-            ],
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                isEditMode = false;
+              });
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Icon(Icons.cancel),
+                Text(
+                  "Cancelar",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
