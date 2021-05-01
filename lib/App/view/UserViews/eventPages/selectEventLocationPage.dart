@@ -17,8 +17,7 @@ class SelectEventLocationPage extends StatefulWidget {
 
 class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
   double _currentSliderValue = 50;
-  String dropdownValue = "";
-
+  String dropdownValue = "";  
   GoogleMapController googleMapController;
   LocationController locationController = LocationController();
 
@@ -52,7 +51,7 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
       locationList = locals;
       setMarkers(locationList);
     });
-  }
+  }   
 
   Future<List<LocationModel>> _getLocationDistances() async {
     return locationController.getLocations();
