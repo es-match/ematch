@@ -19,17 +19,17 @@ class UserLocationEventtableCalendar extends StatefulWidget {
   final Future<Map<DateTime, List>> futureEvents;
   final Widget customEventList;
   final String title;
-
-  const UserLocationEventtableCalendar(
-      {Key key, this.futureEvents, this.title, this.customEventList})
+  final customOnDaySelected;
+   UserLocationEventtableCalendar(
+      {Key key, this.futureEvents, this.title, this.customEventList, this.customOnDaySelected})
       : super(key: key);
 
   @override
-  _OwnerLocationEventtableCalendarState createState() =>
-      _OwnerLocationEventtableCalendarState();
+  _UserLocationEventtableCalendarState createState() =>
+      _UserLocationEventtableCalendarState();
 }
 
-class _OwnerLocationEventtableCalendarState
+class _UserLocationEventtableCalendarState
     extends State<UserLocationEventtableCalendar>
     with TickerProviderStateMixin {
   Map<DateTime, List> _events;
@@ -65,6 +65,7 @@ class _OwnerLocationEventtableCalendarState
   void _onDaySelected(DateTime day, List events, List holidays) {
     // print('CALLBACK: _onDaySelected');
     setState(() {
+       widget.customOnDaySelected(events);
       _selectedEvents = events;
     });
   }
