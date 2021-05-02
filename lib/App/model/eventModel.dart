@@ -1,3 +1,5 @@
+import 'dart:html';
+
 class EventModel {
   String id;
   String groupID;
@@ -7,16 +9,29 @@ class EventModel {
   String endDate;
   String createDate;
   List<String> confirmedUsers;
+  String userID;
+  String userName;
+  String locationName;
+  String address;
+  String imageUrl;
+  Geolocation geolocation;
 
-  EventModel(
-      {this.id,
-      this.groupID,
-      this.eventName,
-      this.locationID,
-      this.startDate,
-      this.endDate,
-      this.confirmedUsers,
-      this.createDate});
+  EventModel({
+    this.id,
+    this.groupID,
+    this.eventName,
+    this.locationID,
+    this.startDate,
+    this.endDate,
+    this.confirmedUsers,
+    this.createDate,
+    this.userID,
+    this.userName,
+    this.locationName,
+    this.address,
+    this.imageUrl,
+    this.geolocation,
+  });
 
   EventModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,6 +42,14 @@ class EventModel {
     endDate = json['endDate'];
     confirmedUsers = json['confirmedUsers'].cast<String>();
     createDate = json['createDate'];
+    locationName = json['locationName'];
+    userID = json['userID'];
+    userName = json['userName'];
+    address = json['address'];
+    imageUrl = json['imageUrl'];
+    geolocation = json['geolocation'] != null
+        ? new Geolocation.fromJson(json['geolocation'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +62,33 @@ class EventModel {
     data['endDate'] = this.endDate;
     data['confirmedUsers'] = this.confirmedUsers;
     data['createDate'] = this.createDate;
+    data['locationName'] = this.locationName;
+    data['userID'] = this.userID;
+    data['userName'] = this.userName;
+    data['address'] = this.address;
+    data['imageUrl'] = this.imageUrl;
+    if (this.geolocation != null) {
+      data['geolocation'] = this.geolocation.toJson();
+    }
+    return data;
+  }
+}
+
+class Geolocation {
+  double dLatitude;
+  double dLongitude;
+
+  Geolocation({this.dLatitude, this.dLongitude});
+
+  Geolocation.fromJson(Map<String, dynamic> json) {
+    dLatitude = json['_latitude'];
+    dLongitude = json['_longitude'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_latitude'] = this.dLatitude;
+    data['_longitude'] = this.dLongitude;
     return data;
   }
 }

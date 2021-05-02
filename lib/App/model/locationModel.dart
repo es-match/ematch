@@ -7,6 +7,8 @@ class LocationModel {
   String number;
   String imageUrl;
   Geolocation geolocation;
+  String userID;
+  String userName;
   Null createDate;
   String avaiableDays;
   String avaiableHours;

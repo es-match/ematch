@@ -159,273 +159,289 @@ class _EditLocationPageState extends State<EditLocationPage> {
           return SingleChildScrollView(
             child: Form(
               key: formkey,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[900],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                height: MediaQuery.of(context).size.height / 1.2,
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                          flex: 6,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextFormField(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                readOnly: !isEditMode,
-                                controller: locationController.name,
-                                validator: MultiValidator([
-                                  RequiredValidator(
-                                    errorText: "Campo Obrigatório",
-                                  )
-                                ]),
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  alignLabelWithHint: true,
-                                  labelText: 'Nome da Quadra',
-                                  labelStyle: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[800],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent[700],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              TextFormField(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                readOnly: !isEditMode,
-                                controller: locationController.cep,
-                                validator: MultiValidator([
-                                  RequiredValidator(
-                                    errorText: "Campo Obrigatório",
-                                  )
-                                ]),
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  alignLabelWithHint: true,
-                                  labelText: 'CEP',
-                                  labelStyle: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[800],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent[700],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              TextFormField(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                readOnly: !isEditMode,
-                                controller: locationController.city,
-                                validator: MultiValidator([
-                                  RequiredValidator(
-                                    errorText: "Campo Obrigatório",
-                                  )
-                                ]),
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  alignLabelWithHint: true,
-                                  labelText: 'Cidade',
-                                  labelStyle: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[800],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent[700],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              TextFormField(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                readOnly: !isEditMode,
-                                controller: locationController.address,
-                                validator: MultiValidator([
-                                  RequiredValidator(
-                                    errorText: "Campo Obrigatório",
-                                  )
-                                ]),
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  alignLabelWithHint: true,
-                                  labelText: 'Endereço',
-                                  labelStyle: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[800],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent[700],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              TextFormField(
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                readOnly: !isEditMode,
-                                keyboardType: TextInputType.number,
-                                controller: locationController.number,
-                                validator: MultiValidator([
-                                  RequiredValidator(
-                                    errorText: "Campo Obrigatório",
-                                  )
-                                ]),
-                                decoration: InputDecoration(
-                                  fillColor: Colors.white,
-                                  alignLabelWithHint: true,
-                                  labelText: 'Número',
-                                  labelStyle: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey[800],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.redAccent[700],
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.deepOrange,
-                                      width: 1.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                height: 250,
-                                child: GoogleMap(
-                                  initialCameraPosition: CameraPosition(
-                                      target: _currPosition, zoom: 14),
-                                  onMapCreated: (controller) {
-                                    googleMapController = controller;
-                                  },
-                                  markers: marker,
-                                ),
-                              ),
-                              Align(
-                                  alignment: Alignment.bottomCenter,
-
-                                  // ignore: deprecated_member_use
-                                  child: isEditMode == true
-                                      ? buildEditModeButtons(context)
-                                      : null),
-                            ],
-                          )),
-                    ],
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    height: 170,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.network(
+                      widget.locationModel.imageUrl,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    height: MediaQuery.of(context).size.height / 1.2,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                              flex: 6,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    readOnly: !isEditMode,
+                                    controller: locationController.name,
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                        errorText: "Campo Obrigatório",
+                                      )
+                                    ]),
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      alignLabelWithHint: true,
+                                      labelText: 'Nome da Quadra',
+                                      labelStyle: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey[800],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.redAccent[700],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    readOnly: !isEditMode,
+                                    controller: locationController.cep,
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                        errorText: "Campo Obrigatório",
+                                      )
+                                    ]),
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      alignLabelWithHint: true,
+                                      labelText: 'CEP',
+                                      labelStyle: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey[800],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.redAccent[700],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    readOnly: !isEditMode,
+                                    controller: locationController.city,
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                        errorText: "Campo Obrigatório",
+                                      )
+                                    ]),
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      alignLabelWithHint: true,
+                                      labelText: 'Cidade',
+                                      labelStyle: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey[800],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.redAccent[700],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    readOnly: !isEditMode,
+                                    controller: locationController.address,
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                        errorText: "Campo Obrigatório",
+                                      )
+                                    ]),
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      alignLabelWithHint: true,
+                                      labelText: 'Endereço',
+                                      labelStyle: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey[800],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.redAccent[700],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextFormField(
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    readOnly: !isEditMode,
+                                    keyboardType: TextInputType.number,
+                                    controller: locationController.number,
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                        errorText: "Campo Obrigatório",
+                                      )
+                                    ]),
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      alignLabelWithHint: true,
+                                      labelText: 'Número',
+                                      labelStyle: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.grey[800],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.redAccent[700],
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Colors.deepOrange,
+                                          width: 1.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 250,
+                                    child: GoogleMap(
+                                      initialCameraPosition: CameraPosition(
+                                          target: _currPosition, zoom: 14),
+                                      onMapCreated: (controller) {
+                                        googleMapController = controller;
+                                      },
+                                      markers: marker,
+                                    ),
+                                  ),
+                                  Align(
+                                      alignment: Alignment.bottomCenter,
+
+                                      // ignore: deprecated_member_use
+                                      child: isEditMode == true
+                                          ? buildEditModeButtons(context)
+                                          : null),
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );

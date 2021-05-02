@@ -85,7 +85,7 @@ class _OverViewPageState extends State<OverViewPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 4.0),
         child: Container(
-          height: MediaQuery.of(context).size.height / 12,
+          height: MediaQuery.of(context).size.height / 14,
           width: MediaQuery.of(context).size.width,
           child: ElevatedButton(
             onPressed: () => Navigator.push(
@@ -99,11 +99,11 @@ class _OverViewPageState extends State<OverViewPage> {
               children: [
                 Icon(
                   Icons.add,
-                  size: 50,
+                  size: 30,
                 ),
                 Text(
                   " Adicionar Novo Local",
-                  style: TextStyle(fontSize: 27),
+                  style: TextStyle(fontSize: 20),
                 ),
               ],
             ),

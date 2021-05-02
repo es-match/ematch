@@ -116,7 +116,17 @@ class _OwnerLocationEventtableCalendarState
           const SizedBox(height: 8.0),
           _buildButtons(),
           const SizedBox(height: 8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Agendamentos:",
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
           Expanded(
+              flex: 6,
               child:
                   // widget.customEventList ??
                   _buildEventList()),
@@ -127,63 +137,91 @@ class _OwnerLocationEventtableCalendarState
 
   // Simple TableCalendar configuration (using Styles)
   Widget _buildTableCalendar() {
-    return TableCalendar(
-      availableCalendarFormats: {
-        CalendarFormat.month: 'Mensal',
-        // CalendarFormat.twoWeeks: '2 Semanas',
-        // CalendarFormat.week: 'Semanal',
-      },
-      calendarController: _calendarController,
-      locale: 'pt_BR',
-      events: _events,
-      holidays: _holidays,
-      weekendDays: widget.location.getLocationDaysDisable().values.toList(),
-      // enabledDayPredicate: (date) {
-      //   return date.weekday != DateTime.sunday;
-      // },
-      startingDayOfWeek: StartingDayOfWeek.monday,
-      calendarStyle: CalendarStyle(
-        selectedColor: Colors.deepOrange[700],
-        todayColor: Colors.grey[700],
-        markersColor: Colors.brown[700],
-        weekendStyle: TextStyle(
-          color: Colors.grey[600],
-          fontWeight: FontWeight.w300,
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.deepOrangeAccent,
+          width: 1,
         ),
-        weekdayStyle: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.w600,
-        ),
-        outsideDaysVisible: false,
+        borderRadius: BorderRadius.circular(5),
       ),
-      daysOfWeekStyle: DaysOfWeekStyle(
-        weekendStyle: TextStyle(
-          color: Colors.grey[600],
-          fontWeight: FontWeight.w300,
+      child: TableCalendar(
+        availableCalendarFormats: {
+          CalendarFormat.month: 'Mensal',
+          // CalendarFormat.twoWeeks: '2 Semanas',
+          // CalendarFormat.week: 'Semanal',
+        },
+        calendarController: _calendarController,
+        locale: 'pt_BR',
+        events: _events,
+        holidays: _holidays,
+        weekendDays: widget.location.getLocationDaysDisable().values.toList(),
+        // enabledDayPredicate: (date) {
+        //   return date.weekday != DateTime.sunday;
+        // },
+        startingDayOfWeek: StartingDayOfWeek.monday,
+        calendarStyle: CalendarStyle(
+          contentPadding: const EdgeInsets.all(0.0),
+          selectedColor: Colors.deepOrange[700],
+          todayColor: Colors.grey[700],
+          markersColor: Colors.deepOrange[900],
+          weekendStyle: TextStyle(
+            color: Colors.grey[600],
+            fontWeight: FontWeight.w300,
+            fontSize: 17,
+          ),
+          weekdayStyle: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 17,
+          ),
+          outsideDaysVisible: false,
         ),
-        weekdayStyle: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+        daysOfWeekStyle: DaysOfWeekStyle(
+          weekendStyle: TextStyle(
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w300,
+              fontSize: 17,
+              height: 2),
+          weekdayStyle: TextStyle(
+            fontSize: 17,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            height: 2,
+          ),
+          dowTextBuilder: (date, locale) {
+            return DateFormat.E(locale).format(date).toUpperCase();
+          },
+          decoration: BoxDecoration(
+            color: Colors.deepOrangeAccent,
+          ),
         ),
+
+        headerStyle: HeaderStyle(
+          decoration: BoxDecoration(
+            color: Colors.deepOrangeAccent,
+          ),
+          centerHeaderTitle: true,
+          titleTextBuilder: (date, locale) {
+            return DateFormat.yMMMM(locale).format(date).toUpperCase();
+          },
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+          formatButtonTextStyle: TextStyle().copyWith(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+          formatButtonDecoration: BoxDecoration(
+            color: Colors.deepOrange[400],
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+        ),
+        onDaySelected: _onDaySelected,
+        onVisibleDaysChanged: _onVisibleDaysChanged,
+        onCalendarCreated: _onCalendarCreated,
       ),
-      headerStyle: HeaderStyle(
-        centerHeaderTitle: true,
-        titleTextStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-        ),
-        formatButtonTextStyle: TextStyle().copyWith(
-          color: Colors.white,
-          fontSize: 18.0,
-        ),
-        formatButtonDecoration: BoxDecoration(
-          color: Colors.deepOrange[400],
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-      ),
-      onDaySelected: _onDaySelected,
-      onVisibleDaysChanged: _onVisibleDaysChanged,
-      onCalendarCreated: _onCalendarCreated,
     );
   }
 
@@ -360,27 +398,26 @@ class _OwnerLocationEventtableCalendarState
         //     ),
         //   ],
         // ),
-        const SizedBox(height: 8.0),
-        Container(
-          height: MediaQuery.of(context).size.height / 15,
-          width: MediaQuery.of(context).size.width / 2,
-          child: ElevatedButton(
-            child: Text(
-              'Mostrar Hoje\n(${today.day}/${today.month}/${today.year})',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            onPressed: () {
-              _calendarController.setSelectedDay(
-                DateTime(today.year, today.month, today.day),
-                runCallback: true,
-              );
-            },
-          ),
-        ),
+        // Container(
+        //   height: MediaQuery.of(context).size.height / 15,
+        //   width: MediaQuery.of(context).size.width / 2,
+        //   child: ElevatedButton(
+        //     child: Text(
+        //       'Mostrar Hoje\n(${today.day}/${today.month}/${today.year})',
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(
+        //         fontSize: 18,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
+        //     onPressed: () {
+        //       _calendarController.setSelectedDay(
+        //         DateTime(today.year, today.month, today.day),
+        //         runCallback: true,
+        //       );
+        //     },
+        //   ),
+        // ),
       ],
     );
   }
