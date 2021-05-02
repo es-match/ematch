@@ -2,10 +2,11 @@ import 'package:ematch/App/controller/locationController.dart';
 import 'package:ematch/App/custom_widgets/userLocationEventtableCalendar.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/locationModel.dart';
+import 'package:ematch/App/view/UserViews/eventPages/paymentCheckinPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class SelectEventDate extends StatefulWidget {
   SelectEventDate({this.location});
@@ -21,6 +22,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
   GoogleMapController googleMapController;
   CalendarController _calendarController = CalendarController();
   Set<Marker> markers = Set();
+  DateTime currentDay;
 
   List<dynamic> dayEvents;
 
@@ -37,11 +39,12 @@ class _SelectEventDateState extends State<SelectEventDate> {
     });
   }
 
-  dynamic getDayEvents(List<dynamic> events) {
+  dynamic getDayEvents(List<dynamic> events,DateTime day) {
     setState(() {
       //LIMPA DROPDOWNS
       startDropdownvalue = null;
       endDropdownvalue = null;
+      currentDay = day;
       dayEvents = events;
       print(dayEvents);
     });
@@ -69,7 +72,15 @@ class _SelectEventDateState extends State<SelectEventDate> {
               children: [
                 buildDropdownButtons(),
                 ElevatedButton(
-                    onPressed: () {}, child: Text("Ir para pagamento")),
+
+                    onPressed: (startDropdownvalue ==  null || endDropdownvalue == null)  ? null :  () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaymentCheckinPage(location: widget.location,eventDay: currentDay,startHour: startDropdownvalue, endHour: endDropdownvalue)),
+                      );
+                    },
+                    child: Text("Ir para pagamento")),
               ],
             ),
           ],
@@ -98,14 +109,14 @@ class _SelectEventDateState extends State<SelectEventDate> {
           value: endDropdownvalue,
           onChanged: (String newValue) {
             setState(() {
-              endDropdownvalue = startDropdownvalue;
+              endDropdownvalue = newValue;
             });
           },
           items: dropDownMenuItems(true),
-              // .where((element) =>
-              //     int.parse(startDropdownvalue ?? "0") <=
-              //     int.parse(element.value))
-              // .toList(),
+          // .where((element) =>
+          //     int.parse(startDropdownvalue ?? "0") <=
+          //     int.parse(element.value))
+          // .toList(),
           style: const TextStyle(
               color: Colors.white, backgroundColor: Colors.black),
         ),
@@ -114,10 +125,8 @@ class _SelectEventDateState extends State<SelectEventDate> {
   }
 
   List<DropdownMenuItem<String>> dropDownMenuItems([bool end = false]) {
-    
-    if(end && startDropdownvalue == null)
-      return null;
-    
+    if (end && startDropdownvalue == null) return null;
+
     var hours = widget.location.avaiableHours.split(',').toList();
 
     //REMOVE horários cadastrados no dia selecionado

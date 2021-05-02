@@ -65,7 +65,7 @@ class _UserLocationEventtableCalendarState
   void _onDaySelected(DateTime day, List events, List holidays) {
     // print('CALLBACK: _onDaySelected');
     setState(() {
-       widget.customOnDaySelected(events);
+       widget.customOnDaySelected(events,day);
       _selectedEvents = events;
     });
   }
