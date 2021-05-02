@@ -8,7 +8,7 @@ class EventController {
   int eventCount;
 
   Future<List<EventModel>> getEventsByUserID(String userID) async {
-    List<EventModel> listEvents = await _repository.getEvents();
+    List<EventModel> listEvents = await _repository.getEventsByUserID(userID);
     List<EventModel> finalEvents = [];
     for (var ev in listEvents) {
       if (ev.confirmedUsers.contains(userID)) {

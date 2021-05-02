@@ -7,6 +7,7 @@ import 'package:ematch/App/custom_widgets/groupList.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ematch/App/view/UserViews/eventPages/eventDetailPage.dart';
 
 class HomePage extends StatefulWidget {
   final String name;
@@ -136,7 +137,15 @@ class _HomePageState extends State<HomePage> {
             child: ListView.builder(
               itemCount: _eventList.length,
               itemBuilder: (context, index) => ListTile(
-                title: EventCard(event: _eventList[index]),
+                title: InkWell(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EventDetailPage(model: _eventList[index]),
+                    ),
+                  ),
+                  child: EventCard(event: _eventList[index]),
+                ),
               ),
             ),
           ),
