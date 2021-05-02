@@ -1,4 +1,5 @@
 import 'dart:html';
+import 'package:intl/intl.dart';
 
 class EventModel {
   String id;
@@ -71,6 +72,22 @@ class EventModel {
       data['geolocation'] = this.geolocation.toJson();
     }
     return data;
+  }
+
+  List<String> getAlocatedHoursList() {
+    var startHour = int.parse(DateFormat("HH")
+        .format(DateTime.parse(this.startDate).subtract(Duration(hours: 3))));
+    var endHour = int.parse(DateFormat("HH")
+        .format(DateTime.parse(this.endDate).subtract(Duration(hours: 3))));
+
+    var diff = endHour - startHour;
+
+    List<String> alocatedHoursList = [];
+    for (var i = 0; i < diff; i++) {
+      alocatedHoursList.add((startHour + i).toString().padLeft(2, '0'));
+    }
+
+    return alocatedHoursList;
   }
 }
 
