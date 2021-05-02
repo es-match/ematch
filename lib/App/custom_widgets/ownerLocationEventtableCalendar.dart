@@ -447,7 +447,7 @@ class _OwnerLocationEventtableCalendarState
                     color: Colors.amber,
                   ),
                 ),
-                Text("${ev.eventName}"),
+                Text("${ev.userName}"),
               ],
             ),
             onTap: () => print('$event tapped!'),

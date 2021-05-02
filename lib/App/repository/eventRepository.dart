@@ -30,7 +30,7 @@ class EventRepository {
   }
 
   Future<List<EventModel>> getEventsByLocation(String locationID) async {
-    String path = "$url/byGroup/$locationID";
+    String path = "$url/byLocation/$locationID";
     final response = await get(path);
     if (response.body.toUpperCase().contains("NOT FOUND")) {
       return null;

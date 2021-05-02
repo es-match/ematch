@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:intl/intl.dart';
 
 class EventModel {
