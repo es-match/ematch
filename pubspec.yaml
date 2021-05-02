@@ -47,6 +47,7 @@ dependencies:
   share: ^0.6.2+3
   firebase_dynamic_links: ^0.5.0+11
   flutter_masked_text: ^0.7.0
+  mercado_pago_mobile_checkout: ^0.0.3
   
   
   

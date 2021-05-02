@@ -1,4 +1,5 @@
 import 'package:ematch/App/view/UserViews/_userMainPage.dart';
+import 'package:ematch/App/view/UserViews/eventPages/mercadoPagoCheckOutPage.dart';
 import 'package:ematch/App/view/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -64,7 +65,7 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
       ),
       initialRoute: '/',
-      home: LoginPage(),
+      home: MercadoPagoCheckout(),
       // home: TestPageViewer(),
     );
     return materialApp;
