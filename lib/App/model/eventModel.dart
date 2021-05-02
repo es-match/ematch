@@ -15,6 +15,8 @@ class EventModel {
   String address;
   String imageUrl;
   Geolocation geolocation;
+  String groupName;
+  String activityName;
 
   EventModel({
     this.id,
@@ -31,6 +33,8 @@ class EventModel {
     this.address,
     this.imageUrl,
     this.geolocation,
+    this.groupName,
+    this.activityName,
   });
 
   EventModel.fromJson(Map<String, dynamic> json) {
@@ -50,6 +54,8 @@ class EventModel {
     geolocation = json['geolocation'] != null
         ? new Geolocation.fromJson(json['geolocation'])
         : null;
+    groupName = json['groupName'];
+    activityName = json['activityName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -67,6 +73,8 @@ class EventModel {
     data['userName'] = this.userName;
     data['address'] = this.address;
     data['imageUrl'] = this.imageUrl;
+    data['groupName'] = this.groupName;
+    data['activityName'] = this.activityName;
     if (this.geolocation != null) {
       data['geolocation'] = this.geolocation.toJson();
     }
