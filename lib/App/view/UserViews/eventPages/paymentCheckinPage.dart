@@ -1,3 +1,5 @@
+import 'package:ematch/App/controller/eventController.dart';
+import 'package:ematch/App/controller/mercadopagoService.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +31,9 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
         (int.parse(widget.location.hourValue) * totalHours).toString();
   }
 
+
+  EventController eventController = EventController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,22 +41,22 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
         title: Text("Checkin de Pagamento"),
       ),
       body: buildBody(context),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                print("cancelar");
-              },
-              child: Text("Cancelar")),
-          ElevatedButton(
-              onPressed: () {
-                print("finalizar pagamento");
-              },
-              child: Text("Finalizar Pagamento"))
-        ],
-      ),
+      floatingActionButton: ElevatedButton(
+          onPressed: () {
+            
+            payAndAlocateEvent();
+          },
+          child: Text("Realizar Pagamento")),
     );
+  }
+
+  Future<String> payAndAlocateEvent() async{ 
+    var res = await paymentMP(await createBillMP());
+
+    if(res.status.toString() == "approved")
+    {
+        eventController.insertEvent(ev)
+    }
   }
 
   Container buildBody(BuildContext context) {
@@ -65,27 +70,27 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
             Text("Resumo"),
             Divider(),
             buildReviewTable(),
-            Divider(),
-            Text("Método de Pagamento"),
-            Divider(),
-            ElevatedButton(
-              onPressed: () {
-                print("Pagar com Cartão de Crédito");
-              },
-              child: Text("Cartão de Crédito"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print("Pagar com Mercado Pago");
-              },
-              child: Text("Mercado Pago"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print("Pagar com Pix");
-              },
-              child: Text("Pix"),
-            )
+            // Divider(),
+            // Text("Método de Pagamento"),
+            // Divider(),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     print("Pagar com Cartão de Crédito");
+            //   },
+            //   child: Text("Cartão de Crédito"),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     print("Pagar com Mercado Pago");
+            //   },
+            //   child: Text("Mercado Pago"),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     print("Pagar com Pix");
+            //   },
+            //   child: Text("Pix"),
+            // )
           ],
         ));
   }

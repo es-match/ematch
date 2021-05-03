@@ -65,7 +65,8 @@ class AppWidget extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
       ),
       initialRoute: '/',
-      home: MercadoPagoCheckout(),
+      home: LoginPage(),
+      // home: MercadoPagoCheckout(),
       // home: TestPageViewer(),
     );
     return materialApp;

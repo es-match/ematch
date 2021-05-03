@@ -39,7 +39,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
     });
   }
 
-  dynamic getDayEvents(List<dynamic> events,DateTime day) {
+  dynamic getDayEvents(List<dynamic> events, DateTime day) {
     setState(() {
       //LIMPA DROPDOWNS
       startDropdownvalue = null;
@@ -72,14 +72,20 @@ class _SelectEventDateState extends State<SelectEventDate> {
               children: [
                 buildDropdownButtons(),
                 ElevatedButton(
-
-                    onPressed: (startDropdownvalue ==  null || endDropdownvalue == null)  ? null :  () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PaymentCheckinPage(location: widget.location,eventDay: currentDay,startHour: startDropdownvalue, endHour: endDropdownvalue)),
-                      );
-                    },
+                    onPressed:
+                        (startDropdownvalue == null || endDropdownvalue == null)
+                            ? null
+                            : () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PaymentCheckinPage(
+                                          location: widget.location,
+                                          eventDay: currentDay,
+                                          startHour: startDropdownvalue,
+                                          endHour: endDropdownvalue)),
+                                );
+                              },
                     child: Text("Ir para pagamento")),
               ],
             ),
@@ -155,6 +161,13 @@ class _SelectEventDateState extends State<SelectEventDate> {
                   hours.indexOf(startDropdownvalue ?? "0")))
           .toList();
     }
+
+    ////REMOVE horários do passado
+    // if (currentDay != null && currentDay.day == DateTime.now().day) {
+    //   hours = hours
+    //       .where((element) => int.parse(element) >= (DateTime.now().hour + 1))
+    //       .toList();
+    // }
 
     return hours.map<DropdownMenuItem<String>>((String value) {
       String sufix = end ? "59" : "00";

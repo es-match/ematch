@@ -243,8 +243,8 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
   }
 
   double locationInRange(LatLng posA, LatLng posB, double target) {
-    Location lA = Location(posA.latitude, -posA.longitude);
-    Location lB = Location(posB.latitude, -posB.longitude);
+    Location lA = Location(posA.latitude, posA.longitude);
+    Location lB = Location(posB.latitude, posB.longitude);
 
     double value = haversineDistance.haversine(lA, lB, Unit.METER);
     double result = value <= target ? 0.5 : 0;

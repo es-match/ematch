@@ -24,4 +24,5 @@ Future<String> paymentMP(String preferenceID) async {
     preferenceId,
   );
   print(result.toString());
+  return result.status.toString();  
 }
