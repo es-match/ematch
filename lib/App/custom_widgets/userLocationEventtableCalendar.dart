@@ -20,8 +20,12 @@ class UserLocationEventtableCalendar extends StatefulWidget {
   final Widget customEventList;
   final String title;
   final customOnDaySelected;
-   UserLocationEventtableCalendar(
-      {Key key, this.futureEvents, this.title, this.customEventList, this.customOnDaySelected})
+  UserLocationEventtableCalendar(
+      {Key key,
+      this.futureEvents,
+      this.title,
+      this.customEventList,
+      this.customOnDaySelected})
       : super(key: key);
 
   @override
@@ -65,7 +69,7 @@ class _UserLocationEventtableCalendarState
   void _onDaySelected(DateTime day, List events, List holidays) {
     // print('CALLBACK: _onDaySelected');
     setState(() {
-       widget.customOnDaySelected(events,day);
+      widget.customOnDaySelected(events, day);
       _selectedEvents = events;
     });
   }
@@ -113,6 +117,9 @@ class _UserLocationEventtableCalendarState
   // Simple TableCalendar configuration (using Styles)
   Widget _buildTableCalendar() {
     return TableCalendar(
+      startDay: DateTime.now().add(
+        Duration(days: 1),
+      ),
       availableCalendarFormats: {
         CalendarFormat.month: 'Mensal',
         // CalendarFormat.twoWeeks: '2 Semanas',
@@ -120,7 +127,7 @@ class _UserLocationEventtableCalendarState
       },
       calendarController: _calendarController,
       locale: 'pt_BR',
-      events: _events,      
+      events: _events,
       holidays: _holidays,
       startingDayOfWeek: StartingDayOfWeek.monday,
       calendarStyle: CalendarStyle(
@@ -128,7 +135,6 @@ class _UserLocationEventtableCalendarState
         todayColor: Colors.deepOrange[200],
         markersColor: Colors.brown[700],
         outsideDaysVisible: false,
-        
       ),
       headerStyle: HeaderStyle(
         formatButtonTextStyle:
@@ -150,7 +156,7 @@ class _UserLocationEventtableCalendarState
       locale: 'pl_PL',
       calendarController: _calendarController,
       events: _events,
-      holidays: _holidays,      
+      holidays: _holidays,
       initialCalendarFormat: CalendarFormat.month,
       formatAnimation: FormatAnimation.slide,
       startingDayOfWeek: StartingDayOfWeek.sunday,
