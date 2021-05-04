@@ -84,7 +84,7 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
         widget.eventDay.add(Duration(hours: int.parse(widget.startHour)));
 
     var _endDate = widget.eventDay
-        .add(Duration(minutes: 59));        
+        .add(Duration(hours: int.parse(widget.endHour),minutes: 59));        
 
     EventModel curEvent = EventModel(
         userID: myUserid,
