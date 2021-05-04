@@ -1,4 +1,4 @@
-import 'dart:ffi';
+import 'dart:convert';
 
 class PaymentModel {
   String title;
@@ -14,9 +14,34 @@ class PaymentModel {
       this.unitPrice,
       this.email});
 
-  Map<String, dynamic> toJsonBillMP() {
+  String toJsonBillMP() {
+
+    
+    // Map<String, dynamic> data = {'items': jsonEncode({
+    //   "title": this.title,
+    //   "description": this.description,
+    //   "quantity": this.quantity,
+    //   "currency_id": "BRL",
+    //   "category_id": "sport",
+    //   "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
+    //   "unit_price": this.unitPrice
+    // }),
+    // 'payer': jsonEncode({"email": this.email}),
+    // 'payment_methods': jsonEncode({
+    //   "excluded_payment_types": [
+    //     {"id": "ticket"}
+    //   ],
+    //   "installments": 12
+    // }),
+    // 'expires': true,
+    // 'expiration_date_from': jsonEncode(DateTime.now().toIso8601String()),
+    // 'expiration_date_to': jsonEncode(DateTime.now().add(const Duration(days: 1)).toIso8601String())};
+
+
+
+
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['items'] = {
+    data['items'] = [{
       "title": this.title,
       "description": this.description,
       "quantity": this.quantity,
@@ -24,7 +49,7 @@ class PaymentModel {
       "category_id": "sport",
       "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
       "unit_price": this.unitPrice
-    };
+    }];
     data['payer'] = {"email": this.email};
     data['payment_methods'] = {
       "excluded_payment_types": [
@@ -33,10 +58,13 @@ class PaymentModel {
       "installments": 12
     };
     data['expires'] = true;
-    data['expiration_date_from'] = DateTime.now();
-    data['expiration_date_to'] = DateTime.now().add(const Duration(days: 1));
+    data['expiration_date_from'] = DateTime.now().toIso8601String();
+    data['expiration_date_to'] = DateTime.now().add(const Duration(days: 1)).toIso8601String();
+           
+    var res = jsonEncode(data);
 
-    return data;
+
+    return res;
   }
 }
 
