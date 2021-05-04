@@ -3,15 +3,15 @@ import 'dart:ffi';
 class PaymentModel {
   String title;
   String description;
-  Int32 quantity;
-  Float unit_price;
+  int quantity;
+  double unitPrice;
   String email;
 
   PaymentModel(
       {this.title,
       this.description,
       this.quantity,
-      this.unit_price,
+      this.unitPrice,
       this.email});
 
   Map<String, dynamic> toJsonBillMP() {
@@ -23,7 +23,7 @@ class PaymentModel {
       "currency_id": "BRL",
       "category_id": "sport",
       "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
-      "unit_price": this.unit_price
+      "unit_price": this.unitPrice
     };
     data['payer'] = {"email": this.email};
     data['payment_methods'] = {

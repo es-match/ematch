@@ -1,4 +1,5 @@
 import 'package:ematch/App/model/eventModel.dart';
+import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/repository/eventRepository.dart';
 
 class EventController {
@@ -20,5 +21,10 @@ class EventController {
 
   Future<List<EventModel>> getEventsByGroupID(String groupID) {
     return _repository.getEventsByGroupID(groupID);
+  }
+
+  void insertEvent(LocationModel location) async {
+    // return _repository.insertEvent(l)
+
   }
 }
