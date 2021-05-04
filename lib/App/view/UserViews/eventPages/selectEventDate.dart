@@ -44,7 +44,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
       //LIMPA DROPDOWNS
       startDropdownvalue = null;
       endDropdownvalue = null;
-      currentDay = day;
+      currentDay = day.subtract(Duration(hours: 12));
       dayEvents = events;
       print(dayEvents);
     });

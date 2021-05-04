@@ -54,4 +54,35 @@ class EventRepository {
       return events;
     }
   }
+
+  Future<EventModel> insertEvent(EventModel event) async {
+    var _body = jsonEncode({
+    "userID": event.userID,
+    "eventName": event.eventName,
+    "locationID": event.locationID,
+    "groupID": event.groupID,
+    "startDate": event.startDate,
+    "endDate": event.endDate,
+  });
+
+
+   final response = await post(
+      url,
+      // path,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: _body,
+    );
+
+    EventModel newEvent;
+
+    print(response.statusCode);
+    Map<String, dynamic> l;
+    if (response.statusCode == 200) {
+      l = json.decode(response.body);
+      newEvent = EventModel.fromJson(l);
+    }
+    return newEvent;
+  }  
 }

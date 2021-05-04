@@ -27,9 +27,9 @@ class PaymentRepository {
 
     print(response.statusCode);
     Map<String, dynamic> l;
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       l = json.decode(response.body);
     }
-    return l['preferenceId'].toString();
+    return l['id'].toString();
   }
 }

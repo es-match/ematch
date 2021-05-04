@@ -3,8 +3,10 @@ import 'dart:ffi';
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/mercadopagoService.dart';
 import 'package:ematch/App/controller/sign_in.dart';
+import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/model/paymentModel.dart';
+import 'package:ematch/App/view/UserViews/eventPages/eventDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -67,19 +69,38 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
     var formatedEnd = "${widget.endHour.padLeft(2, '0')}:59";
     var _unitPrice = double.parse(widget.location.hourValue);
 
-    PaymentModel payModel = PaymentModel(
-        description:
-            "Reserva Quadra ${widget.location.locationName} no dia $formatedDate das ${formatedStart}hrs as ${formatedEnd}hrs.",
-        email: myEmail,
-        quantity: totalHours,
-        title: "Reserva Quadra ${widget.location.locationName}.",
-        unitPrice: _unitPrice);
-        
-    var res = await paymentMP(await createBillMP(payModel, context));
+    // PaymentModel payModel = PaymentModel(
+    //     description:
+    //         "Reserva Quadra ${widget.location.locationName} no dia $formatedDate das ${formatedStart}hrs as ${formatedEnd}hrs.",
+    //     email: myEmail,
+    //     quantity: totalHours,
+    //     title: "Reserva Quadra ${widget.location.locationName}.",
+    //     unitPrice: _unitPrice);
 
-    if (res.status.toString() == "approved") {
-      // eventController.insertEvent(widget.location);
+    // var res = await paymentMP(await createBillMP(payModel, context));
+
+    // if (res.status.toString() == "approved") {
+    var _startDate =
+        widget.eventDay.add(Duration(hours: int.parse(widget.startHour)));
+
+    var _endDate = widget.eventDay
+        .add(Duration(minutes: 59));        
+
+    EventModel curEvent = EventModel(
+        userID: myUserid,
+        eventName: "",
+        locationID: widget.location.id,
+        groupID: "000001",
+        startDate: _startDate.toIso8601String(),
+        endDate: _endDate.toIso8601String());
+
+    EventModel ev = await eventController.insertEvent(curEvent);
+
+    if (ev != null && ev.id != null) {
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+          builder: (BuildContext context) => EventDetailPage(model: ev)));
     }
+    // }
   }
 
   Container buildBody(BuildContext context) {

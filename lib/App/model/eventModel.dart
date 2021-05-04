@@ -44,7 +44,7 @@ class EventModel {
     locationID = json['locationID'];
     startDate = json['startDate'];
     endDate = json['endDate'];
-    confirmedUsers = json['confirmedUsers'].cast<String>();
+    confirmedUsers = json['confirmedUsers'] == null ? [] : json['confirmedUsers'].cast<String>();
     createDate = json['createDate'];
     locationName = json['locationName'];
     userID = json['userID'];

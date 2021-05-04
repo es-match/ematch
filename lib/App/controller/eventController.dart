@@ -23,8 +23,8 @@ class EventController {
     return _repository.getEventsByGroupID(groupID);
   }
 
-  void insertEvent(LocationModel location) async {
-    // return _repository.insertEvent(l)
+  Future<EventModel> insertEvent(EventModel event) async {
+     return _repository.insertEvent(event);
 
   }
 }
