@@ -10,13 +10,13 @@ class EventController {
 
   Future<List<EventModel>> getEventsByUserID(String userID) async {
     List<EventModel> listEvents = await _repository.getEventsByUserID(userID);
-    List<EventModel> finalEvents = [];
-    for (var ev in listEvents) {
-      if (ev.confirmedUsers.contains(userID)) {
-        finalEvents.add(ev);
-      }
-    }
-    return finalEvents;
+    // List<EventModel> finalEvents = [];
+    // for (var ev in listEvents) {
+    //   if (ev.confirmedUsers.contains(userID)) {
+    //     finalEvents.add(ev);
+    //   }
+    // }
+    return listEvents;
   }
 
   Future<List<EventModel>> getEventsByGroupID(String groupID) {
@@ -24,7 +24,6 @@ class EventController {
   }
 
   Future<EventModel> insertEvent(EventModel event) async {
-     return _repository.insertEvent(event);
-
+    return _repository.insertEvent(event);
   }
 }

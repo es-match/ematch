@@ -46,7 +46,17 @@ class _NewGroupPageState extends State<NewGroupPage> {
               child: CircularProgressIndicator(
               backgroundColor: Colors.white,
             ))
-          : buildBody(),
+          : Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(20),
+              ),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: buildBody(),
+              )),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if (formkey.currentState.validate()) {
@@ -170,7 +180,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 TextFormField(
                   controller: descricaoController,
                   maxLines: 5,
-                  maxLength: 50,
+                  maxLength: 300,
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -240,7 +250,6 @@ class _NewGroupPageState extends State<NewGroupPage> {
     var radiobuttons = <RadioListTile>[];
     activityList.forEach((element) {
       return radiobuttons.add(RadioListTile<ActivityModel>(
-        tileColor: Colors.grey[900],
         activeColor: Colors.deepOrangeAccent,
         title: Text(
           element.activityName,

@@ -151,14 +151,33 @@ showErrDialog(BuildContext context, String err) {
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: Text("Error"),
-      content: Text(err),
+      backgroundColor: Colors.grey[900],
+      title: Text(
+        "O LOGIN FALHOU!!!",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.red,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      content: Text(
+        err,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.red,
+        ),
+      ),
       actions: <Widget>[
         OutlinedButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text("Ok"),
+          child: Text(
+            "Ok",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
         ),
       ],
     ),
