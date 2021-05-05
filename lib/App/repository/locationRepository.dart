@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/locationModel.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:http/http.dart';
 
 class LocationRepository {
@@ -14,25 +16,22 @@ class LocationRepository {
     return locations;
   }
 
-  void insertLocation(
-      {String userID,
-      String name,
-      String cep,
-      String city,
-      String address,
-      String number,
-      String imageUrl = "/imageurl",
-      String geolocation = "99999"}) async {
+  Future<LocationModel> insertLocation(
+      LocationModel location, Coordinates coord) async {
     var _body = jsonEncode(
-      <String, String>{
-        "userID": userID,
-        "name": name,
-        "zip": cep,
-        "city": city,
-        "address": address,
-        "number": number,
-        "imageUrl": imageUrl,
-        "geolocation": geolocation
+      <String, dynamic>{
+        "address": location.address,
+        "avaiableDays": location.avaiableDays,
+        "avaiableHours": location.avaiableHours,
+        "city": location.city,
+        "latitude": coord.latitude,
+        "longitude": coord.longitude,
+        "hourValue": location.hourValue,
+        "imageUrl": location.imageUrl,
+        "locationName": location.locationName,
+        "number" : location.number,
+        "userID": location.userID,
+        "zip": location.zip,
       },
     );
     final response = await post(
@@ -43,7 +42,17 @@ class LocationRepository {
       body: _body,
     );
 
+    // print(response.statusCode);
+
+    LocationModel newLocation;
+
     print(response.statusCode);
+    Map<String, dynamic> l;
+    if (response.statusCode == 200) {
+      l = json.decode(response.body);
+      newLocation = LocationModel.fromJson(l);
+    }
+    return newLocation;
   }
 
   void editLocation(

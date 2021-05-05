@@ -1,8 +1,10 @@
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/repository/eventRepository.dart';
 import 'package:ematch/App/repository/locationRepository.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geocoder/geocoder.dart';
 
 class LocationController {
   final TextEditingController name;
@@ -17,14 +19,14 @@ class LocationController {
   LocationRepository locationRepository = LocationRepository();
   EventRepository eventRepository = EventRepository();
 
-  insertLocation() {
-    locationRepository.insertLocation(
-        userID: "1",
-        name: name.text,
-        cep: this.cep.text,
-        city: this.city.text,
-        address: this.address.text,
-        number: this.number.text);
+
+
+
+  Future<LocationModel> insertLocation(LocationModel  location,Coordinates coordinates) {          
+    LocationModel model = location;
+            
+
+    return locationRepository.insertLocation(model, coordinates);       
   }
 
   editLocation(locationId) {
@@ -94,3 +96,4 @@ class LocationController {
     return futureEvents;
   }
 }
+

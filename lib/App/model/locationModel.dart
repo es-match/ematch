@@ -43,7 +43,7 @@ class LocationModel {
     avaiableHours = json['avaiableHours'];
     hourValue = json['hourValue'];
 
-    createDate = json['createDate'];
+    // createDate = json['createDate'];
   }
 
   Map<String, dynamic> toJson() {

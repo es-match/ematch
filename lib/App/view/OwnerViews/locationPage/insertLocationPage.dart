@@ -1,4 +1,5 @@
 import 'package:ematch/App/controller/locationController.dart';
+import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -21,7 +22,7 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
   final TextEditingController _endereco = TextEditingController();
   final TextEditingController _numero = TextEditingController();
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
+  LocationModel currentLocation = LocationModel();
   Set<Marker> marker = Set();
 
   LocationController locationController;
@@ -65,10 +66,12 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
       body: _currPosition == null
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
               child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: buildBody(context),
-            )),
+                padding: const EdgeInsets.all(4.0),
+                child: buildBody(context),
+              ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           if (formkey.currentState.validate()) {
@@ -93,17 +96,25 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
                 );
               },
             );
-            LocationModel location = await locationController.insertLocation();
-            // GroupModel group = GroupModel();
-            // group.groupName = tituloController.text;
-            // group.groupDescription = descricaoController.text;
-            // group.imageUrl = _selectedActivity.imageUrl;
-            // group.activityID = _selectedActivity.id;
-            // group.groupPending = [];
-            // group.groupAdmins = [myUserid];
-            // group.userCreator = myUserid;
-            // group.groupUsers = [myUserid];
-            // group = await groupController.insertGroup(group);
+
+            currentLocation = LocationModel(
+                address: _endereco.text,
+                avaiableDays: "SEG,TER,QUA,QUI,SEX",
+                avaiableHours: "9,10,11,13,14,15,16,17",
+                city: _cidade.text,
+                hourValue: "100",
+                imageUrl: "",
+                locationName: _name.text,
+                number: _numero.text,
+                zip: _cep.text);
+
+            currentLocation.userID = myUserid;          
+
+            Coordinates currCoordinate =
+                Coordinates(_currPosition.latitude, _currPosition.longitude);
+
+            LocationModel location = await locationController.insertLocation(
+                currentLocation, currCoordinate);
 
             Navigator.pushReplacement(
                 context,
@@ -204,10 +215,11 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
                         ]),
                         textInputAction: TextInputAction.search,
                         onFieldSubmitted: (value) {
-                          if (value != null && value.length > 7) {
-                            getLocationByCep(value);
-                          }
                           setState(() {
+                            if (value != null && value.length > 7) {
+                              getLocationByCep(value);
+                            }
+
                             googleMapController.animateCamera(
                                 CameraUpdate.newCameraPosition(CameraPosition(
                                     target: _currPosition, zoom: 19)));
@@ -435,6 +447,9 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
         await Geocoder.local.findAddressesFromCoordinates(coordinate);
     var first = addresses.first;
     print("${first.featureName} : ${first.addressLine}");
+
+    _cidade.text = first.subAdminArea;
+    _endereco.text = first.thoroughfare;
   }
 
   void getLocationByCep(String cepValue) async {
@@ -444,8 +459,12 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
           cep: cepValue, returnType: SearchInfoType.piped);
 
       final infoCepJSON = optionRes.getOrElse(() => null);
-      var addresses = await Geocoder.local.findAddressesFromQuery(cepValue);
+      var addresses = await Geocoder.local.findAddressesFromQuery(
+          infoCepJSON != null ? infoCepJSON.cep : cepValue);
       var first = addresses.first;
+      if (infoCepJSON != null) {
+        _cep.text = infoCepJSON.cep;
+      }
       _cidade.text = infoCepJSON.localidade;
       _endereco.text = infoCepJSON.logradouro;
       // _numero.text = infoCepJSON.
