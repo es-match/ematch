@@ -55,36 +55,11 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
   }
 
   Future<String> payAndAlocateEvent() async {
-//  "title": "Reserva Quadra Bar100Lona",
-//             "description": "Reserva da Quadra Bar100Lona no dia 03/05/2021 das 08:00hrs as 11:59hrs.",
-//             "quantity": 3,
-//             "currency_id": "BRL",
-//             "category_id": "sport",
-//             "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
-//             "unit_price": 80.0
-
-    var formatedDate = DateFormat("dd/MM/yyyy").format(widget.eventDay);
-
-    var formatedStart = "${widget.startHour.padLeft(2, '0')}:00";
-    var formatedEnd = "${widget.endHour.padLeft(2, '0')}:59";
-    var _unitPrice = double.parse(widget.location.hourValue);
-
-    // PaymentModel payModel = PaymentModel(
-    //     description:
-    //         "Reserva Quadra ${widget.location.locationName} no dia $formatedDate das ${formatedStart}hrs as ${formatedEnd}hrs.",
-    //     email: myEmail,
-    //     quantity: totalHours,
-    //     title: "Reserva Quadra ${widget.location.locationName}.",
-    //     unitPrice: _unitPrice);
-
-    // var res = await paymentMP(await createBillMP(payModel, context));
-
-    // if (res.status.toString() == "approved") {
     var _startDate =
         widget.eventDay.add(Duration(hours: int.parse(widget.startHour)));
 
     var _endDate = widget.eventDay
-        .add(Duration(hours: int.parse(widget.endHour),minutes: 59));        
+        .add(Duration(hours: int.parse(widget.endHour), minutes: 59));
 
     EventModel curEvent = EventModel(
         userID: myUserid,
@@ -114,27 +89,6 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
             Text("Resumo"),
             Divider(),
             buildReviewTable(),
-            // Divider(),
-            // Text("Método de Pagamento"),
-            // Divider(),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     print("Pagar com Cartão de Crédito");
-            //   },
-            //   child: Text("Cartão de Crédito"),
-            // ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     print("Pagar com Mercado Pago");
-            //   },
-            //   child: Text("Mercado Pago"),
-            // ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     print("Pagar com Pix");
-            //   },
-            //   child: Text("Pix"),
-            // )
           ],
         ));
   }

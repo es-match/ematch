@@ -113,215 +113,222 @@ class _LoginPageState extends State<LoginPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox.expand(
-            child: CustomPaint(
-              painter: BackgroundPainter(
-                animation: _controller.view,
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width / 1.2,
-              child: Center(
-                child: Form(
-                  key: formkey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Visibility(
-                        visible: !loadingVisible,
-                        child: Column(
-                          children: [
-                            Image(
-                                image: AssetImage("assets/icon/icon_logo.png"),
-                                height: 140.0),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            SingleChildScrollView(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[900],
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    color: Colors.deepOrange,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(8.0),
-                                      ),
-                                      borderSide: new BorderSide(
-                                        color: Colors.deepOrange,
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.deepOrange, width: 1.0),
-                                    ),
-                                    labelText: "E-mail",
-                                    labelStyle: TextStyle(
-                                      color: Colors.deepOrange,
-                                    ),
-                                  ),
-                                  validator: MultiValidator([
-                                    RequiredValidator(
-                                        errorText: "Campo obrigatório"),
-                                    EmailValidator(
-                                        errorText: "E-mail Inválido"),
-                                  ]),
-                                  onChanged: (val) {
-                                    email = val;
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 15.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[900],
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: TextFormField(
-                                  style: TextStyle(
-                                    color: Colors.deepOrange,
-                                  ),
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    border: new OutlineInputBorder(
-                                      borderRadius: const BorderRadius.all(
-                                        const Radius.circular(8.0),
-                                      ),
-                                      borderSide: new BorderSide(
-                                        color: Colors.deepOrange,
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.deepOrange, width: 1.0),
-                                    ),
-                                    labelText: "Senha",
-                                    labelStyle: TextStyle(
-                                      color: Colors.deepOrange,
-                                    ),
-                                  ),
-                                  validator: MultiValidator([
-                                    RequiredValidator(
-                                        errorText:
-                                            "É necessário inserir a senha"),
-                                    MinLengthValidator(6,
-                                        errorText: "Mínimo de 6 caractéres"),
-                                  ]),
-                                  onChanged: (val) {
-                                    password = val;
-                                  },
-                                ),
-                              ),
-                            ),
-                            Visibility(
-                              visible: signupVisible,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[900],
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                  child: TextFormField(
-                                    style: TextStyle(
-                                      color: Colors.deepOrange,
-                                    ),
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: const BorderRadius.all(
-                                          const Radius.circular(8.0),
-                                        ),
-                                        borderSide: new BorderSide(
-                                          color: Colors.deepOrange,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Colors.deepOrange,
-                                            width: 1.0),
-                                      ),
-                                      labelText: "Nome/Apelido",
-                                      labelStyle: TextStyle(
-                                        color: Colors.deepOrange,
-                                      ),
-                                    ),
-                                    validator: MultiValidator([
-                                      RequiredValidator(
-                                        errorText: "Campo Obrigatório",
-                                      )
-                                    ]),
-                                    onChanged: (val) {
-                                      name = val;
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ),
-                            _createAccButton(),
-                            _signInButton(),
-                            _signInButtonGoogle(),
-                            _signInModeButton(),
-                            _signUpModeButton(),
-                          ],
-                        ),
-                      ),
-                      Visibility(
-                        visible: loadingVisible,
-                        child: Column(
-                          children: [
-                            Image(
-                                image: AssetImage("assets/loadingenter.gif"),
-                                height: 140.0),
-                            Text(
-                              "Por favor, aguarde...",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.height,
+                child: Stack(
+          children: [
+            SizedBox.expand(
+                child: CustomPaint(
+                  painter: BackgroundPainter(
+                    animation: _controller.view,
                   ),
                 ),
-              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                'Quer registrar seu espaço esportivo? Contate-nos pelo e-mail: esmatchar@gmail.com',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
+            Center(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  child: Center(
+                    child: Form(
+                      key: formkey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Visibility(
+                            visible: !loadingVisible,
+                            child: Column(
+                              children: [
+                                Image(
+                                    image: AssetImage("assets/icon/icon_logo.png"),
+                                    height: 140.0),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                SingleChildScrollView(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[900],
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                        color: Colors.deepOrange,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                          borderSide: new BorderSide(
+                                            color: Colors.deepOrange,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.deepOrange, width: 1.0),
+                                        ),
+                                        labelText: "E-mail",
+                                        labelStyle: TextStyle(
+                                          color: Colors.deepOrange,
+                                        ),
+                                      ),
+                                      validator: MultiValidator([
+                                        RequiredValidator(
+                                            errorText: "Campo obrigatório"),
+                                        EmailValidator(
+                                            errorText: "E-mail Inválido"),
+                                      ]),
+                                      onChanged: (val) {
+                                        email = val;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[900],
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: TextFormField(
+                                      style: TextStyle(
+                                        color: Colors.deepOrange,
+                                      ),
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                        border: new OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                            const Radius.circular(8.0),
+                                          ),
+                                          borderSide: new BorderSide(
+                                            color: Colors.deepOrange,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.deepOrange, width: 1.0),
+                                        ),
+                                        labelText: "Senha",
+                                        labelStyle: TextStyle(
+                                          color: Colors.deepOrange,
+                                        ),
+                                      ),
+                                      validator: MultiValidator([
+                                        RequiredValidator(
+                                            errorText:
+                                                "É necessário inserir a senha"),
+                                        MinLengthValidator(6,
+                                            errorText: "Mínimo de 6 caractéres"),
+                                      ]),
+                                      onChanged: (val) {
+                                        password = val;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: signupVisible,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 15.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[900],
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      child: TextFormField(
+                                        style: TextStyle(
+                                          color: Colors.deepOrange,
+                                        ),
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                            borderRadius: const BorderRadius.all(
+                                              const Radius.circular(8.0),
+                                            ),
+                                            borderSide: new BorderSide(
+                                              color: Colors.deepOrange,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.deepOrange,
+                                                width: 1.0),
+                                          ),
+                                          labelText: "Nome/Apelido",
+                                          labelStyle: TextStyle(
+                                            color: Colors.deepOrange,
+                                          ),
+                                        ),
+                                        validator: MultiValidator([
+                                          RequiredValidator(
+                                            errorText: "Campo Obrigatório",
+                                          )
+                                        ]),
+                                        onChanged: (val) {
+                                          name = val;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                _createAccButton(),
+                                _signInButton(),
+                                _signInButtonGoogle(),
+                                _signInModeButton(),
+                                _signUpModeButton(),
+                              ],
+                            ),
+                          ),
+                          Visibility(
+                            visible: loadingVisible,
+                            child: Column(
+                              children: [
+                                Image(
+                                    image: AssetImage("assets/loadingenter.gif"),
+                                    height: 140.0),
+                                Text(
+                                  "Por favor, aguarde...",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
             ),
-          ),
-        ],
+            Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    'Quer registrar seu espaço esportivo? Contate-nos pelo e-mail: esmatchar@gmail.com',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+            ),
+          ],
+        ),
+              ),
       ),
       backgroundColor: Colors.black,
     );
