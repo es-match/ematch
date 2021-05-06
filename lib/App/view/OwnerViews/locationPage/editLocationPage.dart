@@ -74,12 +74,6 @@ class _EditLocationPageState extends State<EditLocationPage> {
           title: Column(
             children: [
               Text(widget.locationModel.locationName),
-              // Text(
-              //   "(Detalhes do Local)",
-              //   style: TextStyle(
-              //     color: Colors.grey[200],
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -89,17 +83,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => EditLocationAvaiability(
-                      //                 widget.locationModel)));
-                      //   },
-                      //   child: Text("Horários"),
-                      // ),
+                    children: [                      
                       Container(
                         height: MediaQuery.of(context).size.height / 12,
                         width: MediaQuery.of(context).size.width / 2,
@@ -110,10 +94,6 @@ class _EditLocationPageState extends State<EditLocationPage> {
                               MaterialPageRoute(
                                 builder: (context) => LocationCalendarPage(
                                   location: widget.locationModel,
-                                  // LocationEventtableCalendar(
-                                  // futureEvents:
-                                  //     locationController.getLocationEvents(
-                                  //         widget.locationModel.id),
                                 ),
                               ),
                             );
@@ -157,21 +137,22 @@ class _EditLocationPageState extends State<EditLocationPage> {
               ),
         body: Builder(builder: (context) {
           return SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
             child: Form(
               key: formkey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    height: 170,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      widget.locationModel.imageUrl,
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                  // Container(
+                  //   height: 170,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   child: Image.network(
+                  //     widget.locationModel.imageUrl,
+                  //     width: MediaQuery.of(context).size.width,
+                  //     fit: BoxFit.fill,
+                  //   ),
+                  // ),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[900],
@@ -454,8 +435,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ElevatedButton(
-            onPressed: () => {
+          ElevatedButton(            
+            onPressed: () {
+              LocationModel updLocation = widget.locationModel;
               (_name.text.isEmpty ||
                       _cep.text.isEmpty ||
                       _cidade.text.isEmpty ||
@@ -475,7 +457,12 @@ class _EditLocationPageState extends State<EditLocationPage> {
                         },
                       ),
                     ))
-                  : locationController.editLocation(widget.locationModel.id)
+                  : locationController.editLocation(LocationModel(address: updLocation.address,
+        city: _cidade.text,        
+        locationName: _name.text,
+        number: _numero.text,
+        // userID: updLocation.userID,
+        zip: _cep.text));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
