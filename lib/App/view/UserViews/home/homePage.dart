@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   dynamic buildBody() {
-    if (_eventList.length == 0 || _eventList == null) {
+    if (_eventList == null) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Align(
