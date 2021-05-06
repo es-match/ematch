@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   dynamic buildBody() {
-    if (_eventList.length == 0 || _eventList == null) {
+    if (_eventList == null) {
       return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Align(
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: "Sem eventos atuais :(\nQue tal montar em ",
+              text: "Sem eventos atuais :(\nQue tal montar  ",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 25,

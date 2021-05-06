@@ -45,28 +45,31 @@ class EventRepository {
   getEventsByUserID(String userID) async {
     String path = "$url/byUserFollow/$userID";
     final response = await get(path);
-    if (response.body.toUpperCase().contains("NOT FOUND")) {
+    if (response.body.toUpperCase().contains("USER DOES NOT")) {
       return null;
     } else {
-      Iterable l = json.decode(response.body);
-      List<EventModel> events =
-          List<EventModel>.from(l.map((model) => EventModel.fromJson(model)));
-      return events;
+      try {
+        Iterable l = json.decode(response.body);
+        List<EventModel> events =
+            List<EventModel>.from(l.map((model) => EventModel.fromJson(model)));
+        return events;
+      } catch (e) {
+        return null;
+      }
     }
   }
 
   Future<EventModel> insertEvent(EventModel event) async {
     var _body = jsonEncode({
-    "userID": event.userID,
-    "eventName": event.eventName,
-    "locationID": event.locationID,
-    "groupID": event.groupID,
-    "startDate": event.startDate,
-    "endDate": event.endDate,
-  });
+      "userID": event.userID,
+      "eventName": event.eventName,
+      "locationID": event.locationID,
+      "groupID": event.groupID,
+      "startDate": event.startDate,
+      "endDate": event.endDate,
+    });
 
-
-   final response = await post(
+    final response = await post(
       url,
       // path,
       headers: <String, String>{
@@ -84,5 +87,5 @@ class EventRepository {
       newEvent = EventModel.fromJson(l);
     }
     return newEvent;
-  }  
+  }
 }
