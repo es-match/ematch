@@ -5,7 +5,9 @@ import 'package:ematch/App/view/OwnerViews/locationPage/editLocationAvaiability.
 import 'package:ematch/App/view/OwnerViews/locationPage/locationCalendarPage.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:search_cep/search_cep.dart';
 
 class EditLocationPage extends StatefulWidget {
   final LocationModel locationModel;
@@ -83,7 +85,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [                      
+                    children: [
                       Container(
                         height: MediaQuery.of(context).size.height / 12,
                         width: MediaQuery.of(context).size.width / 2,
@@ -228,6 +230,21 @@ class _EditLocationPageState extends State<EditLocationPage> {
                                         errorText: "Campo Obrigatório",
                                       )
                                     ]),
+                                    textInputAction: TextInputAction.search,
+                                    onFieldSubmitted: (value) {
+                                      setState(() {
+                                        if (value != null && value.length > 7) {
+                                          getLocationByCep(value);
+                                        }
+
+                                        googleMapController.animateCamera(
+                                            CameraUpdate.newCameraPosition(
+                                                CameraPosition(
+                                                    target: _currPosition,
+                                                    zoom: 19)));
+                                        setMarker();
+                                      });
+                                    },
                                     decoration: InputDecoration(
                                       fillColor: Colors.white,
                                       alignLabelWithHint: true,
@@ -435,7 +452,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ElevatedButton(            
+          ElevatedButton(
             onPressed: () {
               LocationModel updLocation = widget.locationModel;
               (_name.text.isEmpty ||
@@ -457,12 +474,14 @@ class _EditLocationPageState extends State<EditLocationPage> {
                         },
                       ),
                     ))
-                  : locationController.editLocation(LocationModel(address: updLocation.address,
-        city: _cidade.text,        
-        locationName: _name.text,
-        number: _numero.text,
-        // userID: updLocation.userID,
-        zip: _cep.text));
+                  : locationController.editLocation(LocationModel(
+                      id: updLocation.id,
+                      address: _endereco.text,
+                      city: _cidade.text,
+                      locationName: _name.text,
+                      number: _numero.text,
+                      // userID: updLocation.userID,
+                      zip: _cep.text));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -495,5 +514,35 @@ class _EditLocationPageState extends State<EditLocationPage> {
         ],
       ),
     );
+  }
+
+  void getLocationByCep(String cepValue) async {
+    try {
+      cepValue = cepValue.replaceAll('-', '');
+      final viaCepSearchCep = ViaCepSearchCep();
+      final optionRes = await viaCepSearchCep.searchInfoByCep(
+          cep: cepValue, returnType: SearchInfoType.piped);
+
+      final infoCepJSON = optionRes.getOrElse(() => null);
+      var addresses = await Geocoder.local.findAddressesFromQuery(
+          infoCepJSON != null ? infoCepJSON.cep : cepValue);
+      var first = addresses.first;
+      if (infoCepJSON != null) {
+        _cep.text = infoCepJSON.cep;
+      }
+      setState(() {
+        _cidade.text = infoCepJSON.localidade;
+        _endereco.text = infoCepJSON.logradouro;
+        // _numero.text = infoCepJSON.
+        _currPosition =
+            LatLng(first.coordinates.latitude, first.coordinates.longitude);
+
+        googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(target: _currPosition, zoom: 19)));
+        setMarker();
+      });
+    } on Exception catch (e) {
+      print("ERRO: $e");
+    }
   }
 }

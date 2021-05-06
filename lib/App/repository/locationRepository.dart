@@ -62,13 +62,13 @@ class LocationRepository {
         "city": location.city,        
         "locationName": location.locationName,
         "number": location.number,
-        "userID": location.userID,
+        // "userID": location.userID,
         "zip": location.zip,
       },
     );
 
     final response = await patch(
-      url + "/${location.id}",
+      url + "${location.id}",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
