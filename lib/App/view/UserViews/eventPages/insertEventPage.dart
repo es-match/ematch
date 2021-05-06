@@ -263,8 +263,7 @@ class _InsertEventPageState extends State<InsertEventPage> {
       onTap: () {},
     ));
 
-    data.forEach((model) {
-      //TODO: VERIFICAR ERRO
+    data.forEach((model) {      
       try {
         LatLng modelLocation =
             LatLng(model.geolocation.dLatitude, model.geolocation.dLongitude);
