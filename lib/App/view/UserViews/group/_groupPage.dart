@@ -95,30 +95,57 @@ class _GroupPageState extends State<GroupPage> {
   }
 
   Column buildGroupColumn(List<GroupModel> groupList) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: groupList.length,
-            itemBuilder: (context, index) {
-              // String groupName = groupList[index].groupName;
-              GroupModel currentGroup = groupList[index];
-              return ListTile(
-                title: InkWell(
-                    onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  GroupDetailsPage(group: currentGroup)),
-                        ),
-                    child: GroupCard(group: currentGroup)),
-              );
-            },
+    if (groupList.length == 0 || groupList == null) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Align(
+              alignment: Alignment.center,
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text:
+                      "Sem grupos atuais :(\nQue tal começar um novo grupo abaixo. ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    wordSpacing: 5,
+                  ),
+                ),
+              ),
+            ),
           ),
-        )
-      ],
-    );
+        ],
+      );
+    } else {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: groupList != null ? groupList.length : 0,
+              itemBuilder: (context, index) {
+                // String groupName = groupList[index].groupName;
+                GroupModel currentGroup = groupList[index];
+                return ListTile(
+                  title: InkWell(
+                      onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    GroupDetailsPage(group: currentGroup)),
+                          ),
+                      child: GroupCard(group: currentGroup)),
+                );
+              },
+            ),
+          )
+        ],
+      );
+    }
   }
 }
