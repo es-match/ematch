@@ -26,9 +26,32 @@ class _GroupCardState extends State<GroupCard> {
             Container(
               height: 100,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(
-                widget.group.imageUrl,
-                fit: BoxFit.none,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [
+                    0.1,
+                    0.4,
+                    0.6,
+                    0.9,
+                  ],
+                  colors: [
+                    Colors.white,
+                    Colors.deepOrangeAccent[100],
+                    Colors.deepOrangeAccent[200],
+                    Colors.deepOrangeAccent[400],
+                  ],
+                ),
+                image: DecorationImage(
+                  colorFilter: new ColorFilter.mode(
+                      Colors.black.withOpacity(0.30), BlendMode.dstATop),
+                  image: NetworkImage(
+                    widget.group.imageUrl,
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(
@@ -36,7 +59,7 @@ class _GroupCardState extends State<GroupCard> {
               child: Container(
                 height: 35,
                 width: MediaQuery.of(context).size.width,
-                color: Color.fromRGBO(5, 5, 5, 0.75),
+                color: Colors.transparent,
                 child: Stack(children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(2.0),
@@ -63,7 +86,8 @@ class _GroupCardState extends State<GroupCard> {
                       child: Text(
                         "" + widget.group.activityName + "",
                         style: TextStyle(
-                          color: Colors.deepOrangeAccent,
+                          color: Colors.indigo[900],
+                          fontSize: 18,
                           fontStyle: FontStyle.normal,
                           fontWeight: FontWeight.bold,
                         ),

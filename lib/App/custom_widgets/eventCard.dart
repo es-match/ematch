@@ -22,7 +22,26 @@ class _EventCardState extends State<EventCard> {
         children: [
           Container(
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  stops: [
+                    0.1,
+                    0.4,
+                    0.6,
+                    0.9,
+                  ],
+                  colors: [
+                    Colors.deepOrange[400],
+                    Colors.deepOrange[600],
+                    Colors.deepOrange[700],
+                    Colors.deepOrange[900],
+                  ],
+                ),
                 image: DecorationImage(
+                  colorFilter: new ColorFilter.mode(
+                      Colors.black.withOpacity(0.10), BlendMode.dstATop),
                   image: NetworkImage(
                     event.imageUrl,
                   ),
@@ -36,7 +55,7 @@ class _EventCardState extends State<EventCard> {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
-                      color: Colors.black54,
+                      color: Colors.transparent,
                       height: 32,
                       width: 500,
                       child: Padding(
@@ -47,15 +66,16 @@ class _EventCardState extends State<EventCard> {
                               TextSpan(
                                 text: event.activityName,
                                 style: TextStyle(
-                                  color: Colors.yellowAccent,
+                                  color: Colors.indigo[900],
                                   fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
                               TextSpan(text: "   "),
                               WidgetSpan(
                                 child: Icon(
                                   Icons.calendar_today,
+                                  color: Colors.white,
                                   size: 16,
                                 ),
                               ),
@@ -76,30 +96,64 @@ class _EventCardState extends State<EventCard> {
                     ),
                   ),
                   Align(
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.centerLeft,
                     child: Container(
-                      color: Colors.black54,
-                      height: 25,
+                      color: Colors.transparent,
+                      height: 32,
                       width: 500,
                       child: Padding(
-                        padding: const EdgeInsets.all(4.0),
+                        padding: const EdgeInsets.all(3.0),
                         child: Text.rich(
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: "Grupo: ",
+                                text: "Grupo:",
                                 style: TextStyle(
-                                  color: Colors.amber,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white70,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
+                              TextSpan(text: "   "),
                               TextSpan(
                                 text: event.groupName,
                                 style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: Colors.transparent,
+                      height: 30,
+                      width: 500,
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Local: ",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              TextSpan(
+                                text: event.locationName,
+                                style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ],

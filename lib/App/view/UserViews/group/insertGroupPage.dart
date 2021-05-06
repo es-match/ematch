@@ -128,6 +128,7 @@ class _NewGroupPageState extends State<NewGroupPage> {
                 //   child: Text('Título do Grupo'),
                 // ),
                 TextFormField(
+                  maxLength: 30,
                   style: TextStyle(
                     color: Colors.white,
                   ),

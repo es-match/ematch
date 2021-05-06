@@ -1,6 +1,7 @@
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/groupController.dart';
 import 'package:ematch/App/controller/sign_in.dart';
+import 'package:ematch/App/custom_widgets/eventCard.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/model/userModel.dart';
@@ -256,55 +257,55 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                         .format(DateTime.parse(currEvent.endDate));
                     return ListTile(
                       title: Container(
-                        height: 80,
-                        width: MediaQuery.of(context).size.width,
-                        child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Colors.black.withOpacity(0.5),
-                                  width: 1),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                      flex: 9,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(Icons
-                                                  .calendar_today_outlined),
-                                              Text(
-                                                  "$startDay, $startTime - $endTime")
-                                            ],
-                                          ),
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text("$eventName - 5 km")),
-                                        ],
-                                      )),
-                                  Expanded(
-                                      flex: 3,
-                                      child: Container(
-                                          child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.check_circle_outline,
-                                              color: Colors.green),
-                                          Text("Confirmado")
-                                        ],
-                                      ))),
-                                ],
-                              ),
-                            )),
-                      ),
+                          width: MediaQuery.of(context).size.width,
+                          child: EventCard(
+                            event: currEvent,
+                          )
+                          // Card(
+                          //   shape: RoundedRectangleBorder(
+                          //     side: BorderSide(
+                          //         color: Colors.black.withOpacity(0.5), width: 1),
+                          //   ),
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.all(6.0),
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Expanded(
+                          //             flex: 9,
+                          //             child: Column(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.spaceAround,
+                          //               children: [
+                          //                 Row(
+                          //                   children: [
+                          //                     Icon(Icons.calendar_today_outlined),
+                          //                     Text(
+                          //                         "$startDay, $startTime - $endTime")
+                          //                   ],
+                          //                 ),
+                          //                 Align(
+                          //                     alignment: Alignment.centerLeft,
+                          //                     child: Text("$eventName - 5 km")),
+                          //               ],
+                          //             )),
+                          //         Expanded(
+                          //             flex: 3,
+                          //             child: Container(
+                          //                 child: Column(
+                          //               mainAxisAlignment:
+                          //                   MainAxisAlignment.center,
+                          //               children: [
+                          //                 Icon(Icons.check_circle_outline,
+                          //                     color: Colors.green),
+                          //                 Text("Confirmado")
+                          //               ],
+                          //             ))),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                          ),
                     );
                   },
                 ),
