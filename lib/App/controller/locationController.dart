@@ -19,25 +19,15 @@ class LocationController {
   LocationRepository locationRepository = LocationRepository();
   EventRepository eventRepository = EventRepository();
 
-
-
-
-  Future<LocationModel> insertLocation(LocationModel  location,Coordinates coordinates) {          
+  Future<LocationModel> insertLocation(
+      LocationModel location, Coordinates coordinates) {
     LocationModel model = location;
-            
 
-    return locationRepository.insertLocation(model, coordinates);       
+    return locationRepository.insertLocation(model, coordinates);
   }
 
-  editLocation(locationId) {
-    locationRepository.editLocation(
-        locationID: locationId,
-        // userID: userID,
-        name: name.text,
-        cep: this.cep.text,
-        city: this.city.text,
-        address: this.address.text,
-        number: this.number.text);
+  editLocation(LocationModel model) {
+    locationRepository.editLocation(model);
   }
 
   Future<List<LocationModel>> getLocations() {
@@ -96,4 +86,3 @@ class LocationController {
     return futureEvents;
   }
 }
-

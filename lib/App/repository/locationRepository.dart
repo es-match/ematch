@@ -29,7 +29,7 @@ class LocationRepository {
         "hourValue": location.hourValue,
         "imageUrl": location.imageUrl,
         "locationName": location.locationName,
-        "number" : location.number,
+        "number": location.number,
         "userID": location.userID,
         "zip": location.zip,
       },
@@ -55,30 +55,20 @@ class LocationRepository {
     return newLocation;
   }
 
-  void editLocation(
-      {String locationID,
-      String userID,
-      String name,
-      String cep,
-      String city,
-      String address,
-      String number,
-      String imageUrl = "/imageurl",
-      String geolocation = "99999"}) async {
+  void editLocation(LocationModel location) async {
     var _body = jsonEncode(
-      <String, String>{
-        "userID": userID,
-        "name": name,
-        "zip": cep,
-        "city": city,
-        "address": address,
-        "number": number,
-        "imageUrl": imageUrl,
-        "geolocation": geolocation
+      <String, dynamic>{
+        "address": location.address,
+        "city": location.city,        
+        "locationName": location.locationName,
+        "number": location.number,
+        "userID": location.userID,
+        "zip": location.zip,
       },
     );
+
     final response = await patch(
-      url + "/$locationID",
+      url + "/${location.id}",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
