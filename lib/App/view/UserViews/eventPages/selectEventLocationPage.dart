@@ -148,7 +148,7 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
 
                       googleMapController.animateCamera(
                           CameraUpdate.newCameraPosition(
-                              CameraPosition(target: indexLocation, zoom: 16)));
+                              CameraPosition(target: indexLocation, zoom: getZoomLevel(_circleRadius))));
                     }
                     else{
                       googleMapController.animateCamera(
