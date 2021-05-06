@@ -95,7 +95,7 @@ class _GroupPageState extends State<GroupPage> {
   }
 
   Column buildGroupColumn(List<GroupModel> groupList) {
-    if (groupList.length == 0 || groupList == null) {
+    if (groupList == null || groupList.length == 0) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,

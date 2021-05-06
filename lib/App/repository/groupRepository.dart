@@ -13,7 +13,7 @@ class GroupRepository {
     List<GroupModel> groups;
     if (response.body != "Groups by user not found") {
       Iterable l = json.decode(response.body);
-      List<GroupModel> groups =
+      groups =
           List<GroupModel>.from(l.map((model) => GroupModel.fromJson(model)));
     } else {
       groups = List<GroupModel>();
