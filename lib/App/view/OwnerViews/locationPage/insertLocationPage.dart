@@ -108,7 +108,7 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
                 number: _numero.text,
                 zip: _cep.text);
 
-            currentLocation.userID = myUserid;          
+            currentLocation.userID = myUserid;
 
             Coordinates currCoordinate =
                 Coordinates(_currPosition.latitude, _currPosition.longitude);
@@ -454,6 +454,7 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
 
   void getLocationByCep(String cepValue) async {
     try {
+      cepValue = cepValue.replaceAll('-', '');
       final viaCepSearchCep = ViaCepSearchCep();
       final optionRes = await viaCepSearchCep.searchInfoByCep(
           cep: cepValue, returnType: SearchInfoType.piped);
@@ -465,13 +466,16 @@ class _InsertLocationPageState extends State<InsertLocationPage> {
       if (infoCepJSON != null) {
         _cep.text = infoCepJSON.cep;
       }
-      _cidade.text = infoCepJSON.localidade;
-      _endereco.text = infoCepJSON.logradouro;
-      // _numero.text = infoCepJSON.
-      _currPosition =
-          LatLng(first.coordinates.latitude, first.coordinates.longitude);
-      // print(infoCepJSON);
-      // print("${first.featureName} : ${first.coordinates}");
+      setState(() {
+        _cidade.text = infoCepJSON.localidade;
+        _endereco.text = infoCepJSON.logradouro;
+        // _numero.text = infoCepJSON.
+        _currPosition =
+            LatLng(first.coordinates.latitude, first.coordinates.longitude);
+        googleMapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(target: _currPosition, zoom: 19)));
+        setMarker();
+      });
     } on Exception catch (e) {
       print("ERRO: $e");
     }
