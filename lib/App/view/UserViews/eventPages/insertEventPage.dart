@@ -70,9 +70,9 @@ class _InsertEventPageState extends State<InsertEventPage> {
               Future.wait([_futureGetGeoLocation, _futureGetLocationDistances]),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              // Position position = snapshot.data[0];
-              // _initialPosition = LatLng(position.latitude, position.longitude);
-              _initialPosition = LatLng(-23.5257412, -47.4936445);
+              Position position = snapshot.data[0];
+              _initialPosition = LatLng(position.latitude, position.longitude);
+              // _initialPosition = LatLng(-23.5257412, -47.4936445);
               // setMarkers(snapshot.data[1]);
               return buildBody();
             } else

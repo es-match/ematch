@@ -17,7 +17,7 @@ class SelectEventLocationPage extends StatefulWidget {
 
 class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
   double _currentSliderValue = 50;
-  String dropdownValue = "";  
+  String dropdownValue = "";
   GoogleMapController googleMapController;
   LocationController locationController = LocationController();
 
@@ -48,10 +48,16 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
     List<LocationModel> locals = await _getLocationDistances();
     setState(() {
       _initialPosition = coord;
-      locationList = locals;
+      locationList = locals
+          .where((loc) =>
+              loc.avaiableDays != null &&
+              loc.avaiableHours != null &&
+              loc.hourValue != null)
+          .toList();
+
       setMarkers(locationList);
     });
-  }   
+  }
 
   Future<List<LocationModel>> _getLocationDistances() async {
     return locationController.getLocations();
@@ -135,11 +141,21 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
                 0) {
               return ExpansionTile(
                 onExpansionChanged: (value) {
-                  if (value)
-                    itemScrollController.scrollTo(
-                        index: index, duration: Duration(milliseconds: 5));
+                  setState(() {
+                    if (value) {
+                      itemScrollController.scrollTo(
+                          index: index, duration: Duration(milliseconds: 5));
 
-                  return value;
+                      googleMapController.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                              CameraPosition(target: indexLocation, zoom: 16)));
+                    }
+                    else{
+                      googleMapController.animateCamera(
+                          CameraUpdate.newCameraPosition(
+                              CameraPosition(target: _initialPosition, zoom: getZoomLevel(_circleRadius))));
+                    }
+                  });
                 },
                 title: Row(
                   children: [
