@@ -45,7 +45,7 @@ class EventRepository {
   getEventsByUserID(String userID) async {
     String path = "$url/byUserFollow/$userID";
     final response = await get(path);
-    if (response.body.toUpperCase().contains("USER DOES NOT")) {
+    if (response.body == "User does not have events") {
       return null;
     } else {
       try {
