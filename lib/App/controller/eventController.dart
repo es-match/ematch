@@ -1,5 +1,4 @@
 import 'package:ematch/App/model/eventModel.dart';
-import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/repository/eventRepository.dart';
 
 class EventController {

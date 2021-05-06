@@ -1,11 +1,8 @@
-import 'dart:ffi';
-
 import 'package:ematch/App/controller/eventController.dart';
 import 'package:ematch/App/controller/mercadopagoService.dart';
 import 'package:ematch/App/controller/sign_in.dart';
 import 'package:ematch/App/model/eventModel.dart';
 import 'package:ematch/App/model/locationModel.dart';
-import 'package:ematch/App/model/paymentModel.dart';
 import 'package:ematch/App/view/UserViews/eventPages/eventDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

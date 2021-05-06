@@ -46,16 +46,7 @@ class _MainPageState extends State<MainPage> {
               Icons.search,
             ),
             label: 'Buscar Grupos',
-          )),
-      //TODO:CALENDARIO ESCONDIDO
-      // NavigationPage(
-      //     widget: SchedulePage(),
-      //     bottomNavItem: BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.calendar_today,
-      //       ),
-      //       label: 'Agenda',
-      //     )),
+          )),      
       NavigationPage(
           widget: GroupPage(),
           bottomNavItem: BottomNavigationBarItem(

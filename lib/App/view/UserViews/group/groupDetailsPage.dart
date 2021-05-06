@@ -245,66 +245,22 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                   itemCount: events == null ? 0 : events.length,
                   itemBuilder: (context, index) {
                     EventModel currEvent = events[index];
-                    var eventName = currEvent.eventName;
-                    var startDay = DateFormat("dd/MM")
-                        .format(DateTime.parse(currEvent.startDate));
-                    // ignore: unused_local_variable
-                    var endDay = DateFormat("dd/MM")
-                        .format(DateTime.parse(currEvent.endDate));
-                    var startTime = DateFormat("HH:mm")
-                        .format(DateTime.parse(currEvent.startDate));
-                    var endTime = DateFormat("HH:mm")
-                        .format(DateTime.parse(currEvent.endDate));
+                    // var eventName = currEvent.eventName;
+                    // var startDay = DateFormat("dd/MM")
+                    //     .format(DateTime.parse(currEvent.startDate));
+                    // // ignore: unused_local_variable
+                    // var endDay = DateFormat("dd/MM")
+                    //     .format(DateTime.parse(currEvent.endDate));
+                    // var startTime = DateFormat("HH:mm")
+                    //     .format(DateTime.parse(currEvent.startDate));
+                    // var endTime = DateFormat("HH:mm")
+                    //     .format(DateTime.parse(currEvent.endDate));
                     return ListTile(
                       title: Container(
                           width: MediaQuery.of(context).size.width,
                           child: EventCard(
                             event: currEvent,
-                          )
-                          // Card(
-                          //   shape: RoundedRectangleBorder(
-                          //     side: BorderSide(
-                          //         color: Colors.black.withOpacity(0.5), width: 1),
-                          //   ),
-                          //   child: Padding(
-                          //     padding: const EdgeInsets.all(6.0),
-                          //     child: Row(
-                          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         Expanded(
-                          //             flex: 9,
-                          //             child: Column(
-                          //               mainAxisAlignment:
-                          //                   MainAxisAlignment.spaceAround,
-                          //               children: [
-                          //                 Row(
-                          //                   children: [
-                          //                     Icon(Icons.calendar_today_outlined),
-                          //                     Text(
-                          //                         "$startDay, $startTime - $endTime")
-                          //                   ],
-                          //                 ),
-                          //                 Align(
-                          //                     alignment: Alignment.centerLeft,
-                          //                     child: Text("$eventName - 5 km")),
-                          //               ],
-                          //             )),
-                          //         Expanded(
-                          //             flex: 3,
-                          //             child: Container(
-                          //                 child: Column(
-                          //               mainAxisAlignment:
-                          //                   MainAxisAlignment.center,
-                          //               children: [
-                          //                 Icon(Icons.check_circle_outline,
-                          //                     color: Colors.green),
-                          //                 Text("Confirmado")
-                          //               ],
-                          //             ))),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
+                          )                          
                           ),
                     );
                   },
