@@ -58,8 +58,11 @@ class LocationController {
   Future<Map<DateTime, List<EventModel>>> getLocationEvents(
       String locationID) async {
     List<EventModel> events =
-        await eventRepository.getEventsByLocation(locationID);
+        await eventRepository.getEventsByLocation(locationID);    
 
+
+    if(events == null)
+      return null;
     Map<DateTime, List<EventModel>> futureEvents = Map.fromIterable(events,
         key: (k) {
           var evDay = DateTime.parse(k.startDate);
@@ -70,15 +73,10 @@ class LocationController {
 
     for (EventModel ev in events) {
       var evDay = DateTime.parse(ev.startDate);
-      evDay = DateTime(evDay.year, evDay.month, evDay.day);
-      // var endDay = DateFormat("dd/MM").format(DateTime.parse(ev.endDate));
-      // var startTime = DateFormat("HH:mm").format(DateTime.parse(ev.startDate));
-      // var endTime = DateFormat("HH:mm").format(DateTime.parse(ev.endDate));
+      evDay = DateTime(evDay.year, evDay.month, evDay.day);      
 
       List list = futureEvents[evDay];
-      // if (list.isEmpty)
-      //   list = [ev];
-      // else
+
       list.add(ev);
       futureEvents[evDay] = list;
     }

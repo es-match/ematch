@@ -90,9 +90,9 @@ class _UserLocationEventtableCalendarState
       future: getEvents,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          _events = snapshot.data;
+          _events = snapshot.data ?? null;
           if (_selectedEvents.isEmpty ?? true)
-            _selectedEvents = _events[DateTime.now()] ?? [];
+            _selectedEvents = _events == null ? [] : _events[DateTime.now()];
           return buildBody();
         } else
           return Center(child: CircularProgressIndicator());
