@@ -1,6 +1,7 @@
 import 'package:ematch/App/controller/locationController.dart';
 import 'package:ematch/App/custom_widgets/userLocationEventtableCalendar.dart';
 import 'package:ematch/App/model/eventModel.dart';
+import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/view/UserViews/eventPages/paymentCheckinPage.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,12 @@ import 'package:table_calendar/table_calendar.dart';
 // import 'package:intl/intl.dart';
 
 class SelectEventDate extends StatefulWidget {
-  SelectEventDate({this.location});
+  SelectEventDate({this.location, this.group});
 
   @override
   _SelectEventDateState createState() => _SelectEventDateState();
   final LocationModel location;
+  final GroupModel group;
 }
 
 class _SelectEventDateState extends State<SelectEventDate> {
@@ -83,7 +85,8 @@ class _SelectEventDateState extends State<SelectEventDate> {
                                           location: widget.location,
                                           eventDay: currentDay,
                                           startHour: startDropdownvalue,
-                                          endHour: endDropdownvalue)),
+                                          endHour: endDropdownvalue,
+                                          group: widget.group)),
                                 );
                               },
                     child: Text("Ir para pagamento")),
@@ -137,19 +140,23 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
     //REMOVE horários cadastrados no dia selecionado
     if (dayEvents != null) {
-      dayEvents.forEach((event) {
-        EventModel ev = event;
+      if (dayEvents.isNotEmpty) {
+        dayEvents.forEach((event) {
+          EventModel ev = event;
 
-        // String startTime =
-        // //REMOVER .substract ao resolver situacao de regionalizaçao (UTC-3)
-        //    (DateFormat("HH").format(DateTime.parse(ev.startDate).subtract(Duration(hours: 3))));
-
-        ev.getAlocatedHoursList().forEach((e) {
-          if (hours.contains(e)) {
-            hours.remove(e);
+          // String startTime =
+          // //REMOVER .substract ao resolver situacao de regionalizaçao (UTC-3)
+          //    (DateFormat("HH").format(DateTime.parse(ev.startDate).subtract(Duration(hours: 3))));
+          List<String> alocatedHoursList = ev.getAlocatedHoursList();
+          if (alocatedHoursList.isNotEmpty) {
+            alocatedHoursList.forEach((e) {
+              if (hours.contains(e)) {
+                hours.remove(e);
+              }
+            });
           }
         });
-      });
+      }
     }
 
     //REMOVER HORARIOS C/ GAP
@@ -198,6 +205,8 @@ class _SelectEventDateState extends State<SelectEventDate> {
       height: MediaQuery.of(context).size.height * 0.4,
       width: MediaQuery.of(context).size.width,
       child: GoogleMap(
+        // scrollGesturesEnabled: false,
+
         onCameraMove: (position) => {},
         mapToolbarEnabled: false,
         // zoomControlsEnabled: false,

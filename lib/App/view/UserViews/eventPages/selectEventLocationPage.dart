@@ -1,4 +1,5 @@
 import 'package:ematch/App/controller/locationController.dart';
+import 'package:ematch/App/model/groupModel.dart';
 import 'package:ematch/App/model/locationModel.dart';
 import 'package:ematch/App/view/UserViews/eventPages/selectEventDate.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,10 @@ import 'dart:math' as math;
 // import 'package:table_calendar/table_calendar.dart';
 
 class SelectEventLocationPage extends StatefulWidget {
+  final GroupModel group;
+
+  const SelectEventLocationPage({Key key, this.group}) : super(key: key);
+
   @override
   _SelectEventLocationPageState createState() =>
       _SelectEventLocationPageState();
@@ -184,7 +189,7 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SelectEventDate(location: currLocation)),
+                                  SelectEventDate(location: currLocation,group: widget.group)),
                         );
                       },
                     ),

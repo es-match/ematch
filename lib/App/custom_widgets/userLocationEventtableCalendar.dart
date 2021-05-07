@@ -91,7 +91,7 @@ class _UserLocationEventtableCalendarState
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           _events = snapshot.data ?? null;
-          if (_selectedEvents.isEmpty ?? true)
+          if (_selectedEvents == null ? true : _selectedEvents.isEmpty)
             _selectedEvents = _events == null ? [] : _events[DateTime.now()];
           return buildBody();
         } else

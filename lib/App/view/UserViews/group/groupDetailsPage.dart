@@ -225,7 +225,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    SelectEventLocationPage()),
+                                    SelectEventLocationPage(group: widget.group)),
                           )
                         },
                       )
@@ -465,7 +465,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SelectEventLocationPage()),
+                    builder: (context) => SelectEventLocationPage(group: widget.group)),
               )
             },
           ),
