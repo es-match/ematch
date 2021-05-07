@@ -101,8 +101,8 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Align(alignment: Alignment.topCenter, child: Text("Locais")),
-          Divider(),
+          // Align(alignment: Alignment.topCenter, child: Text("Locais")),
+          // Divider(),
           //SLIDER DE DISTANCIA
           buildDistanceSlider(),
           Expanded(
@@ -147,13 +147,14 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
                           index: index, duration: Duration(milliseconds: 5));
 
                       googleMapController.animateCamera(
-                          CameraUpdate.newCameraPosition(
-                              CameraPosition(target: indexLocation, zoom: getZoomLevel(_circleRadius))));
-                    }
-                    else{
+                          CameraUpdate.newCameraPosition(CameraPosition(
+                              target: indexLocation,
+                              zoom: getZoomLevel(_circleRadius))));
+                    } else {
                       googleMapController.animateCamera(
-                          CameraUpdate.newCameraPosition(
-                              CameraPosition(target: _initialPosition, zoom: getZoomLevel(_circleRadius))));
+                          CameraUpdate.newCameraPosition(CameraPosition(
+                              target: _initialPosition,
+                              zoom: getZoomLevel(_circleRadius))));
                     }
                   });
                 },
@@ -225,7 +226,13 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
   Row buildDistanceSlider() {
     return Row(
       children: [
-        Text("Distância: "),
+        Text(
+          "Distância: ",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         Expanded(
           child: Slider(
             min: 1,
