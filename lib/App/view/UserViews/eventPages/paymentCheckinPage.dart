@@ -17,7 +17,12 @@ class PaymentCheckinPage extends StatefulWidget {
   final GroupModel group;
 
   const PaymentCheckinPage(
-      {Key key, this.location, this.eventDay, this.startHour, this.endHour, this.group})
+      {Key key,
+      this.location,
+      this.eventDay,
+      this.startHour,
+      this.endHour,
+      this.group})
       : super(key: key);
   @override
   _PaymentCheckinPageState createState() => _PaymentCheckinPageState();
@@ -42,6 +47,7 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[900],
       appBar: AppBar(
         title: Text("Checkin de Pagamento"),
       ),
@@ -55,7 +61,6 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
   }
 
   Future<String> payAndAlocateEvent() async {
-
     var formatedDate = DateFormat("dd/MM/yyyy").format(widget.eventDay);
 
     var formatedStart = "${widget.startHour.padLeft(2, '0')}:00";
@@ -104,7 +109,13 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text("Resumo"),
+            Text(
+              "Resumo",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Divider(),
             buildReviewTable(),
           ],

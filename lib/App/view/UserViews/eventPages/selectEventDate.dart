@@ -75,7 +75,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
                 buildDropdownButtons(),
                 ElevatedButton(
                     onPressed:
-                        (startDropdownvalue == null || endDropdownvalue == null)
+                        (startDropdownvalue == null || endDropdownvalue == null || currentDay == null)
                             ? null
                             : () {
                                 Navigator.push(
@@ -102,7 +102,12 @@ class _SelectEventDateState extends State<SelectEventDate> {
     return Container(
         child: Row(
       children: [
+        Text("Início: ",
+            style: TextStyle(
+              fontSize: 20,
+            )),
         DropdownButton(
+          dropdownColor: Colors.grey[900],
           value: startDropdownvalue,
           onChanged: (String newValue) {
             setState(() {
@@ -111,10 +116,12 @@ class _SelectEventDateState extends State<SelectEventDate> {
             });
           },
           items: dropDownMenuItems(),
-          style: const TextStyle(
-              color: Colors.white, backgroundColor: Colors.black),
+          style: const TextStyle(color: Colors.white),
         ),
+        SizedBox(width:20),
+        Text("Fim: ", style: TextStyle(fontSize: 20)),
         DropdownButton(
+          dropdownColor: Colors.grey[900],
           value: endDropdownvalue,
           onChanged: (String newValue) {
             setState(() {
@@ -126,8 +133,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
           //     int.parse(startDropdownvalue ?? "0") <=
           //     int.parse(element.value))
           // .toList(),
-          style: const TextStyle(
-              color: Colors.white, backgroundColor: Colors.black),
+          style: const TextStyle(color: Colors.white),
         ),
       ],
     ));
@@ -202,7 +208,7 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
   Container buildMap(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: MediaQuery.of(context).size.width,
       child: GoogleMap(
         // scrollGesturesEnabled: false,
@@ -223,7 +229,14 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
   Container buildLocationValues() {
     return Container(
-      child: Text("Valor Por hora: ${widget.location.hourValue}"),
+      child: Center(
+        child: Text(
+          "Valor Por hora: ${widget.location.hourValue}",
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ),
     );
   }
 

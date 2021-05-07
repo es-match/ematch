@@ -116,10 +116,11 @@ class _UserLocationEventtableCalendarState
 
   // Simple TableCalendar configuration (using Styles)
   Widget _buildTableCalendar() {
-    return TableCalendar(
+    return TableCalendar(initialSelectedDay: DateTime.now().add(Duration(days: 1)),
       startDay: DateTime.now().add(
         Duration(days: 1),
       ),
+      
       availableCalendarFormats: {
         CalendarFormat.month: 'Mensal',
         // CalendarFormat.twoWeeks: '2 Semanas',
