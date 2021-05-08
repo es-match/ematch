@@ -20,5 +20,5 @@ Utilizando padrão MVVM + Repository Pattern
 
 ## Desenvolvido por
 
-Alvaro Cisotto
-Richard Mondin
+- Alvaro Cisotto
+- Richard Mondin
