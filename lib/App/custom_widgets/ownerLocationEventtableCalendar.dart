@@ -160,6 +160,7 @@ class _OwnerLocationEventtableCalendarState
         //   return date.weekday != DateTime.sunday;
         // },
         startingDayOfWeek: StartingDayOfWeek.monday,
+
         calendarStyle: CalendarStyle(
           contentPadding: const EdgeInsets.all(0.0),
           selectedColor: Colors.deepOrange[700],

@@ -91,11 +91,14 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
       appBar: AppBar(
         title: Text("Novo Evento"),
       ),
-      body: DefaultTextStyle(
-          style: TextStyle(
-            color: Colors.white,
-          ),
-          child: buildBody()),
+      body: Container(
+        color: Colors.grey[900],
+        child: DefaultTextStyle(
+            style: TextStyle(
+              color: Colors.white,
+            ),
+            child: buildBody()),
+      ),
     );
   }
 
@@ -109,13 +112,20 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
           // Align(alignment: Alignment.topCenter, child: Text("Locais")),
           // Divider(),
           //SLIDER DE DISTANCIA
-          buildDistanceSlider(),
+
           Expanded(
             child: _initialPosition == null
                 ? Center(child: CircularProgressIndicator())
                 : buildGoogleMap(),
           ),
-          //LISTA DE EVENTOS
+          Container(
+            height: 60,
+            decoration: BoxDecoration(
+              color: Colors.grey[900],
+            ),
+            child: buildDistanceSlider(),
+          ),
+          //LISTA DE 1EVENTOS
           Container(child: buildEventListView()),
           SizedBox(height: 8),
         ],
@@ -144,58 +154,104 @@ class _SelectEventLocationPageState extends State<SelectEventLocationPage> {
             if (locationInRange(
                     _initialPosition, indexLocation, _circleRadius) >
                 0) {
-              return ExpansionTile(
-                onExpansionChanged: (value) {
-                  setState(() {
-                    if (value) {
-                      itemScrollController.scrollTo(
-                          index: index, duration: Duration(milliseconds: 5));
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                      // colorFilter: new ColorFilter.mode(
+                      //     Colors.black.withOpacity(0.80), BlendMode.dstATop),
+                      image: NetworkImage(
+                        (currLocation.imageUrl != null
+                            ? currLocation.imageUrl
+                            : "https://firebasestorage.googleapis.com/v0/b/esmatch-ce3c9.appspot.com/o/Places%2Fnoimage.jfif?alt=media&token=37655228-b433-4caa-935e-49b0cc295032"),
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: ExpansionTile(
+                    onExpansionChanged: (value) {
+                      setState(() {
+                        if (value) {
+                          itemScrollController.scrollTo(
+                              index: index,
+                              duration: Duration(milliseconds: 5));
 
-                      googleMapController.animateCamera(
-                          CameraUpdate.newCameraPosition(CameraPosition(
-                              target: indexLocation,
-                              zoom: getZoomLevel(_circleRadius))));
-                    } else {
-                      googleMapController.animateCamera(
-                          CameraUpdate.newCameraPosition(CameraPosition(
-                              target: _initialPosition,
-                              zoom: getZoomLevel(_circleRadius))));
-                    }
-                  });
-                },
-                title: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Icon(
-                        Icons.run_circle_outlined,
+                          googleMapController.animateCamera(
+                              CameraUpdate.newCameraPosition(CameraPosition(
+                                  target: indexLocation,
+                                  zoom: getZoomLevel(_circleRadius))));
+                        } else {
+                          googleMapController.animateCamera(
+                              CameraUpdate.newCameraPosition(CameraPosition(
+                                  target: _initialPosition,
+                                  zoom: getZoomLevel(_circleRadius))));
+                        }
+                      });
+                    },
+                    title: Container(
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(
+                          color: Colors.black87,
+                          border: Border.all(color: Colors.black12, width: 5),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Icon(
+                              Icons.run_circle_outlined,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  currLocation.locationName,
+                                ),
+                                Text(
+                                  "Preço hora: R\$ " + currLocation.hourValue,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          currLocation.locationName,
+                    children: [
+                      Text(currLocation.address,
+                          style: TextStyle(
+                              backgroundColor: Colors.white,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: ElevatedButton(
+                          child: Row(
+                            children: [
+                              Icon(Icons.play_arrow),
+                              Text("Agendar horário"),
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SelectEventDate(
+                                      location: currLocation,
+                                      group: widget.group)),
+                            );
+                          },
                         ),
-                      ],
-                    ),
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-                children: [
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: ElevatedButton(
-                      child: Text("Agendar horário"),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SelectEventDate(location: currLocation,group: widget.group)),
-                        );
-                      },
-                    ),
-                  )
-                ],
               );
             }
           },

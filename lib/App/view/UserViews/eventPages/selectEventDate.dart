@@ -59,23 +59,34 @@ class _SelectEventDateState extends State<SelectEventDate> {
         title: Text("Defina o horário"),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            buildMap(context),
-            Divider(),
-            buildLocationValues(),
-            Divider(),
-            buildCalendarTable(context),
-            Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildDropdownButtons(),
-                ElevatedButton(
-                    onPressed:
-                        (startDropdownvalue == null || endDropdownvalue == null || currentDay == null)
+        child: Container(
+          color: Colors.grey[900],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              buildMap(context),
+              Divider(
+                color: Colors.grey[700],
+              ),
+              buildLocationValues(),
+              Divider(
+                color: Colors.grey[700],
+              ),
+              buildCalendarTable(context),
+              Divider(
+                color: Colors.grey[700],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  buildDropdownButtons(),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: ElevatedButton(
+                        onPressed: (startDropdownvalue == null ||
+                                endDropdownvalue == null ||
+                                currentDay == null)
                             ? null
                             : () {
                                 Navigator.push(
@@ -89,10 +100,12 @@ class _SelectEventDateState extends State<SelectEventDate> {
                                           group: widget.group)),
                                 );
                               },
-                    child: Text("Ir para pagamento")),
-              ],
-            ),
-          ],
+                        child: Text("Ir para pagamento")),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -100,43 +113,54 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
   Container buildDropdownButtons() {
     return Container(
+        padding: EdgeInsets.all(5),
         child: Row(
-      children: [
-        Text("Início: ",
-            style: TextStyle(
-              fontSize: 20,
-            )),
-        DropdownButton(
-          dropdownColor: Colors.grey[900],
-          value: startDropdownvalue,
-          onChanged: (String newValue) {
-            setState(() {
-              startDropdownvalue = newValue;
-              endDropdownvalue = startDropdownvalue;
-            });
-          },
-          items: dropDownMenuItems(),
-          style: const TextStyle(color: Colors.white),
-        ),
-        SizedBox(width:20),
-        Text("Fim: ", style: TextStyle(fontSize: 20)),
-        DropdownButton(
-          dropdownColor: Colors.grey[900],
-          value: endDropdownvalue,
-          onChanged: (String newValue) {
-            setState(() {
-              endDropdownvalue = newValue;
-            });
-          },
-          items: dropDownMenuItems(true),
-          // .where((element) =>
-          //     int.parse(startDropdownvalue ?? "0") <=
-          //     int.parse(element.value))
-          // .toList(),
-          style: const TextStyle(color: Colors.white),
-        ),
-      ],
-    ));
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Início: ",
+                style: TextStyle(
+                  fontSize: 25,
+                )),
+            Container(
+              child: DropdownButton(
+                dropdownColor: Colors.grey[600],
+                value: startDropdownvalue,
+                onChanged: (String newValue) {
+                  setState(() {
+                    startDropdownvalue = newValue;
+                    endDropdownvalue = startDropdownvalue;
+                  });
+                },
+                items: dropDownMenuItems(),
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
+            ),
+            SizedBox(width: 25),
+            Text("Fim: ", style: TextStyle(fontSize: 20)),
+            DropdownButton(
+              dropdownColor: Colors.grey[600],
+              value: endDropdownvalue,
+              onChanged: (String newValue) {
+                setState(() {
+                  endDropdownvalue = newValue;
+                });
+              },
+              items: dropDownMenuItems(true),
+              // .where((element) =>
+              //     int.parse(startDropdownvalue ?? "0") <=
+              //     int.parse(element.value))
+              // .toList(),
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30),
+            ),
+          ],
+        ));
   }
 
   List<DropdownMenuItem<String>> dropDownMenuItems([bool end = false]) {
@@ -229,11 +253,12 @@ class _SelectEventDateState extends State<SelectEventDate> {
 
   Container buildLocationValues() {
     return Container(
+      padding: EdgeInsets.all(10),
       child: Center(
         child: Text(
-          "Valor Por hora: ${widget.location.hourValue}",
+          "Valor Por hora: R\$ ${widget.location.hourValue}",
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 25,
           ),
         ),
       ),

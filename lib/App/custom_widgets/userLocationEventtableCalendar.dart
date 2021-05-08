@@ -106,7 +106,16 @@ class _UserLocationEventtableCalendarState
       children: <Widget>[
         // Switch out 2 lines below to play with TableCalendar's settings
         //-----------------------
-        _buildTableCalendar(),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.deepOrangeAccent,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: _buildTableCalendar(),
+        ),
         // _buildTableCalendarWithBuilders(),
 
         // Expanded(child: widget.customEventList ?? _buildEventList()),
@@ -116,11 +125,11 @@ class _UserLocationEventtableCalendarState
 
   // Simple TableCalendar configuration (using Styles)
   Widget _buildTableCalendar() {
-    return TableCalendar(initialSelectedDay: DateTime.now().add(Duration(days: 1)),
+    return TableCalendar(
+      initialSelectedDay: DateTime.now().add(Duration(days: 1)),
       startDay: DateTime.now().add(
         Duration(days: 1),
       ),
-      
       availableCalendarFormats: {
         CalendarFormat.month: 'Mensal',
         // CalendarFormat.twoWeeks: '2 Semanas',
@@ -136,10 +145,53 @@ class _UserLocationEventtableCalendarState
         todayColor: Colors.deepOrange[200],
         markersColor: Colors.brown[700],
         outsideDaysVisible: false,
+        weekendStyle: TextStyle(
+          color: Colors.grey[600],
+          fontWeight: FontWeight.w300,
+          fontSize: 17,
+        ),
+        weekdayStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+          fontSize: 17,
+        ),
+      ),
+      daysOfWeekStyle: DaysOfWeekStyle(
+        weekendStyle: TextStyle(
+            color: Colors.red[900],
+            fontWeight: FontWeight.w900,
+            fontSize: 17,
+            height: 2),
+        weekdayStyle: TextStyle(
+          fontSize: 17,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          height: 2,
+        ),
+        dowTextBuilder: (date, locale) {
+          return DateFormat.E(locale).format(date).toUpperCase();
+        },
+        decoration: BoxDecoration(
+          color: Colors.deepOrangeAccent,
+        ),
       ),
       headerStyle: HeaderStyle(
-        formatButtonTextStyle:
-            TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+        decoration: BoxDecoration(
+          color: Colors.deepOrangeAccent,
+        ),
+        centerHeaderTitle: true,
+        titleTextBuilder: (date, locale) {
+          return DateFormat.yMMMM(locale).format(date).toUpperCase();
+        },
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+        formatButtonTextStyle: TextStyle().copyWith(
+          color: Colors.white,
+          fontSize: 18.0,
+        ),
         formatButtonDecoration: BoxDecoration(
           color: Colors.deepOrange[400],
           borderRadius: BorderRadius.circular(16.0),

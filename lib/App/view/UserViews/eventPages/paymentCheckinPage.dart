@@ -53,10 +53,28 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
       ),
       body: buildBody(context),
       floatingActionButton: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.pressed)) return Colors.green;
+                return Colors.lightBlue; // Use the component's default.
+              },
+            ),
+          ),
           onPressed: () {
             payAndAlocateEvent();
           },
-          child: Text("Realizar Pagamento")),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.payment),
+              Text(
+                "Realizar Pagamento",
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          )),
     );
   }
 
@@ -103,6 +121,7 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
 
   Container buildBody(BuildContext context) {
     return Container(
+        padding: EdgeInsets.all(8),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -112,12 +131,18 @@ class _PaymentCheckinPageState extends State<PaymentCheckinPage> {
             Text(
               "Resumo",
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Divider(),
-            buildReviewTable(),
+            Divider(
+              color: Colors.grey[600],
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: buildReviewTable(),
+            ),
           ],
         ));
   }

@@ -130,9 +130,10 @@ class _EventCardState extends State<EventCard> {
                     ),
                   ),
                   Align(
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.bottomRight,
                     child: Container(
                       color: Colors.transparent,
+                      alignment: Alignment.bottomRight,
                       height: 30,
                       width: 500,
                       child: Padding(
