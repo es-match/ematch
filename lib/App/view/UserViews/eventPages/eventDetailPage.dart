@@ -28,7 +28,7 @@ class _EventDetailPageState extends State<EventDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detalhes dsso Evento"),
+        title: Text("Detalhes do Evento"),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
