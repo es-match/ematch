@@ -38,6 +38,8 @@ class _SelectEventDateState extends State<SelectEventDate> {
       geoPosition = LatLng(widget.location.geolocation.dLatitude,
           widget.location.geolocation.dLongitude);
       setMarkers();
+
+      currentDay = DateTime.now().add(Duration(days: 1));
     });
   }
 
