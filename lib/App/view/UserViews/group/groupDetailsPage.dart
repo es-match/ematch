@@ -224,8 +224,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    SelectEventLocationPage(group: widget.group)),
+                                builder: (context) => SelectEventLocationPage(
+                                    group: widget.group)),
                           )
                         },
                       )
@@ -260,8 +260,7 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
                           width: MediaQuery.of(context).size.width,
                           child: EventCard(
                             event: currEvent,
-                          )                          
-                          ),
+                          )),
                     );
                   },
                 ),
@@ -465,7 +464,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SelectEventLocationPage(group: widget.group)),
+                    builder: (context) =>
+                        SelectEventLocationPage(group: widget.group)),
               )
             },
           ),
@@ -478,7 +478,8 @@ class _GroupDetailsPageState extends State<GroupDetailsPage> {
     final RenderBox box = context.findRenderObject();
 
     Share.share(
-      "Ei vem participar do meu grupo no ESMatch",
+      "Ei vem participar do meu grupo chamado ${widget.group.groupName} no ESMatch: " +
+          uri.shortUrl.toString(),
       subject: uri.shortUrl.toString(),
       sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
     );
